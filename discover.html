@@ -33,43 +33,47 @@
 
         body {
 
+            min-height: 100vh;
+
             font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+                Georgia,
+                "Times New Roman",
+                serif;
 
-            color: #3f342e;
+            color: #40362f;
 
-            background:
-                #f6eee4;
+            background: #f5ecdf;
 
             overflow-x: hidden;
         }
 
 
         /* =====================================================
-           VARIABLES
+           APP BACKGROUND
         ===================================================== */
 
-        :root {
+        body::before {
 
-            --cream: #f6eee4;
+            content: "";
 
-            --paper: #fffaf3;
+            position: fixed;
 
-            --paper-dark: #eee0d0;
+            inset: 0;
 
-            --brown: #463a33;
+            z-index: -5;
 
-            --soft-brown: #806d5e;
-
-            --rose: #b98d91;
-
-            --dusty-pink: #ead4d2;
-
-            --line: #dccabd;
-
-            --white: #fffdf9;
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(190, 164, 143, 0.16),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(150, 135, 145, 0.12),
+                    transparent 30%
+                ),
+                #f5ecdf;
         }
 
 
@@ -98,36 +102,39 @@
 
             background:
                 rgba(
-                    246,
-                    238,
-                    228,
-                    0.94
+                    250,
+                    244,
+                    235,
+                    0.92
                 );
 
             backdrop-filter:
-                blur(14px);
+                blur(16px);
 
             border-bottom:
                 1px solid
                 rgba(
-                    126,
-                    101,
-                    84,
-                    0.12
+                    100,
+                    75,
+                    60,
+                    0.10
                 );
         }
 
 
         .logo {
 
-            font-size: 14px;
+            font-family:
+                Arial,
+                sans-serif;
 
-            letter-spacing: 6px;
+            font-size: 13px;
+
+            letter-spacing: 5px;
+
+            color: #40362f;
 
             font-weight: 500;
-
-            color:
-                var(--brown);
         }
 
 
@@ -137,7 +144,7 @@
 
             align-items: center;
 
-            gap: 34px;
+            gap: 30px;
         }
 
 
@@ -151,12 +158,11 @@
                 Arial,
                 sans-serif;
 
-            font-size: 11px;
+            font-size: 10px;
 
             letter-spacing: 1.5px;
 
-            color:
-                var(--soft-brown);
+            color: #806e60;
 
             cursor: pointer;
 
@@ -167,17 +173,7 @@
 
         .nav-link:hover {
 
-            color:
-                var(--brown);
-        }
-
-
-        .nav-link.active {
-
-            color:
-                var(--brown);
-
-            font-weight: 600;
+            color: #40362f;
         }
 
 
@@ -191,57 +187,39 @@
 
             border:
                 1px solid
-                #cbb5a5;
+                #cbb8a5;
 
             background:
-                var(--paper);
+                #eee0cf;
 
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
+            color: #62544b;
 
             font-family:
                 Georgia,
                 serif;
 
-            font-size: 15px;
-
-            color:
-                var(--brown);
+            font-size: 14px;
 
             cursor: pointer;
-
-            transition:
-                transform .2s ease;
-        }
-
-
-        .profile-button:hover {
-
-            transform:
-                scale(1.05);
         }
 
 
         /* =====================================================
-           PAGE
+           MAIN
         ===================================================== */
 
         .page {
 
-            width:
-                min(
-                    1400px,
-                    92vw
-                );
+            width: min(
+                1200px,
+                90vw
+            );
 
             margin:
                 0 auto;
 
             padding:
-                70px 0 100px;
+                65px 0 100px;
         }
 
 
@@ -254,18 +232,22 @@
             display: grid;
 
             grid-template-columns:
-                1.2fr
-                .8fr;
+                1.15fr
+                .85fr;
 
-            gap: 70px;
+            gap: 50px;
 
             align-items: center;
 
-            margin-bottom: 75px;
+            margin-bottom: 65px;
         }
 
 
         .eyebrow {
+
+            font-family:
+                Arial,
+                sans-serif;
 
             font-size: 10px;
 
@@ -273,42 +255,34 @@
 
             text-transform: uppercase;
 
-            color:
-                var(--rose);
+            color: #9a806e;
 
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
 
-        .hero h1 {
-
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-
-            font-weight: normal;
+        .hero-title {
 
             font-size:
                 clamp(
-                    44px,
+                    45px,
                     6vw,
                     78px
                 );
 
+            font-weight: normal;
+
             line-height: .98;
 
-            color:
-                var(--brown);
+            color: #40362f;
 
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
 
-        .hero h1 span {
+        .hero-title em {
 
-            color:
-                var(--rose);
+            color: #806b5c;
 
             font-style: italic;
         }
@@ -316,114 +290,98 @@
 
         .hero-description {
 
-            max-width: 570px;
+            max-width: 560px;
+
+            font-family:
+                Arial,
+                sans-serif;
 
             font-size: 14px;
 
-            line-height: 1.8;
+            line-height: 1.75;
 
-            color:
-                var(--soft-brown);
+            color: #806e60;
         }
 
 
         /* =====================================================
-           HERO MINI POSTCARD
+           PERSONAL POSTCARD
         ===================================================== */
 
-        .hero-postcard {
+        .personal-card {
 
             position: relative;
 
-            min-height: 300px;
+            min-height: 330px;
+
+            padding: 35px;
+
+            overflow: hidden;
 
             background:
-                var(--paper);
+                linear-gradient(
+                    135deg,
+                    #e4d2c0,
+                    #d3c0b0
+                );
 
             border:
-                1px solid
-                #dfcec0;
-
-            padding: 30px;
+                7px solid
+                #fffaf2;
 
             box-shadow:
-                0 20px 50px
+                0 25px 50px
                 rgba(
-                    69,
-                    49,
-                    38,
-                    .10
+                    55,
+                    40,
+                    30,
+                    0.18
                 );
 
             transform:
-                rotate(2deg);
-
-            transition:
-                transform .4s ease;
+                rotate(1.2deg);
         }
 
 
-        .hero-postcard:hover {
-
-            transform:
-                rotate(0deg)
-                translateY(-5px);
-        }
-
-
-        .hero-postcard::before {
+        .personal-card::before {
 
             content: "";
 
             position: absolute;
 
-            inset: 12px;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.15),
+                    transparent
+                );
+
+            pointer-events: none;
+        }
+
+
+        .personal-stamp {
+
+            position: absolute;
+
+            top: 22px;
+
+            right: 22px;
+
+            width: 58px;
+
+            height: 70px;
 
             border:
                 1px dashed
-                #cbb5a5;
-
-            pointer-events:
-                none;
-        }
-
-
-        .postcard-top {
-
-            position: relative;
-
-            display: flex;
-
-            justify-content:
-                space-between;
-
-            align-items:
-                flex-start;
-
-            z-index: 2;
-        }
-
-
-        .postcard-label {
-
-            font-size: 9px;
-
-            letter-spacing: 3px;
-
-            color:
-                var(--soft-brown);
-        }
-
-
-        .postcard-stamp {
-
-            width: 52px;
-
-            height: 62px;
-
-            border:
-                1px dashed
-                #b99c89;
+                rgba(
+                    95,
+                    70,
+                    55,
+                    0.55
+                );
 
             display: flex;
 
@@ -433,54 +391,91 @@
 
             text-align: center;
 
+            font-family:
+                Arial,
+                sans-serif;
+
             font-size: 7px;
 
             letter-spacing: 1.5px;
 
-            color:
-                #947968;
+            line-height: 1.5;
+
+            color: #705b4d;
+
+            transform:
+                rotate(4deg);
         }
 
 
-        .postcard-message {
+        .personal-label {
 
-            position: absolute;
-
-            left: 30px;
-
-            bottom: 38px;
-
-            z-index: 2;
-        }
-
-
-        .postcard-message small {
-
-            display: block;
+            font-family:
+                Arial,
+                sans-serif;
 
             font-size: 9px;
 
-            letter-spacing: 2px;
+            letter-spacing: 3px;
 
-            color:
-                var(--rose);
+            text-transform: uppercase;
 
-            margin-bottom: 10px;
+            color: #806b5c;
+
+            margin-bottom: 35px;
         }
 
 
-        .postcard-message strong {
+        .personal-location {
 
-            font-family:
-                Georgia,
-                serif;
-
-            font-size: 31px;
+            font-size: 37px;
 
             font-weight: normal;
 
-            color:
-                var(--brown);
+            line-height: 1.05;
+
+            max-width: 270px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .personal-small {
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            color: #725f52;
+        }
+
+
+        .card-line {
+
+            position: absolute;
+
+            bottom: 22px;
+
+            left: 22px;
+
+            right: 22px;
+
+            height: 4px;
+
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    #a17d6b 0 12px,
+                    transparent 12px 20px,
+                    #897c86 20px 32px,
+                    transparent 32px 40px
+                );
+
+            opacity: .55;
         }
 
 
@@ -492,257 +487,158 @@
 
             display: flex;
 
-            justify-content:
-                space-between;
+            align-items: flex-end;
 
-            align-items:
-                flex-end;
+            justify-content: space-between;
 
-            margin-bottom: 25px;
-        }
-
-
-        .section-label {
-
-            font-size: 10px;
-
-            letter-spacing: 3px;
-
-            text-transform: uppercase;
-
-            color:
-                var(--rose);
-
-            margin-bottom: 8px;
+            margin-bottom: 24px;
         }
 
 
         .section-title {
 
-            font-family:
-                Georgia,
-                serif;
-
             font-size: 34px;
 
             font-weight: normal;
 
-            color:
-                var(--brown);
+            line-height: 1;
         }
 
 
-        .view-all {
-
-            border: none;
-
-            background: none;
-
-            font-size: 10px;
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
-
-            color:
-                var(--soft-brown);
-
-            cursor: pointer;
-        }
-
-
-        /* =====================================================
-           UNIVERSITY CARDS
-        ===================================================== */
-
-        .university-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(
-                    3,
-                    1fr
-                );
-
-            gap: 22px;
-
-            margin-bottom: 85px;
-        }
-
-
-        .university-card {
-
-            background:
-                var(--paper);
-
-            border:
-                1px solid
-                #dfcec0;
-
-            overflow: hidden;
-
-            cursor: pointer;
-
-            transition:
-                transform .3s ease,
-                box-shadow .3s ease;
-        }
-
-
-        .university-card:hover {
-
-            transform:
-                translateY(-7px);
-
-            box-shadow:
-                0 18px 40px
-                rgba(
-                    69,
-                    49,
-                    38,
-                    .12
-                );
-        }
-
-
-        .university-image {
-
-            width: 100%;
-
-            height: 210px;
-
-            object-fit: cover;
-
-            display: block;
-        }
-
-
-        .university-info {
-
-            padding:
-                23px;
-        }
-
-
-        .university-location {
-
-            font-size: 9px;
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
-
-            color:
-                var(--rose);
-
-            margin-bottom: 9px;
-        }
-
-
-        .university-name {
+        .section-description {
 
             font-family:
-                Georgia,
-                serif;
-
-            font-size: 25px;
-
-            font-weight: normal;
-
-            line-height: 1.05;
-
-            margin-bottom: 8px;
-
-            color:
-                var(--brown);
-        }
-
-
-        .university-field {
+                Arial,
+                sans-serif;
 
             font-size: 11px;
 
-            color:
-                var(--soft-brown);
+            color: #907d6e;
+
+            max-width: 300px;
+
+            text-align: right;
 
             line-height: 1.5;
-
-            margin-bottom: 18px;
-        }
-
-
-        .card-bottom {
-
-            display: flex;
-
-            justify-content:
-                space-between;
-
-            align-items: center;
-
-            padding-top: 15px;
-
-            border-top:
-                1px solid
-                #e4d6ca;
-        }
-
-
-        .match {
-
-            font-size: 9px;
-
-            letter-spacing: 1.5px;
-
-            color:
-                var(--soft-brown);
-        }
-
-
-        .save-button {
-
-            width: 31px;
-
-            height: 31px;
-
-            border-radius: 50%;
-
-            border:
-                1px solid
-                #d4c0b2;
-
-            background:
-                transparent;
-
-            color:
-                var(--brown);
-
-            font-size: 16px;
-
-            cursor: pointer;
-
-            transition:
-                all .2s ease;
-        }
-
-
-        .save-button:hover,
-        .save-button.saved {
-
-            background:
-                var(--brown);
-
-            color:
-                white;
         }
 
 
         /* =====================================================
-           DESTINATIONS
+           SEARCH
         ===================================================== */
 
-        .destination-grid {
+        .search-area {
+
+            margin-bottom: 65px;
+        }
+
+
+        .search-box {
+
+            display: flex;
+
+            align-items: center;
+
+            width: 100%;
+
+            padding: 5px;
+
+            background:
+                rgba(
+                    255,
+                    250,
+                    242,
+                    .75
+                );
+
+            border:
+                1px solid
+                #d5c4b4;
+
+            box-shadow:
+                0 8px 25px
+                rgba(
+                    65,
+                    45,
+                    35,
+                    .06
+                );
+        }
+
+
+        .search-icon {
+
+            width: 48px;
+
+            text-align: center;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 15px;
+
+            color: #90796a;
+        }
+
+
+        .search-input {
+
+            flex: 1;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            padding:
+                15px 8px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 13px;
+
+            color: #40362f;
+        }
+
+
+        .search-input::placeholder {
+
+            color: #a89483;
+        }
+
+
+        .search-button {
+
+            border: none;
+
+            background: #4c4038;
+
+            color: white;
+
+            padding:
+                14px 25px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           EXPLORE DESTINATIONS
+        ===================================================== */
+
+        .destinations {
 
             display: grid;
 
@@ -754,7 +650,7 @@
 
             gap: 15px;
 
-            margin-bottom: 85px;
+            margin-bottom: 65px;
         }
 
 
@@ -762,15 +658,27 @@
 
             position: relative;
 
-            height: 230px;
+            height: 190px;
 
             overflow: hidden;
 
             cursor: pointer;
+
+            background: #d8c8b8;
+
+            transition:
+                transform .3s ease;
         }
 
 
-        .destination img {
+        .destination:hover {
+
+            transform:
+                translateY(-5px);
+        }
+
+
+        .destination-image {
 
             width: 100%;
 
@@ -779,14 +687,15 @@
             object-fit: cover;
 
             transition:
-                transform .6s ease;
+                transform .5s ease;
         }
 
 
-        .destination:hover img {
+        .destination:hover
+        .destination-image {
 
             transform:
-                scale(1.07);
+                scale(1.06);
         }
 
 
@@ -800,12 +709,12 @@
 
             background:
                 linear-gradient(
-                    transparent 35%,
+                    transparent 30%,
                     rgba(
                         30,
                         23,
                         20,
-                        .72
+                        .68
                     )
                 );
         }
@@ -815,149 +724,279 @@
 
             position: absolute;
 
-            z-index: 2;
+            bottom: 18px;
 
-            bottom: 20px;
+            left: 18px;
 
-            left: 20px;
+            z-index: 3;
 
             color: white;
 
-            font-family:
-                Georgia,
-                serif;
+            font-size: 22px;
 
-            font-size: 24px;
+            font-weight: normal;
+        }
+
+
+        .destination-country {
+
+            position: absolute;
+
+            bottom: 8px;
+
+            left: 19px;
+
+            z-index: 3;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .75
+                );
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 8px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
         }
 
 
         /* =====================================================
-           INTERESTS
+           UNIVERSITY RECOMMENDATIONS
         ===================================================== */
 
-        .interest-grid {
+        .recommendations {
 
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 12px;
-
-            margin-bottom: 85px;
+            margin-bottom: 65px;
         }
 
 
-        .interest {
+        .university-grid {
 
-            padding:
-                14px 22px;
+            display: grid;
 
-            border:
-                1px solid
-                #d7c3b4;
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap: 20px;
+        }
+
+
+        .university-card {
 
             background:
                 rgba(
                     255,
                     250,
-                    243,
-                    .55
+                    242,
+                    .7
                 );
-
-            font-size: 11px;
-
-            letter-spacing: 1px;
-
-            color:
-                var(--soft-brown);
-
-            transition:
-                all .2s ease;
-        }
-
-
-        .interest:hover {
-
-            background:
-                var(--brown);
-
-            color:
-                white;
-
-            border-color:
-                var(--brown);
-        }
-
-
-        /* =====================================================
-           PERSONALIZATION
-        ===================================================== */
-
-        .personalization {
-
-            display: grid;
-
-            grid-template-columns:
-                1fr
-                1fr;
-
-            gap: 25px;
-
-            margin-bottom: 60px;
-        }
-
-
-        .personal-card {
-
-            padding:
-                30px;
-
-            background:
-                var(--dusty-pink);
 
             border:
                 1px solid
-                #dcc0bf;
+                #d8c7b7;
+
+            padding: 26px;
+
+            min-height: 300px;
+
+            position: relative;
+
+            transition:
+                transform .3s ease,
+                box-shadow .3s ease;
         }
 
 
-        .personal-card:nth-child(2) {
+        .university-card:hover {
 
-            background:
-                #e8dfd4;
+            transform:
+                translateY(-5px);
 
-            border-color:
-                #d7c8b8;
+            box-shadow:
+                0 15px 30px
+                rgba(
+                    65,
+                    45,
+                    35,
+                    .09
+                );
         }
 
 
-        .personal-label {
+        .university-country {
 
-            font-size: 9px;
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 8px;
 
             letter-spacing: 2px;
 
             text-transform: uppercase;
 
-            color:
-                var(--soft-brown);
+            color: #9a806e;
 
-            margin-bottom: 13px;
+            margin-bottom: 35px;
         }
 
 
-        .personal-text {
+        .university-name {
+
+            font-size: 29px;
+
+            font-weight: normal;
+
+            line-height: 1.05;
+
+            margin-bottom: 13px;
+
+            max-width: 85%;
+        }
+
+
+        .university-city {
 
             font-family:
-                Georgia,
-                serif;
+                Arial,
+                sans-serif;
 
-            font-size: 23px;
+            font-size: 11px;
 
-            line-height: 1.25;
+            color: #907d6e;
 
-            color:
-                var(--brown);
+            margin-bottom: 25px;
+        }
+
+
+        .match {
+
+            display: inline-block;
+
+            padding:
+                7px 10px;
+
+            background:
+                #e9ddd0;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 8px;
+
+            letter-spacing: 1.5px;
+
+            color: #625248;
+        }
+
+
+        .save {
+
+            position: absolute;
+
+            top: 21px;
+
+            right: 21px;
+
+            width: 31px;
+
+            height: 31px;
+
+            border:
+                1px solid
+                #cbb8a5;
+
+            border-radius: 50%;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            color: #786456;
+
+            font-size: 15px;
+        }
+
+
+        .save.saved {
+
+            background: #4c4038;
+
+            color: white;
+
+            border-color:
+                #4c4038;
+        }
+
+
+        .view-button {
+
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 26px;
+
+            border: none;
+
+            background: none;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            color: #625248;
+
+            cursor: pointer;
+
+            text-decoration:
+                underline;
+        }
+
+
+        /* =====================================================
+           SAVED
+        ===================================================== */
+
+        .saved-section {
+
+            margin-bottom: 65px;
+        }
+
+
+        .saved-empty {
+
+            padding: 45px;
+
+            text-align: center;
+
+            border:
+                1px dashed
+                #cbb8a5;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 12px;
+
+            color: #907d6e;
         }
 
 
@@ -967,24 +1006,31 @@
 
         footer {
 
+            padding:
+                45px 0;
+
             border-top:
                 1px solid
-                #dccabd;
-
-            padding:
-                30px 0;
+                rgba(
+                    100,
+                    75,
+                    60,
+                    .12
+                );
 
             display: flex;
 
-            justify-content:
-                space-between;
+            justify-content: space-between;
 
-            color:
-                var(--soft-brown);
+            font-family:
+                Arial,
+                sans-serif;
 
             font-size: 9px;
 
             letter-spacing: 1.5px;
+
+            color: #998778;
         }
 
 
@@ -992,14 +1038,23 @@
            RESPONSIVE
         ===================================================== */
 
-        @media (max-width: 950px) {
+        @media (max-width: 900px) {
 
             .hero {
 
-                grid-template-columns:
-                    1fr;
+                grid-template-columns: 1fr;
 
-                gap: 40px;
+                gap: 35px;
+            }
+
+
+            .destinations {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        1fr
+                    );
             }
 
 
@@ -1011,21 +1066,10 @@
                         1fr
                     );
             }
-
-
-            .destination-grid {
-
-                grid-template-columns:
-                    repeat(
-                        2,
-                        1fr
-                    );
-            }
-
         }
 
 
-        @media (max-width: 650px) {
+        @media (max-width: 600px) {
 
             .navbar {
 
@@ -1036,75 +1080,103 @@
 
             .nav-links {
 
+                gap: 14px;
+            }
+
+
+            .nav-link {
+
                 display: none;
             }
 
 
             .page {
 
-                width:
-                    90vw;
+                width: 90vw;
 
-                padding-top:
-                    45px;
+                padding-top: 40px;
             }
 
 
-            .hero {
+            .hero-title {
 
-                margin-bottom:
-                    55px;
+                font-size: 48px;
             }
 
 
-            .hero h1 {
+            .personal-card {
 
-                font-size:
-                    46px;
+                min-height: 280px;
+
+                padding: 27px;
             }
 
 
-            .university-grid {
+            .personal-location {
 
-                grid-template-columns:
-                    1fr;
+                font-size: 31px;
             }
 
 
-            .destination-grid {
+            .section-header {
 
-                grid-template-columns:
-                    1fr 1fr;
+                display: block;
+            }
+
+
+            .section-description {
+
+                text-align: left;
+
+                margin-top: 10px;
+            }
+
+
+            .search-box {
+
+                flex-wrap: wrap;
+
+                padding: 8px;
+            }
+
+
+            .search-icon {
+
+                width: 35px;
+            }
+
+
+            .search-button {
+
+                width: 100%;
+
+                margin-top: 5px;
+            }
+
+
+            .destinations {
+
+                grid-template-columns: 1fr;
             }
 
 
             .destination {
 
-                height:
-                    180px;
+                height: 180px;
             }
 
 
-            .personalization {
+            .university-grid {
 
-                grid-template-columns:
-                    1fr;
-            }
-
-
-            .section-title {
-
-                font-size:
-                    29px;
+                grid-template-columns: 1fr;
             }
 
 
             footer {
 
-                flex-direction:
-                    column;
+                display: block;
 
-                gap: 10px;
+                line-height: 2;
             }
 
         }
@@ -1131,36 +1203,38 @@
         <div class="nav-links">
 
             <button
-                class="nav-link active"
+                class="nav-link"
+                onclick="scrollToSection('explore')"
             >
-                Discover
+                EXPLORE
             </button>
 
 
             <button
                 class="nav-link"
-                onclick="alert('Your saved universities will appear here.')"
+                onclick="scrollToSection('recommendations')"
             >
-                Saved
+                FOR YOU
             </button>
 
 
             <button
                 class="nav-link"
-                onclick="alert('University comparison will be available here.')"
+                onclick="scrollToSection('saved')"
             >
-                Compare
+                SAVED
+            </button>
+
+
+            <button
+                class="profile-button"
+                onclick="showProfile()"
+                id="profileButton"
+            >
+                ?
             </button>
 
         </div>
-
-
-        <button
-            class="profile-button"
-            id="profileButton"
-        >
-            ?
-        </button>
 
     </nav>
 
@@ -1183,13 +1257,16 @@
             <div>
 
                 <div class="eyebrow">
-                    Your university journey
+                    YOUR UNIVERSITY JOURNEY
                 </div>
 
 
-                <h1>
-                    Find somewhere<br>
-                    that feels like <span>yours.</span>
+                <h1
+                    class="hero-title"
+                    id="heroTitle"
+                >
+                    Find the place<br>
+                    where your <em>next chapter</em> begins.
                 </h1>
 
 
@@ -1197,45 +1274,47 @@
                     class="hero-description"
                     id="heroDescription"
                 >
-                    Based on what you've told us,
-                    Postcards has started putting together
-                    a world of possibilities for you.
+                    Postcards brings the world's universities
+                    together in one place, personalized around
+                    what matters to you.
                 </p>
 
             </div>
 
 
 
-            <div class="hero-postcard">
+            <!-- PERSONAL POSTCARD -->
 
-                <div class="postcard-top">
+            <div class="personal-card">
 
-                    <div class="postcard-label">
-                        A POSTCARD FROM
-                    </div>
-
-
-                    <div class="postcard-stamp">
-                        POST<br>
-                        CARDS
-                    </div>
-
+                <div class="personal-stamp">
+                    POST<br>
+                    CARDS
                 </div>
 
 
-                <div class="postcard-message">
-
-                    <small>
-                        YOUR NEXT CHAPTER
-                    </small>
-
-
-                    <strong id="postcardDestination">
-                        Somewhere<br>
-                        waiting for you.
-                    </strong>
-
+                <div class="personal-label">
+                    YOUR HOME
                 </div>
+
+
+                <div
+                    class="personal-location"
+                    id="personalLocation"
+                >
+                    Your journey begins here.
+                </div>
+
+
+                <div
+                    class="personal-small"
+                    id="personalDetails"
+                >
+                    Let's discover where you could go next.
+                </div>
+
+
+                <div class="card-line"></div>
 
             </div>
 
@@ -1244,44 +1323,56 @@
 
 
         <!-- =================================================
-             RECOMMENDED UNIVERSITIES
+             SEARCH
         ================================================== -->
 
-        <section>
+        <section class="search-area">
 
 
             <div class="section-header">
 
                 <div>
 
-                    <div class="section-label">
-                        Picked for you
+                    <div class="eyebrow">
+                        DISCOVER
                     </div>
 
-
                     <h2 class="section-title">
-                        Recommended universities
+                        Where will you go?
                     </h2>
 
                 </div>
 
 
-                <button
-                    class="view-all"
-                    onclick="alert('The full university search will be built next.')"
-                >
-                    Explore all →
-                </button>
+                <p class="section-description">
+                    Search universities, cities, countries,
+                    or programs.
+                </p>
 
             </div>
 
 
-            <div
-                class="university-grid"
-                id="universityGrid"
-            >
+            <div class="search-box">
 
-                <!-- Cards generated by JavaScript -->
+                <div class="search-icon">
+                    ⌕
+                </div>
+
+
+                <input
+                    class="search-input"
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search a university, city, country or program..."
+                >
+
+
+                <button
+                    class="search-button"
+                    onclick="searchUniversities()"
+                >
+                    SEARCH
+                </button>
 
             </div>
 
@@ -1293,95 +1384,127 @@
              DESTINATIONS
         ================================================== -->
 
-        <section>
+        <section
+            id="explore"
+            class="explore"
+        >
 
 
             <div class="section-header">
 
                 <div>
 
-                    <div class="section-label">
-                        Explore the world
+                    <div class="eyebrow">
+                        EXPLORE THE WORLD
                     </div>
 
-
                     <h2 class="section-title">
-                        Where could you go?
+                        Start somewhere.
                     </h2>
 
                 </div>
 
+
+                <p class="section-description">
+                    Explore popular destinations for
+                    international students.
+                </p>
+
             </div>
 
 
-            <div class="destination-grid">
+
+            <div class="destinations">
 
 
                 <div
                     class="destination"
-                    onclick="alert('University search for the United States is coming next.')"
+                    onclick="searchByDestination('United States')"
                 >
 
                     <img
-                        src="https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=1000&q=85"
-                        alt="United States"
+                        class="destination-image"
+                        src="https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1000&q=85"
+                        alt="New York"
                     >
 
                     <div class="destination-name">
                         United States
                     </div>
 
-                </div>
-
-
-                <div
-                    class="destination"
-                    onclick="alert('University search for the United Kingdom is coming next.')"
-                >
-
-                    <img
-                        src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1000&q=85"
-                        alt="United Kingdom"
-                    >
-
-                    <div class="destination-name">
-                        United Kingdom
+                    <div class="destination-country">
+                        NORTH AMERICA
                     </div>
 
                 </div>
 
 
-                <div
-                    class="destination"
-                    onclick="alert('University search for Spain is coming next.')"
-                >
-
-                    <img
-                        src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1000&q=85"
-                        alt="Spain"
-                    >
-
-                    <div class="destination-name">
-                        Spain
-                    </div>
-
-                </div>
-
 
                 <div
                     class="destination"
-                    onclick="alert('University search for Italy is coming next.')"
+                    onclick="searchByDestination('Italy')"
                 >
 
                     <img
+                        class="destination-image"
                         src="https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1000&q=85"
-                        alt="Italy"
+                        alt="Rome"
                     >
 
                     <div class="destination-name">
                         Italy
                     </div>
 
+                    <div class="destination-country">
+                        EUROPE
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    class="destination"
+                    onclick="searchByDestination('Spain')"
+                >
+
+                    <img
+                        class="destination-image"
+                        src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1000&q=85"
+                        alt="Barcelona"
+                    >
+
+                    <div class="destination-name">
+                        Spain
+                    </div>
+
+                    <div class="destination-country">
+                        EUROPE
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    class="destination"
+                    onclick="searchByDestination('Japan')"
+                >
+
+                    <img
+                        class="destination-image"
+                        src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=1000&q=85"
+                        alt="Tokyo"
+                    >
+
+                    <div class="destination-name">
+                        Japan
+                    </div>
+
+                    <div class="destination-country">
+                        ASIA
+                    </div>
+
                 </div>
 
             </div>
@@ -1391,36 +1514,47 @@
 
 
         <!-- =================================================
-             YOUR INTERESTS
+             RECOMMENDATIONS
         ================================================== -->
 
-        <section>
+        <section
+            id="recommendations"
+            class="recommendations"
+        >
 
 
             <div class="section-header">
 
                 <div>
 
-                    <div class="section-label">
-                        Your profile
+                    <div class="eyebrow">
+                        PERSONALIZED FOR YOU
                     </div>
 
-
                     <h2 class="section-title">
-                        What makes you, you?
+                        Places worth discovering.
                     </h2>
 
                 </div>
 
+
+                <p
+                    class="section-description"
+                    id="recommendationDescription"
+                >
+                    Based on what you told us during your journey.
+                </p>
+
             </div>
 
 
+
             <div
-                class="interest-grid"
-                id="interestGrid"
+                class="university-grid"
+                id="universityGrid"
             >
 
-                <!-- Generated from onboarding -->
+                <!-- Universities are inserted here -->
 
             </div>
 
@@ -1429,44 +1563,44 @@
 
 
         <!-- =================================================
-             PERSONALIZATION
+             SAVED
         ================================================== -->
 
-        <section class="personalization">
+        <section
+            id="saved"
+            class="saved-section"
+        >
 
 
-            <div class="personal-card">
+            <div class="section-header">
 
-                <div class="personal-label">
-                    Your field
+                <div>
+
+                    <div class="eyebrow">
+                        YOUR COLLECTION
+                    </div>
+
+                    <h2 class="section-title">
+                        Saved postcards.
+                    </h2>
+
                 </div>
 
 
-                <div
-                    class="personal-text"
-                    id="studyText"
-                >
-                    Still discovering
-                </div>
+                <p class="section-description">
+                    Keep the universities you don't want to forget.
+                </p>
 
             </div>
 
 
-
-            <div class="personal-card">
-
-                <div class="personal-label">
-                    What matters to you
-                </div>
-
-
-                <div
-                    class="personal-text"
-                    id="priorityText"
-                >
-                    We'll keep learning what matters most.
-                </div>
-
+            <div
+                id="savedContainer"
+                class="saved-empty"
+            >
+                You haven't saved any universities yet.
+                Start exploring and collect the ones that
+                feel like you.
             </div>
 
         </section>
@@ -1480,15 +1614,15 @@
         <footer>
 
             <div>
-                POSTCARDS © 2026
+                POSTCARDS
             </div>
 
-
             <div>
-                YOUR WORLD. YOUR FUTURE.
+                YOUR NEXT CHAPTER IS OUT THERE.
             </div>
 
         </footer>
+
 
     </main>
 
@@ -1497,11 +1631,10 @@
     <script>
 
         /* =====================================================
-           LOAD ONBOARDING DATA
+           LOAD USER INFORMATION
         ===================================================== */
 
         let answers = {};
-
 
         const savedAnswers =
             localStorage.getItem(
@@ -1518,11 +1651,11 @@
                         savedAnswers
                     );
 
-            } catch (error) {
+            }
 
-                console.log(
-                    "Could not load Postcards profile."
-                );
+            catch (error) {
+
+                answers = {};
 
             }
 
@@ -1531,190 +1664,72 @@
 
 
         /* =====================================================
-           STUDENT NAME
+           USER NAME
         ===================================================== */
 
-        /*
-            If the account page eventually stores
-            the student's name, this can automatically
-            use it.
+        const accountName =
+            localStorage.getItem(
+                "postcardsName"
+            );
 
-            For now, "there" keeps the design natural.
-        */
 
         const firstName =
-            localStorage.getItem(
-                "postcardsFirstName"
-            );
+            accountName
+                ? accountName.split(" ")[0]
+                : "there";
 
 
-        const greetingName =
-            firstName ||
-            "there";
+        document.getElementById(
+            "heroTitle"
+        ).innerHTML =
+            `Find the place<br>where your <em>next chapter</em> begins, ${firstName}.`;
 
 
 
         /* =====================================================
-           HERO TEXT
+           PERSONAL LOCATION
         ===================================================== */
 
-        const heroDescription =
+        const city =
+            answers.city || "";
+
+
+        const country =
+            answers.country || "";
+
+
+        const personalLocation =
             document.getElementById(
-                "heroDescription"
+                "personalLocation"
+            );
+
+
+        const personalDetails =
+            document.getElementById(
+                "personalDetails"
             );
 
 
         if (
-            answers.country ||
-            answers.city
+            city &&
+            country
         ) {
 
-            heroDescription.textContent =
-                `We've started building your university world around where you are, what you want to study, and what matters most to you.`;
+            personalLocation.textContent =
+                `${city}, ${country}`;
+
+            personalDetails.textContent =
+                "A new journey can begin from anywhere.";
 
         }
 
+        else if (country) {
 
+            personalLocation.textContent =
+                country;
 
-        /* =====================================================
-           DESTINATION
-        ===================================================== */
-
-        const destinationElement =
-            document.getElementById(
-                "postcardDestination"
-            );
-
-
-        const preferredCountries =
-            answers.countries || [];
-
-
-        if (
-            preferredCountries.length > 0
-        ) {
-
-            const firstCountry =
-                preferredCountries[0];
-
-
-            destinationElement.innerHTML =
-                `${firstCountry}<br>could be waiting for you.`;
-
-        }
-
-
-
-        /* =====================================================
-           INTERESTS
-        ===================================================== */
-
-        const interestGrid =
-            document.getElementById(
-                "interestGrid"
-            );
-
-
-        const interests =
-            answers.interests || [];
-
-
-        if (
-            interests.length > 0
-        ) {
-
-            interests.forEach(
-                interest => {
-
-                    const element =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    element.className =
-                        "interest";
-
-
-                    element.textContent =
-                        interest;
-
-
-                    interestGrid.appendChild(
-                        element
-                    );
-
-                }
-            );
-
-        } else {
-
-            interestGrid.innerHTML = `
-
-                <div class="interest">
-                    Tell us more about yourself
-                </div>
-
-            `;
-
-        }
-
-
-
-        /* =====================================================
-           STUDY FIELD
-        ===================================================== */
-
-        const studyText =
-            document.getElementById(
-                "studyText"
-            );
-
-
-        const study =
-            answers.study || [];
-
-
-        if (
-            study.length > 0
-        ) {
-
-            studyText.textContent =
-                study.join(
-                    " · "
-                );
-
-        }
-
-
-
-        /* =====================================================
-           PRIORITIES
-        ===================================================== */
-
-        const priorityText =
-            document.getElementById(
-                "priorityText"
-            );
-
-
-        const priorities =
-            answers.priorities || [];
-
-
-        if (
-            priorities.length > 0
-        ) {
-
-            priorityText.textContent =
-                priorities
-                    .slice(
-                        0,
-                        3
-                    )
-                    .join(
-                        " · "
-                    );
+            personalDetails.textContent =
+                "Let's discover where your next chapter could take you.";
 
         }
 
@@ -1724,29 +1739,28 @@
            UNIVERSITY DATA
         ===================================================== */
 
-        /*
-            These are currently sample universities.
-
-            Later, we can connect this section to
-            a real university database/API and use
-            the student's answers to rank them.
-        */
-
         const universities = [
 
             {
                 name:
                     "New York University",
 
-                location:
-                    "New York, United States",
+                city:
+                    "New York",
 
-                field:
-                    "Business · Media · Arts · Technology",
+                country:
+                    "United States",
 
-                image:
-                    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=85"
+                fields:
+                    [
+                        "Business & Economics",
+                        "Arts & Design",
+                        "Communication & Media",
+                        "Social Sciences"
+                    ],
 
+                match:
+                    94
             },
 
 
@@ -1754,31 +1768,110 @@
                 name:
                     "Bocconi University",
 
-                location:
-                    "Milan, Italy",
+                city:
+                    "Milan",
 
-                field:
-                    "Business · Economics · Finance",
+                country:
+                    "Italy",
 
-                image:
-                    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=85"
+                fields:
+                    [
+                        "Business & Economics",
+                        "Social Sciences"
+                    ],
 
+                match:
+                    92
             },
 
 
             {
                 name:
-                    "University of Barcelona",
+                    "University of British Columbia",
 
-                location:
-                    "Barcelona, Spain",
+                city:
+                    "Vancouver",
 
-                field:
-                    "Business · Social Sciences · Arts",
+                country:
+                    "Canada",
 
-                image:
-                    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=85"
+                fields:
+                    [
+                        "Science",
+                        "Engineering & Technology",
+                        "Business & Economics"
+                    ],
 
+                match:
+                    89
+            },
+
+
+            {
+                name:
+                    "IE University",
+
+                city:
+                    "Madrid",
+
+                country:
+                    "Spain",
+
+                fields:
+                    [
+                        "Business & Economics",
+                        "Communication & Media",
+                        "Law",
+                        "Social Sciences"
+                    ],
+
+                match:
+                    91
+            },
+
+
+            {
+                name:
+                    "University of Amsterdam",
+
+                city:
+                    "Amsterdam",
+
+                country:
+                    "Netherlands",
+
+                fields:
+                    [
+                        "Social Sciences",
+                        "Business & Economics",
+                        "Science",
+                        "Communication & Media"
+                    ],
+
+                match:
+                    88
+            },
+
+
+            {
+                name:
+                    "Waseda University",
+
+                city:
+                    "Tokyo",
+
+                country:
+                    "Japan",
+
+                fields:
+                    [
+                        "Business & Economics",
+                        "Engineering & Technology",
+                        "Social Sciences"
+                    ],
+
+                match:
+                    86
             }
 
         ];
@@ -1786,161 +1879,674 @@
 
 
         /* =====================================================
-           CREATE UNIVERSITY CARDS
+           PERSONALIZE MATCHES
         ===================================================== */
 
-        const universityGrid =
-            document.getElementById(
-                "universityGrid"
+        function calculateMatch(
+            university
+        ) {
+
+            let score =
+                university.match;
+
+
+            const selectedCountries =
+                answers.countries || [];
+
+
+            const selectedStudy =
+                answers.study || [];
+
+
+            if (
+                selectedCountries.includes(
+                    university.country
+                )
+            ) {
+
+                score += 4;
+
+            }
+
+
+            if (
+                selectedStudy.some(
+                    field =>
+                        university.fields.includes(
+                            field
+                        )
+                )
+            ) {
+
+                score += 4;
+
+            }
+
+
+            return Math.min(
+                score,
+                99
             );
 
-
-        universities.forEach(
-            university => {
-
-                const card =
-                    document.createElement(
-                        "article"
-                    );
+        }
 
 
-                card.className =
-                    "university-card";
+
+        /* =====================================================
+           RENDER UNIVERSITIES
+        ===================================================== */
+
+        function renderUniversities(
+            list = universities
+        ) {
+
+            const grid =
+                document.getElementById(
+                    "universityGrid"
+                );
 
 
-                card.innerHTML = `
+            grid.innerHTML = "";
 
-                    <img
-                        class="university-image"
-                        src="${university.image}"
-                        alt="${university.name}"
+
+            if (
+                list.length === 0
+            ) {
+
+                grid.innerHTML = `
+
+                    <div
+                        style="
+                            grid-column: 1 / -1;
+                            padding: 50px;
+                            text-align: center;
+                            border: 1px dashed #cbb8a5;
+                            font-family: Arial, sans-serif;
+                            font-size: 12px;
+                            color: #907d6e;
+                        "
                     >
 
-
-                    <div class="university-info">
-
-                        <div class="university-location">
-                            ${university.location}
-                        </div>
-
-
-                        <h3 class="university-name">
-                            ${university.name}
-                        </h3>
-
-
-                        <p class="university-field">
-                            ${university.field}
-                        </p>
-
-
-                        <div class="card-bottom">
-
-                            <span class="match">
-                                PERSONALIZED MATCH
-                            </span>
-
-
-                            <button
-                                class="save-button"
-                                aria-label="Save university"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
+                        We couldn't find that postcard yet.
+                        <br><br>
+                        Try searching for another university,
+                        country, or field.
 
                     </div>
 
                 `;
 
-
-                /* ==========================================
-                   SAVE BUTTON
-                ========================================== */
-
-                const saveButton =
-                    card.querySelector(
-                        ".save-button"
-                    );
-
-
-                saveButton.addEventListener(
-                    "click",
-                    function(event) {
-
-                        event.stopPropagation();
-
-
-                        saveButton.classList.toggle(
-                            "saved"
-                        );
-
-
-                        if (
-                            saveButton.classList.contains(
-                                "saved"
-                            )
-                        ) {
-
-                            saveButton.textContent =
-                                "♥";
-
-                        } else {
-
-                            saveButton.textContent =
-                                "♡";
-
-                        }
-
-                    }
-                );
-
-
-                /* ==========================================
-                   CARD CLICK
-                ========================================== */
-
-                card.addEventListener(
-                    "click",
-                    function() {
-
-                        alert(
-                            `${university.name}\n\n` +
-                            `The full university profile will be built next.`
-                        );
-
-                    }
-                );
-
-
-                universityGrid.appendChild(
-                    card
-                );
+                return;
 
             }
-        );
 
 
+            list.forEach(
+                university => {
 
-        /* =====================================================
-           PROFILE BUTTON
-        ===================================================== */
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
 
-        document
-            .getElementById(
-                "profileButton"
-            )
-            .addEventListener(
-                "click",
-                function() {
 
-                    alert(
-                        "Your Postcards profile will be available here."
+                    card.className =
+                        "university-card";
+
+
+                    const match =
+                        calculateMatch(
+                            university
+                        );
+
+
+                    card.innerHTML = `
+
+                        <button
+                            class="save"
+                            onclick="toggleSave(
+                                '${university.name}'
+                            )"
+                            id="save-${cleanId(
+                                university.name
+                            )}"
+                        >
+                            ♡
+                        </button>
+
+
+                        <div
+                            class="university-country"
+                        >
+                            ${university.country}
+                        </div>
+
+
+                        <h3
+                            class="university-name"
+                        >
+                            ${university.name}
+                        </h3>
+
+
+                        <div
+                            class="university-city"
+                        >
+                            ${university.city}
+                        </div>
+
+
+                        <div
+                            class="match"
+                        >
+                            ${match}% MATCH
+                        </div>
+
+
+                        <button
+                            class="view-button"
+                            onclick="viewUniversity(
+                                '${university.name}'
+                            )"
+                        >
+                            VIEW POSTCARD →
+                        </button>
+
+                    `;
+
+
+                    grid.appendChild(
+                        card
                     );
 
                 }
             );
+
+
+            updateSavedButtons();
+
+        }
+
+
+
+        /* =====================================================
+           CLEAN ID
+        ===================================================== */
+
+        function cleanId(
+            text
+        ) {
+
+            return text
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9]/g,
+                    "-"
+                );
+
+        }
+
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        function searchUniversities() {
+
+            const query =
+                document
+                    .getElementById(
+                        "searchInput"
+                    )
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!query) {
+
+                renderUniversities();
+
+                return;
+
+            }
+
+
+            const results =
+                universities.filter(
+                    university => {
+
+                        return (
+
+                            university.name
+                                .toLowerCase()
+                                .includes(query)
+
+                            ||
+
+                            university.city
+                                .toLowerCase()
+                                .includes(query)
+
+                            ||
+
+                            university.country
+                                .toLowerCase()
+                                .includes(query)
+
+                            ||
+
+                            university.fields.some(
+                                field =>
+                                    field
+                                        .toLowerCase()
+                                        .includes(query)
+                            )
+
+                        );
+
+                    }
+                );
+
+
+            renderUniversities(
+                results
+            );
+
+
+            document
+                .getElementById(
+                    "recommendations"
+                )
+                .scrollIntoView({
+                    behavior:
+                        "smooth"
+                });
+
+        }
+
+
+
+        /* =====================================================
+           SEARCH BY DESTINATION
+        ===================================================== */
+
+        function searchByDestination(
+            destination
+        ) {
+
+            document
+                .getElementById(
+                    "searchInput"
+                )
+                .value =
+                destination;
+
+
+            searchUniversities();
+
+        }
+
+
+
+        /* =====================================================
+           ENTER KEY SEARCH
+        ===================================================== */
+
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
+
+                        searchUniversities();
+
+                    }
+
+                }
+            );
+
+
+
+        /* =====================================================
+           SAVED UNIVERSITIES
+        ===================================================== */
+
+        let savedUniversities =
+            JSON.parse(
+                localStorage.getItem(
+                    "postcardsSavedUniversities"
+                ) || "[]"
+            );
+
+
+        function toggleSave(
+            universityName
+        ) {
+
+            const index =
+                savedUniversities.indexOf(
+                    universityName
+                );
+
+
+            if (
+                index === -1
+            ) {
+
+                savedUniversities.push(
+                    universityName
+                );
+
+            }
+
+            else {
+
+                savedUniversities.splice(
+                    index,
+                    1
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "postcardsSavedUniversities",
+                JSON.stringify(
+                    savedUniversities
+                )
+            );
+
+
+            updateSavedButtons();
+
+            renderSaved();
+
+        }
+
+
+
+        function updateSavedButtons() {
+
+            savedUniversities.forEach(
+                name => {
+
+                    const button =
+                        document.getElementById(
+                            `save-${cleanId(name)}`
+                        );
+
+
+                    if (button) {
+
+                        button.classList.add(
+                            "saved"
+                        );
+
+                        button.textContent =
+                            "♥";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        function renderSaved() {
+
+            const container =
+                document.getElementById(
+                    "savedContainer"
+                );
+
+
+            if (
+                savedUniversities.length ===
+                0
+            ) {
+
+                container.className =
+                    "saved-empty";
+
+
+                container.innerHTML =
+                    `
+                        You haven't saved any universities yet.
+                        Start exploring and collect the ones
+                        that feel like you.
+                    `;
+
+                return;
+
+            }
+
+
+            container.className =
+                "university-grid";
+
+
+            container.innerHTML = "";
+
+
+            savedUniversities.forEach(
+                name => {
+
+                    const university =
+                        universities.find(
+                            item =>
+                                item.name ===
+                                name
+                        );
+
+
+                    if (!university) {
+                        return;
+                    }
+
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    card.className =
+                        "university-card";
+
+
+                    card.innerHTML = `
+
+                        <button
+                            class="save saved"
+                            onclick="toggleSave(
+                                '${university.name}'
+                            )"
+                        >
+                            ♥
+                        </button>
+
+
+                        <div
+                            class="university-country"
+                        >
+                            ${university.country}
+                        </div>
+
+
+                        <h3
+                            class="university-name"
+                        >
+                            ${university.name}
+                        </h3>
+
+
+                        <div
+                            class="university-city"
+                        >
+                            ${university.city}
+                        </div>
+
+
+                        <div
+                            class="match"
+                        >
+                            ${calculateMatch(
+                                university
+                            )}% MATCH
+                        </div>
+
+
+                        <button
+                            class="view-button"
+                            onclick="viewUniversity(
+                                '${university.name}'
+                            )"
+                        >
+                            VIEW POSTCARD →
+                        </button>
+
+                    `;
+
+
+                    container.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           VIEW UNIVERSITY
+        ===================================================== */
+
+        function viewUniversity(
+            universityName
+        ) {
+
+            const university =
+                universities.find(
+                    item =>
+                        item.name ===
+                        universityName
+                );
+
+
+            if (!university) {
+                return;
+            }
+
+
+            alert(
+
+                `${university.name}\n\n` +
+
+                `${university.city}, ` +
+                `${university.country}\n\n` +
+
+                `Personalized match: ` +
+                `${calculateMatch(
+                    university
+                )}%\n\n` +
+
+                `Programs:\n` +
+
+                `${university.fields.join(
+                    ", "
+                )}\n\n` +
+
+                `University profiles will become ` +
+                `fully interactive as we build the ` +
+                `Postcards university database.`
+
+            );
+
+        }
+
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        function showProfile() {
+
+            const study =
+                answers.study?.join(
+                    ", "
+                ) ||
+                "Still exploring";
+
+
+            const countries =
+                answers.countries?.join(
+                    ", "
+                ) ||
+                "Still exploring";
+
+
+            alert(
+
+                `YOUR POSTCARDS PROFILE\n\n` +
+
+                `Name: ${firstName}\n\n` +
+
+                `From: ${
+                    city || "Not specified"
+                }, ${
+                    country || "Not specified"
+                }\n\n` +
+
+                `Interested in: ${study}\n\n` +
+
+                `Countries: ${countries}`
+
+            );
+
+        }
+
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        function scrollToSection(
+            id
+        ) {
+
+            document
+                .getElementById(id)
+                .scrollIntoView({
+                    behavior:
+                        "smooth"
+                });
+
+        }
+
+
+
+        /* =====================================================
+           INITIALIZE
+        ===================================================== */
+
+        renderUniversities();
+
+        renderSaved();
 
     </script>
 
