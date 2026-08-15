@@ -1,744 +1,1452 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Postcards</title>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+    <meta charset="UTF-8">
 
-html,body{width:100%;height:100%}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-body{
-    overflow:hidden;
-    font-family:Georgia,"Times New Roman",serif;
-    color:#40362f;
-    background:#d8c8b8;
-}
+    <title>Postcards</title>
 
-.world{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    background:#cbbba9;
-}
 
-.background-image{
-    position:absolute;
-    inset:-3%;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    transition:opacity 2s ease,transform 8s ease;
-    transform:scale(1.03);
-}
+    <style>
 
-.background-image.active{
-    opacity:1;
-    transform:scale(1);
-}
+        /* =====================================================
+           RESET
+        ===================================================== */
 
-.world::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        135deg,
-        rgba(35,27,23,.30),
-        rgba(35,27,23,.08)
-    );
-    z-index:3;
-    pointer-events:none;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.location{
-    position:fixed;
-    top:28px;
-    left:32px;
-    z-index:10;
-    color:rgba(255,255,255,.92);
-    font-family:Arial,sans-serif;
-    font-size:11px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    text-shadow:0 2px 10px rgba(0,0,0,.25);
-}
 
-.screen{
-    position:relative;
-    z-index:5;
-    width:100%;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:30px;
-}
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
 
-.postcard-wrapper{
-    width:min(620px,88vw);
-    aspect-ratio:1.55 / 1;
-    perspective:1800px;
-    cursor:pointer;
-    animation:postcardEntrance 1.4s cubic-bezier(.2,.8,.2,1) forwards;
-    filter:drop-shadow(0 28px 38px rgba(0,0,0,.38));
-}
 
-.postcard{
-    position:relative;
-    width:100%;
-    height:100%;
-    transform-style:preserve-3d;
-    transition:transform 1.25s cubic-bezier(.65,-.15,.25,1.15);
-    will-change:transform;
-}
+        body {
 
-.postcard.flipped{
-    transform:rotateY(180deg);
-}
+            overflow: hidden;
 
-.postcard-side{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    border-radius:4px;
-    backface-visibility:hidden;
-    -webkit-backface-visibility:hidden;
-    transform-style:preserve-3d;
-    isolation:isolate;
-    box-shadow:inset 0 0 0 1px rgba(90,65,50,.12);
-}
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
-.postcard-side::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:radial-gradient(
-        rgba(75,55,40,.09) .7px,
-        transparent .7px
-    );
-    background-size:5px 5px;
-    opacity:.28;
-    pointer-events:none;
-    z-index:20;
-}
+            color: #40362f;
 
-.front{
-    background:linear-gradient(135deg,#fbf0df,#f4e4cf);
-    border:8px solid #fffaf2;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    transform:rotateY(0deg) translateZ(1px);
-}
+            background: #d8c8b8;
+        }
 
-.front-content{
-    position:relative;
-    z-index:5;
-    padding:40px;
-}
 
-.brand{
-    font-family:Arial,sans-serif;
-    font-size:13px;
-    letter-spacing:6px;
-    color:#786456;
-    margin-bottom:28px;
-}
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
 
-.front h1{
-    font-size:clamp(34px,6vw,62px);
-    line-height:1.02;
-    font-weight:normal;
-    color:#40362f;
-}
+        .world {
 
-.front-subtitle{
-    margin-top:24px;
-    font-family:Arial,sans-serif;
-    font-size:11px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    color:#8b7767;
-}
+            position: fixed;
 
-.stamp{
-    position:absolute;
-    top:20px;
-    right:20px;
-    width:72px;
-    height:84px;
-    border:2px dashed #aa8d76;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    font-family:Arial,sans-serif;
-    font-size:9px;
-    letter-spacing:2px;
-    line-height:1.6;
-    color:#806b5c;
-    transform:rotate(3deg);
-}
+            inset: 0;
 
-.airmail{
-    position:absolute;
-    left:17px;
-    right:17px;
-    bottom:16px;
-    height:5px;
-    background:repeating-linear-gradient(
-        135deg,
-        #a17d6b 0 13px,
-        transparent 13px 22px,
-        #897c86 22px 35px,
-        transparent 35px 44px
-    );
-    opacity:.65;
-}
+            overflow: hidden;
 
-.back{
-    background:linear-gradient(135deg,#fbf0df,#f3e3cf);
-    border:8px solid #fffaf2;
-    transform:rotateY(180deg) translateZ(1px);
-    padding:38px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+            background: #cbbba9;
+        }
 
-.back-content{
-    position:relative;
-    z-index:5;
-    width:100%;
-    max-width:460px;
-    text-align:center;
-}
 
-.back h2{
-    font-size:clamp(32px,5vw,48px);
-    font-weight:normal;
-    color:#40362f;
-    margin-bottom:8px;
-}
+        .background-image {
 
-.back-description{
-    font-family:Arial,sans-serif;
-    font-size:12px;
-    letter-spacing:1.3px;
-    color:#847265;
-    margin-bottom:24px;
-}
+            position: absolute;
 
-.input{
-    width:100%;
-    padding:13px 5px;
-    margin-bottom:10px;
-    border:none;
-    border-bottom:1px solid #baa493;
-    background:transparent;
-    outline:none;
-    font-family:Arial,sans-serif;
-    font-size:14px;
-    color:#40362f;
-}
+            inset: -3%;
 
-.input::placeholder{color:#9a8879}
+            background-size: cover;
 
-.input:focus{
-    border-bottom:1px solid #67564b;
-}
+            background-position: center;
 
-.primary-button{
-    width:100%;
-    padding:14px;
-    margin-top:9px;
-    border:none;
-    background:#4c4038;
-    color:#fffaf3;
-    font-family:Arial,sans-serif;
-    font-size:11px;
-    letter-spacing:4px;
-    cursor:pointer;
-    transition:transform .25s ease,background .25s ease;
-}
+            opacity: 0;
 
-.primary-button:hover{
-    background:#66554a;
-    transform:translateY(-2px);
-}
+            transition:
+                opacity 2s ease,
+                transform 8s ease;
 
-.signup{
-    margin-top:17px;
-    font-family:Arial,sans-serif;
-    font-size:11px;
-    color:#827064;
-}
+            transform: scale(1.03);
+        }
 
-.signup button{
-    border:none;
-    background:none;
-    padding:0;
-    font-family:inherit;
-    font-size:inherit;
-    color:#4c4038;
-    text-decoration:underline;
-    cursor:pointer;
-}
 
-.tap-message{
-    position:fixed;
-    bottom:26px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:10;
-    color:rgba(255,255,255,.9);
-    font-family:Arial,sans-serif;
-    font-size:10px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    white-space:nowrap;
-    animation:pulse 2.5s ease-in-out infinite;
-}
+        .background-image.active {
 
-@keyframes postcardEntrance{
-    0%{
-        opacity:0;
-        transform:translateY(45px) rotate(-3deg) scale(.93);
-    }
-    100%{
-        opacity:1;
-        transform:translateY(0) rotate(-1deg) scale(1);
-    }
-}
+            opacity: 1;
 
-@keyframes pulse{
-    0%,100%{opacity:.45}
-    50%{opacity:1}
-}
+            transform: scale(1);
+        }
 
-@media(max-width:700px){
 
-    .postcard-wrapper{
-        width:91vw;
-        max-width:620px;
-    }
+        .world::after {
 
-    .front-content{
-        padding:25px;
-    }
+            content: "";
 
-    .stamp{
-        width:55px;
-        height:64px;
-        top:12px;
-        right:12px;
-        font-size:7px;
-    }
+            position: absolute;
 
-    .back{
-        padding:22px;
-    }
+            inset: 0;
 
-    .location{
-        top:18px;
-        left:20px;
-        font-size:9px;
-        letter-spacing:2px;
-    }
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(35, 27, 23, 0.30),
+                    rgba(35, 27, 23, 0.08)
+                );
 
-    .tap-message{
-        bottom:18px;
-        font-size:8px;
-        letter-spacing:2px;
-    }
-}
-</style>
+            z-index: 3;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           LOCATION
+        ===================================================== */
+
+        .location {
+
+            position: fixed;
+
+            top: 28px;
+
+            left: 32px;
+
+            z-index: 10;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.92
+                );
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                0 2px 10px
+                rgba(0,0,0,0.25);
+        }
+
+
+        /* =====================================================
+           MAIN SCREEN
+        ===================================================== */
+
+        .screen {
+
+            position: relative;
+
+            z-index: 5;
+
+            width: 100%;
+
+            height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+
+        /* =====================================================
+           POSTCARD WRAPPER
+        ===================================================== */
+
+        .postcard-wrapper {
+
+            width:
+                min(
+                    620px,
+                    88vw
+                );
+
+            aspect-ratio:
+                1.55 / 1;
+
+            perspective:
+                1800px;
+
+            cursor: pointer;
+
+            animation:
+                postcardEntrance
+                1.4s
+                cubic-bezier(.2,.8,.2,1)
+                forwards;
+
+            filter:
+                drop-shadow(
+                    0 28px 38px
+                    rgba(0,0,0,0.38)
+                );
+        }
+
+
+        /* =====================================================
+           POSTCARD
+        ===================================================== */
+
+        .postcard {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 100%;
+
+            transform-style:
+                preserve-3d;
+
+            transition:
+                transform
+                1.25s
+                cubic-bezier(
+                    .65,
+                    -.15,
+                    .25,
+                    1.15
+                );
+
+            will-change:
+                transform;
+        }
+
+
+        .postcard.flipped {
+
+            transform:
+                rotateY(180deg);
+        }
+
+
+        /* =====================================================
+           BOTH SIDES
+        ===================================================== */
+
+        .postcard-side {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            overflow: hidden;
+
+            border-radius: 4px;
+
+            backface-visibility:
+                hidden;
+
+            -webkit-backface-visibility:
+                hidden;
+
+            transform-style:
+                preserve-3d;
+
+            isolation: isolate;
+
+            box-shadow:
+                inset
+                0 0 0 1px
+                rgba(
+                    90,
+                    65,
+                    50,
+                    0.12
+                );
+        }
+
+
+        /* =====================================================
+           PAPER TEXTURE
+        ===================================================== */
+
+        .postcard-side::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image:
+                radial-gradient(
+                    rgba(
+                        75,
+                        55,
+                        40,
+                        0.09
+                    )
+                    0.7px,
+                    transparent 0.7px
+                );
+
+            background-size: 5px 5px;
+
+            opacity: 0.28;
+
+            pointer-events:
+                none;
+
+            z-index: 20;
+        }
+
+
+        /* =====================================================
+           FRONT
+        ===================================================== */
+
+        .front {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbf0df,
+                    #f4e4cf
+                );
+
+            border:
+                8px solid
+                #fffaf2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            transform:
+                rotateY(0deg)
+                translateZ(1px);
+        }
+
+
+        .front-content {
+
+            position: relative;
+
+            z-index: 5;
+
+            padding: 40px;
+        }
+
+
+        .brand {
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 13px;
+
+            letter-spacing: 6px;
+
+            color: #786456;
+
+            margin-bottom: 28px;
+        }
+
+
+        .front h1 {
+
+            font-size:
+                clamp(
+                    34px,
+                    6vw,
+                    62px
+                );
+
+            line-height: 1.02;
+
+            font-weight: normal;
+
+            color: #40362f;
+
+            text-wrap: balance;
+        }
+
+
+        .front-subtitle {
+
+            margin-top: 24px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            color: #8b7767;
+        }
+
+
+        /* =====================================================
+           STAMP
+        ===================================================== */
+
+        .stamp {
+
+            position: absolute;
+
+            top: 20px;
+
+            right: 20px;
+
+            width: 72px;
+
+            height: 84px;
+
+            border:
+                2px dashed
+                #aa8d76;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            line-height: 1.6;
+
+            color: #806b5c;
+
+            transform:
+                rotate(3deg);
+        }
+
+
+        /* =====================================================
+           AIRMAIL STRIPE
+        ===================================================== */
+
+        .airmail {
+
+            position: absolute;
+
+            left: 17px;
+
+            right: 17px;
+
+            bottom: 16px;
+
+            height: 5px;
+
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    #a17d6b 0 13px,
+                    transparent 13px 22px,
+                    #897c86 22px 35px,
+                    transparent 35px 44px
+                );
+
+            opacity: 0.65;
+        }
+
+
+        /* =====================================================
+           BACK
+        ===================================================== */
+
+        .back {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbf0df,
+                    #f3e3cf
+                );
+
+            border:
+                8px solid
+                #fffaf2;
+
+            transform:
+                rotateY(180deg)
+                translateZ(1px);
+
+            padding: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .back-content {
+
+            position: relative;
+
+            z-index: 5;
+
+            width: 100%;
+
+            max-width: 460px;
+
+            text-align: center;
+        }
+
+
+        .back h2 {
+
+            font-size:
+                clamp(
+                    32px,
+                    5vw,
+                    48px
+                );
+
+            font-weight: normal;
+
+            color: #40362f;
+
+            margin-bottom: 8px;
+        }
+
+
+        .back-description {
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 12px;
+
+            letter-spacing: 1.3px;
+
+            color: #847265;
+
+            margin-bottom: 24px;
+        }
+
+
+        /* =====================================================
+           INPUTS
+        ===================================================== */
+
+        .input {
+
+            width: 100%;
+
+            padding:
+                13px 5px;
+
+            margin-bottom: 10px;
+
+            border: none;
+
+            border-bottom:
+                1px solid
+                #baa493;
+
+            background: transparent;
+
+            outline: none;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 14px;
+
+            color: #40362f;
+        }
+
+
+        .input::placeholder {
+
+            color: #9a8879;
+        }
+
+
+        .input:focus {
+
+            border-bottom:
+                1px solid
+                #67564b;
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
+
+        .primary-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 9px;
+
+            border: none;
+
+            background: #4c4038;
+
+            color: #fffaf3;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 4px;
+
+            cursor: pointer;
+
+            transition:
+                transform .25s ease,
+                background .25s ease;
+        }
+
+
+        .primary-button:hover {
+
+            background: #66554a;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =====================================================
+           SIGN UP
+        ===================================================== */
+
+        .signup {
+
+            margin-top: 17px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 11px;
+
+            color: #827064;
+        }
+
+
+        .signup button {
+
+            border: none;
+
+            background: none;
+
+            padding: 0;
+
+            font-family: inherit;
+
+            font-size: inherit;
+
+            color: #4c4038;
+
+            text-decoration: underline;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           TAP MESSAGE
+        ===================================================== */
+
+        .tap-message {
+
+            position: fixed;
+
+            bottom: 26px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 10;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.9
+                );
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            white-space: nowrap;
+
+            animation:
+                pulse
+                2.5s
+                ease-in-out
+                infinite;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes postcardEntrance {
+
+            0% {
+
+                opacity: 0;
+
+                transform:
+                    translateY(45px)
+                    rotate(-3deg)
+                    scale(.93);
+            }
+
+            100% {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    rotate(-1deg)
+                    scale(1);
+            }
+        }
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .45;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+
+        /* =====================================================
+           IPAD / MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .postcard-wrapper {
+
+                width: 91vw;
+
+                max-width: 620px;
+            }
+
+
+            .front-content {
+
+                padding: 25px;
+            }
+
+
+            .stamp {
+
+                width: 55px;
+
+                height: 64px;
+
+                top: 12px;
+
+                right: 12px;
+
+                font-size: 7px;
+            }
+
+
+            .back {
+
+                padding: 22px;
+            }
+
+
+            .location {
+
+                top: 18px;
+
+                left: 20px;
+
+                font-size: 9px;
+
+                letter-spacing: 2px;
+            }
+
+
+            .tap-message {
+
+                bottom: 18px;
+
+                font-size: 8px;
+
+                letter-spacing: 2px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<div class="world">
-    <div class="background-image active" id="backgroundA"></div>
-    <div class="background-image" id="backgroundB"></div>
-</div>
 
-<div class="location" id="location">
-    Paris, France
-</div>
+    <!-- =====================================================
+         WORLD BACKGROUND
+    ====================================================== -->
 
-<main class="screen">
+    <div class="world">
 
-    <div class="postcard-wrapper" id="postcardWrapper">
+        <div
+            class="background-image active"
+            id="backgroundA"
+        ></div>
 
-        <div class="postcard" id="postcard">
 
-            <section class="postcard-side front">
-
-                <div class="stamp">
-                    POST<br>
-                    CARDS
-                </div>
-
-                <div class="front-content">
-
-                    <div class="brand">
-                        POSTCARDS
-                    </div>
-
-                    <h1>
-                        Welcome to<br>
-                        your dream<br>
-                        university.
-                    </h1>
-
-                    <div class="front-subtitle">
-                        Your next chapter starts here
-                    </div>
-
-                </div>
-
-                <div class="airmail"></div>
-
-            </section>
-
-            <section class="postcard-side back">
-
-                <div class="back-content">
-
-                    <h2>
-                        Welcome.
-                    </h2>
-
-                    <p class="back-description">
-                        Your journey starts with a postcard.
-                    </p>
-
-                    <input
-                        class="input"
-                        id="email"
-                        type="email"
-                        placeholder="Email address"
-                        autocomplete="email"
-                    >
-
-                    <input
-                        class="input"
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                    >
-
-                    <button
-                        class="primary-button"
-                        id="loginButton"
-                        type="button"
-                    >
-                        LOG IN
-                    </button>
-
-                    <div class="signup">
-
-                        Don't have an account?
-
-                        <button
-                            id="signupButton"
-                            type="button"
-                        >
-                            Create one
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
+        <div
+            class="background-image"
+            id="backgroundB"
+        ></div>
 
     </div>
 
-</main>
 
-<div class="tap-message" id="tapMessage">
-    Tap the postcard to open
-</div>
 
-<script>
+    <!-- =====================================================
+         LOCATION
+    ====================================================== -->
 
-/* =====================================================
-   DESTINATIONS
-===================================================== */
+    <div
+        class="location"
+        id="location"
+    >
+        Paris, France
+    </div>
 
-const destinations = [
 
-    {
-        name:"Paris, France",
-        image:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2200&q=90"
-    },
 
-    {
-        name:"Tokyo, Japan",
-        image:"https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=2200&q=90"
-    },
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-    {
-        name:"New York, USA",
-        image:"https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2200&q=90"
-    },
+    <main class="screen">
 
-    {
-        name:"Barcelona, Spain",
-        image:"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2200&q=90"
-    },
+        <div
+            class="postcard-wrapper"
+            id="postcardWrapper"
+        >
 
-    {
-        name:"Seoul, South Korea",
-        image:"https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=2200&q=90"
-    },
+            <div
+                class="postcard"
+                id="postcard"
+            >
 
-    {
-        name:"Santorini, Greece",
-        image:"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2200&q=90"
-    },
 
-    {
-        name:"London, England",
-        image:"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=90"
-    },
+                <!-- ==========================================
+                     FRONT OF POSTCARD
+                =========================================== -->
 
-    {
-        name:"Rome, Italy",
-        image:"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=2200&q=90"
-    }
+                <section
+                    class="postcard-side front"
+                >
 
-];
+                    <div class="stamp">
 
+                        POST<br>
+                        CARDS
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+                    </div>
 
-const postcard =
-    document.getElementById("postcard");
 
-const wrapper =
-    document.getElementById("postcardWrapper");
+                    <div class="front-content">
 
-const tapMessage =
-    document.getElementById("tapMessage");
+                        <div class="brand">
 
-const locationText =
-    document.getElementById("location");
+                            POSTCARDS
 
-const backgroundA =
-    document.getElementById("backgroundA");
+                        </div>
 
-const backgroundB =
-    document.getElementById("backgroundB");
 
-const loginButton =
-    document.getElementById("loginButton");
+                        <h1>
 
-const signupButton =
-    document.getElementById("signupButton");
+                            Welcome to<br>
+                            your dream<br>
+                            university.
 
-const emailInput =
-    document.getElementById("email");
+                        </h1>
 
-const passwordInput =
-    document.getElementById("password");
 
+                        <div class="front-subtitle">
 
-/* =====================================================
-   BACKGROUND SYSTEM
-===================================================== */
+                            Your next chapter starts here
 
-let currentDestination = 0;
-let showingA = true;
+                        </div>
 
-function preloadImages(){
+                    </div>
 
-    destinations.forEach(destination => {
 
-        const image = new Image();
+                    <div class="airmail"></div>
 
-        image.src = destination.image;
+                </section>
 
-    });
 
-}
 
+                <!-- ==========================================
+                     BACK OF POSTCARD
+                =========================================== -->
 
-function setInitialBackground(){
+                <section
+                    class="postcard-side back"
+                >
 
-    backgroundA.style.backgroundImage =
-        `url("${destinations[0].image}")`;
+                    <div class="back-content">
 
-    locationText.textContent =
-        destinations[0].name;
+                        <h2>
+                            Welcome.
+                        </h2>
 
-}
 
+                        <p class="back-description">
 
-function changeDestination(){
+                            Your journey starts with a postcard.
 
-    currentDestination++;
+                        </p>
 
-    if(currentDestination >= destinations.length){
-        currentDestination = 0;
-    }
 
-    const destination =
-        destinations[currentDestination];
+                        <input
+                            class="input"
+                            id="email"
+                            type="email"
+                            placeholder="Email address"
+                        >
 
-    const nextBackground =
-        showingA ? backgroundB : backgroundA;
 
-    const oldBackground =
-        showingA ? backgroundA : backgroundB;
+                        <input
+                            class="input"
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                        >
 
-    const image = new Image();
 
-    image.onload = function(){
+                        <button
+                            class="primary-button"
+                            id="loginButton"
+                        >
 
-        nextBackground.style.backgroundImage =
-            `url("${destination.image}")`;
+                            LOG IN
 
-        nextBackground.classList.add("active");
+                        </button>
 
-        oldBackground.classList.remove("active");
 
-        showingA = !showingA;
+                        <div class="signup">
 
-        locationText.textContent =
-            destination.name;
+                            Don't have an account?
 
-    };
+                            <button
+                                id="signupButton"
+                            >
 
-    image.src =
-        destination.image;
+                                Create one
 
-}
+                            </button>
 
-setInitialBackground();
+                        </div>
 
-preloadImages();
+                    </div>
 
-setInterval(changeDestination,7000);
+                </section>
 
+            </div>
 
-/* =====================================================
-   POSTCARD FLIP
-===================================================== */
+        </div>
 
-wrapper.addEventListener("click",function(event){
+    </main>
 
-    if(event.target.closest("input,button")){
-        return;
-    }
 
-    postcard.classList.toggle("flipped");
 
-    if(postcard.classList.contains("flipped")){
+    <!-- =====================================================
+         TAP MESSAGE
+    ====================================================== -->
 
-        tapMessage.textContent =
-            "Tap to return";
+    <div
+        class="tap-message"
+        id="tapMessage"
+    >
 
-    }else{
+        Tap the postcard to open
 
-        tapMessage.textContent =
-            "Tap the postcard to open";
+    </div>
 
-    }
 
-});
 
+    <script>
 
-/* =====================================================
-   INPUT PROTECTION
-===================================================== */
+        /* =====================================================
+           DESTINATIONS
+        ===================================================== */
 
-document.querySelectorAll(".input").forEach(input => {
+        const destinations = [
 
-    input.addEventListener("click",event=>{
-        event.stopPropagation();
-    });
+            {
+                name: "Paris, France",
 
-    input.addEventListener("focus",event=>{
-        event.stopPropagation();
-    });
+                image:
+                    "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2200&q=90"
+            },
 
-});
 
+            {
+                name: "Tokyo, Japan",
 
-/* =====================================================
-   LOGIN
-===================================================== */
+                image:
+                    "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=2200&q=90"
+            },
 
-loginButton.addEventListener("click",function(event){
 
-    event.stopPropagation();
+            {
+                name: "New York, USA",
 
-    const email =
-        emailInput.value.trim();
+                image:
+                    "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2200&q=90"
+            },
 
-    const password =
-        passwordInput.value.trim();
 
-    if(!email || !password){
+            {
+                name: "Barcelona, Spain",
 
-        alert(
-            "Please enter your email and password."
+                image:
+                    "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2200&q=90"
+            },
+
+
+            {
+                name: "Seoul, South Korea",
+
+                image:
+                    "https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=2200&q=90"
+            },
+
+
+            {
+                name: "Santorini, Greece",
+
+                image:
+                    "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2200&q=90"
+            },
+
+
+            {
+                name: "London, England",
+
+                image:
+                    "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=90"
+            },
+
+
+            {
+                name: "Rome, Italy",
+
+                image:
+                    "https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=2200&q=90"
+            }
+
+        ];
+
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const postcard =
+            document.getElementById(
+                "postcard"
+            );
+
+
+        const wrapper =
+            document.getElementById(
+                "postcardWrapper"
+            );
+
+
+        const tapMessage =
+            document.getElementById(
+                "tapMessage"
+            );
+
+
+        const locationText =
+            document.getElementById(
+                "location"
+            );
+
+
+        const backgroundA =
+            document.getElementById(
+                "backgroundA"
+            );
+
+
+        const backgroundB =
+            document.getElementById(
+                "backgroundB"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const signupButton =
+            document.getElementById(
+                "signupButton"
+            );
+
+
+
+        /* =====================================================
+           BACKGROUND SYSTEM
+        ===================================================== */
+
+        let currentDestination = 0;
+
+        let showingA = true;
+
+
+        function preloadImages() {
+
+            destinations.forEach(
+                destination => {
+
+                    const image =
+                        new Image();
+
+                    image.src =
+                        destination.image;
+
+                }
+            );
+
+        }
+
+
+        function setInitialBackground() {
+
+            backgroundA.style.backgroundImage =
+                `url("${destinations[0].image}")`;
+
+            locationText.textContent =
+                destinations[0].name;
+
+        }
+
+
+        function changeDestination() {
+
+            currentDestination++;
+
+            if (
+                currentDestination >=
+                destinations.length
+            ) {
+
+                currentDestination = 0;
+
+            }
+
+
+            const destination =
+                destinations[
+                    currentDestination
+                ];
+
+
+            const nextBackground =
+                showingA
+                    ? backgroundB
+                    : backgroundA;
+
+
+            const oldBackground =
+                showingA
+                    ? backgroundA
+                    : backgroundB;
+
+
+            nextBackground.style.backgroundImage =
+                `url("${destination.image}")`;
+
+
+            const img =
+                new Image();
+
+
+            img.onload =
+                function() {
+
+                    nextBackground.classList.add(
+                        "active"
+                    );
+
+
+                    oldBackground.classList.remove(
+                        "active"
+                    );
+
+
+                    showingA =
+                        !showingA;
+
+
+                    locationText.textContent =
+                        destination.name;
+
+                };
+
+
+            img.src =
+                destination.image;
+
+        }
+
+
+        setInitialBackground();
+
+        preloadImages();
+
+
+        setInterval(
+            changeDestination,
+            7000
         );
 
-        return;
-
-    }
-
-    alert(
-        "Welcome back to Postcards!\n\n" +
-        "The real account login system will be connected here."
-    );
-
-});
 
 
-/* =====================================================
-   CREATE ACCOUNT
-===================================================== */
+        /* =====================================================
+           POSTCARD FLIP
+        ===================================================== */
 
-signupButton.addEventListener("click",function(event){
+        wrapper.addEventListener(
+            "click",
+            function(event) {
 
-    event.stopPropagation();
+                /*
+                    Clicking an input or button
+                    must NEVER flip the postcard.
+                */
 
-    /*
-        Save the fact that the user is creating
-        a new Postcards account.
-    */
+                if (
+                    event.target.closest(
+                        "input, button"
+                    )
+                ) {
 
-    localStorage.setItem(
-        "postcardsCreatingAccount",
-        "true"
-    );
+                    return;
 
-    /*
-        Go to the account creation page.
-        The onboarding questionnaire will come
-        AFTER the account creation step.
-    */
+                }
 
-    window.location.href =
-        "account.html";
 
-});
+                postcard.classList.toggle(
+                    "flipped"
+                );
 
-</script>
+
+                if (
+                    postcard.classList.contains(
+                        "flipped"
+                    )
+                ) {
+
+                    tapMessage.textContent =
+                        "Tap to return";
+
+                } else {
+
+                    tapMessage.textContent =
+                        "Tap the postcard to open";
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
+
+        loginButton.addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    ).value.trim();
+
+
+                const password =
+                    document.getElementById(
+                        "password"
+                    ).value.trim();
+
+
+                if (!email || !password) {
+
+                    alert(
+                        "Please enter your email and password."
+                    );
+
+                    return;
+                }
+
+
+                alert(
+                    "Login will be connected to the Postcards account system soon."
+                );
+
+            }
+        );
+
+
+
+        /* =====================================================
+           CREATE ACCOUNT
+        ===================================================== */
+
+        signupButton.addEventListener(
+            "click",
+            function(event) {
+
+                /*
+                    Stop the click from reaching
+                    the postcard wrapper.
+                */
+
+                event.stopPropagation();
+
+
+                /*
+                    Open the NEW account creation page.
+
+                    IMPORTANT:
+                    account.html must be saved in the
+                    SAME folder as index.html.
+                */
+
+                window.location.href =
+                    "account.html";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           EXTRA INPUT PROTECTION
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                ".input"
+            )
+            .forEach(
+                input => {
+
+                    input.addEventListener(
+                        "click",
+                        function(event) {
+
+                            event.stopPropagation();
+
+                        }
+                    );
+
+
+                    input.addEventListener(
+                        "focus",
+                        function(event) {
+
+                            event.stopPropagation();
+
+                        }
+                    );
+
+                }
+            );
+
+    </script>
 
 </body>
+
 </html>
