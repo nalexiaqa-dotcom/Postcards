@@ -3,797 +3,843 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Postcards — Create Your Journey</title>
+<title>Postcards — Your Journey</title>
 
 
-    <style>
+<style>
 
-        /* =====================================================
-           RESET
-        ===================================================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
 
-        html,
-        body {
-            width: 100%;
-            min-height: 100%;
-        }
 
+body{
 
-        body {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
+    color:#40362f;
 
-            color: #40362f;
+    background:#eee0cf;
 
-            background: #eee0cf;
+    overflow-x:hidden;
+}
 
-            overflow-x: hidden;
-        }
 
+/* =====================================================
+   BACKGROUND
+===================================================== */
 
-        /* =====================================================
-           BACKGROUND
-        ===================================================== */
+.background-world{
 
-        .background {
+    position:fixed;
 
-            position: fixed;
+    inset:0;
 
-            inset: 0;
+    z-index:-5;
 
-            z-index: -5;
+    overflow:hidden;
 
-            background-image:
-                url(
-                    "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=2200&q=90"
-                );
+    background:#cbbba9;
+}
 
-            background-size: cover;
 
-            background-position: center;
+.background-image{
 
-            animation:
-                backgroundZoom
-                18s
-                ease-in-out
-                infinite alternate;
-        }
+    position:absolute;
 
+    inset:-3%;
 
-        .background::after {
+    background-size:cover;
 
-            content: "";
+    background-position:center;
 
-            position: absolute;
+    opacity:0;
 
-            inset: 0;
+    transform:scale(1.03);
 
-            background:
-                linear-gradient(
-                    rgba(53, 43, 36, 0.50),
-                    rgba(53, 43, 36, 0.38)
-                );
+    transition:
+        opacity 2s ease,
+        transform 8s ease;
+}
 
-            backdrop-filter:
-                blur(1.5px);
-        }
 
+.background-image.active{
 
-        @keyframes backgroundZoom {
+    opacity:1;
 
-            from {
-                transform: scale(1);
-            }
+    transform:scale(1);
+}
 
-            to {
-                transform: scale(1.06);
-            }
-        }
 
+.background-world::after{
 
-        /* =====================================================
-           HEADER
-        ===================================================== */
+    content:"";
 
-        .header {
+    position:absolute;
 
-            position: fixed;
+    inset:0;
 
-            top: 0;
-            left: 0;
-            right: 0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35,27,23,.42),
+            rgba(35,27,23,.18)
+        );
 
-            height: 75px;
+    z-index:3;
 
-            display: flex;
+    pointer-events:none;
+}
 
-            align-items: center;
-            justify-content: space-between;
 
-            padding:
-                0 35px;
+/* =====================================================
+   LOCATION
+===================================================== */
 
-            z-index: 20;
+.location{
 
-            color: white;
-        }
+    position:fixed;
 
+    top:28px;
 
-        .logo {
+    left:32px;
 
-            font-family: Arial, sans-serif;
+    z-index:20;
 
-            font-size: 13px;
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .94
+        );
 
-            letter-spacing: 5px;
-        }
+    font-family:Arial,sans-serif;
 
+    font-size:11px;
 
-        .step-counter {
+    letter-spacing:3px;
 
-            font-family: Arial, sans-serif;
+    text-transform:uppercase;
 
-            font-size: 10px;
+    text-shadow:
+        0 2px 10px
+        rgba(0,0,0,.3);
+}
 
-            letter-spacing: 2px;
 
-            opacity: 0.85;
-        }
+/* =====================================================
+   HEADER
+===================================================== */
 
+.header{
 
-        /* =====================================================
-           MAIN
-        ===================================================== */
+    position:fixed;
 
-        .main {
+    top:0;
 
-            min-height: 100vh;
+    left:0;
 
-            display: flex;
+    right:0;
 
-            align-items: center;
+    height:75px;
 
-            justify-content: center;
+    display:flex;
 
-            padding:
-                100px 20px 80px;
-        }
+    align-items:center;
 
+    justify-content:flex-end;
 
-        /* =====================================================
-           QUESTION CARD
-        ===================================================== */
+    padding:
+        0 35px;
 
-        .card {
+    z-index:15;
 
-            width:
-                min(
-                    680px,
-                    94vw
-                );
+    color:white;
+}
 
-            min-height: 520px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #fbf0df,
-                    #f3e3cf
-                );
+.step-counter{
 
-            border:
-                8px solid
-                #fffaf2;
+    font-family:Arial,sans-serif;
 
-            border-radius: 4px;
+    font-size:10px;
 
-            box-shadow:
-                0 30px 60px
-                rgba(0,0,0,0.35);
+    letter-spacing:2px;
 
-            position: relative;
+    opacity:.9;
+}
 
-            overflow: hidden;
 
-            padding:
-                55px 60px 45px;
+/* =====================================================
+   MAIN
+===================================================== */
 
-            animation:
-                cardEntrance
-                0.8s
-                ease forwards;
-        }
+.main{
 
+    min-height:100vh;
 
-        @keyframes cardEntrance {
+    display:flex;
 
-            from {
+    align-items:center;
 
-                opacity: 0;
+    justify-content:center;
 
-                transform:
-                    translateY(35px)
-                    rotate(-1deg);
-            }
+    padding:
+        100px 20px 80px;
+}
 
-            to {
 
-                opacity: 1;
+/* =====================================================
+   CARD
+===================================================== */
 
-                transform:
-                    translateY(0)
-                    rotate(0);
-            }
-        }
+.card{
 
+    width:
+        min(
+            680px,
+            94vw
+        );
 
-        /* =====================================================
-           PAPER TEXTURE
-        ===================================================== */
+    min-height:520px;
 
-        .card::before {
+    background:
+        linear-gradient(
+            135deg,
+            #fbf0df,
+            #f3e3cf
+        );
 
-            content: "";
+    border:
+        8px solid
+        #fffaf2;
 
-            position: absolute;
+    border-radius:4px;
 
-            inset: 0;
+    box-shadow:
+        0 30px 60px
+        rgba(0,0,0,.35);
 
-            background-image:
-                radial-gradient(
-                    rgba(75,55,40,0.09)
-                    0.7px,
-                    transparent 0.7px
-                );
+    position:relative;
 
-            background-size: 5px 5px;
+    overflow:hidden;
 
-            opacity: 0.28;
+    padding:
+        55px 60px 45px;
 
-            pointer-events: none;
-        }
+    animation:
+        cardEntrance
+        .8s
+        ease
+        forwards;
+}
 
 
-        /* =====================================================
-           DECORATIONS
-        ===================================================== */
+@keyframes cardEntrance{
 
-        .stamp {
+    from{
 
-            position: absolute;
+        opacity:0;
 
-            top: 20px;
-            right: 22px;
+        transform:
+            translateY(35px)
+            rotate(-1deg);
+    }
 
-            width: 60px;
-            height: 70px;
+    to{
 
-            border:
-                2px dashed
-                #aa8d76;
+        opacity:1;
 
-            display: flex;
+        transform:
+            translateY(0)
+            rotate(0);
+    }
+}
 
-            align-items: center;
-            justify-content: center;
 
-            text-align: center;
+/* =====================================================
+   PAPER TEXTURE
+===================================================== */
 
-            font-family: Arial, sans-serif;
+.card::before{
 
-            font-size: 7px;
+    content:"";
 
-            letter-spacing: 1.5px;
+    position:absolute;
 
-            line-height: 1.6;
+    inset:0;
 
-            color: #806b5c;
+    background-image:
+        radial-gradient(
+            rgba(75,55,40,.09)
+            .7px,
+            transparent .7px
+        );
 
-            transform:
-                rotate(3deg);
+    background-size:5px 5px;
 
-            opacity: 0.8;
-        }
+    opacity:.28;
 
+    pointer-events:none;
+}
 
-        .airmail {
 
-            position: absolute;
+/* =====================================================
+   DECORATIONS
+===================================================== */
 
-            bottom: 12px;
+.stamp{
 
-            left: 14px;
-            right: 14px;
+    position:absolute;
 
-            height: 4px;
+    top:20px;
 
-            background:
-                repeating-linear-gradient(
-                    135deg,
-                    #a17d6b 0 13px,
-                    transparent 13px 22px,
-                    #897c86 22px 35px,
-                    transparent 35px 44px
-                );
+    right:22px;
 
-            opacity: 0.6;
-        }
+    width:60px;
 
+    height:70px;
 
-        /* =====================================================
-           QUESTION CONTENT
-        ===================================================== */
+    border:
+        2px dashed
+        #aa8d76;
 
-        .content {
+    display:flex;
 
-            position: relative;
+    align-items:center;
 
-            z-index: 5;
-        }
+    justify-content:center;
 
+    text-align:center;
 
-        .question-number {
+    font-family:Arial,sans-serif;
 
-            font-family: Arial, sans-serif;
+    font-size:7px;
 
-            font-size: 10px;
+    letter-spacing:1.5px;
 
-            letter-spacing: 4px;
+    line-height:1.6;
 
-            color: #9a806e;
+    color:#806b5c;
 
-            margin-bottom: 18px;
-        }
+    transform:rotate(3deg);
 
+    opacity:.8;
+}
 
-        .question-title {
 
-            font-size:
-                clamp(
-                    32px,
-                    5vw,
-                    50px
-                );
+.airmail{
 
-            font-weight: normal;
+    position:absolute;
 
-            line-height: 1.05;
+    bottom:12px;
 
-            margin-bottom: 12px;
+    left:14px;
 
-            color: #40362f;
-        }
+    right:14px;
 
+    height:4px;
 
-        .question-description {
+    background:
+        repeating-linear-gradient(
+            135deg,
+            #a17d6b 0 13px,
+            transparent 13px 22px,
+            #897c86 22px 35px,
+            transparent 35px 44px
+        );
 
-            font-family: Arial, sans-serif;
+    opacity:.6;
+}
 
-            font-size: 13px;
 
-            line-height: 1.6;
+/* =====================================================
+   CONTENT
+===================================================== */
 
-            color: #806e60;
+.content{
 
-            margin-bottom: 30px;
+    position:relative;
 
-            max-width: 520px;
-        }
+    z-index:5;
+}
 
 
-        /* =====================================================
-           INPUTS
-        ===================================================== */
+.question-number{
 
-        .input {
+    font-family:Arial,sans-serif;
 
-            width: 100%;
+    font-size:10px;
 
-            padding:
-                15px 5px;
+    letter-spacing:4px;
 
-            margin-bottom: 15px;
+    color:#9a806e;
 
-            border: none;
+    margin-bottom:18px;
+}
 
-            border-bottom:
-                1px solid
-                #baa493;
 
-            background: transparent;
+.question-title{
 
-            outline: none;
+    font-size:
+        clamp(
+            32px,
+            5vw,
+            50px
+        );
 
-            font-family: Arial, sans-serif;
+    font-weight:normal;
 
-            font-size: 15px;
+    line-height:1.05;
 
-            color: #40362f;
-        }
+    margin-bottom:12px;
 
+    color:#40362f;
+}
 
-        .input::placeholder {
 
-            color: #a08c7c;
-        }
+.question-description{
 
+    font-family:Arial,sans-serif;
 
-        .input:focus {
+    font-size:13px;
 
-            border-bottom:
-                1px solid
-                #625248;
-        }
+    line-height:1.6;
 
+    color:#806e60;
 
-        /* =====================================================
-           OPTIONS
-        ===================================================== */
+    margin-bottom:30px;
 
-        .options {
+    max-width:520px;
+}
 
-            display: grid;
 
-            grid-template-columns:
-                repeat(
-                    2,
-                    1fr
-                );
+/* =====================================================
+   INPUTS
+===================================================== */
 
-            gap: 12px;
+.input{
 
-            max-height: 280px;
+    width:100%;
 
-            overflow-y: auto;
+    padding:15px 5px;
 
-            padding-right: 5px;
-        }
+    margin-bottom:15px;
 
+    border:none;
 
-        .option {
+    border-bottom:
+        1px solid
+        #baa493;
 
-            position: relative;
-        }
+    background:transparent;
 
+    outline:none;
 
-        .option input {
+    font-family:Arial,sans-serif;
 
-            position: absolute;
+    font-size:15px;
 
-            opacity: 0;
+    color:#40362f;
+}
 
-            pointer-events: none;
-        }
 
+.input::placeholder{
 
-        .option label {
+    color:#a08c7c;
+}
 
-            display: block;
 
-            padding:
-                15px 17px;
+.input:focus{
 
-            border:
-                1px solid
-                #cbb8a5;
+    border-bottom:
+        1px solid
+        #625248;
+}
 
-            background:
-                rgba(
-                    255,
-                    250,
-                    242,
-                    0.35
-                );
 
-            cursor: pointer;
+/* =====================================================
+   OPTIONS
+===================================================== */
 
-            font-family: Arial, sans-serif;
+.options{
 
-            font-size: 12px;
+    display:grid;
 
-            color: #62544b;
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
 
-            transition:
-                all
-                0.25s
-                ease;
-        }
+    gap:12px;
 
+    max-height:280px;
 
-        .option label:hover {
+    overflow-y:auto;
 
-            transform:
-                translateY(-2px);
+    padding-right:5px;
+}
 
-            background:
-                rgba(
-                    255,
-                    250,
-                    242,
-                    0.75
-                );
-        }
 
+.option{
 
-        .option input:checked + label {
+    position:relative;
+}
 
-            background: #4c4038;
 
-            color: white;
+.option input{
 
-            border-color:
-                #4c4038;
+    position:absolute;
 
-            transform:
-                translateY(-2px);
+    opacity:0;
 
-            box-shadow:
-                0 5px 12px
-                rgba(0,0,0,0.12);
-        }
+    pointer-events:none;
+}
 
 
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
+.option label{
 
-        .buttons {
+    display:block;
 
-            margin-top: 30px;
+    padding:
+        15px 17px;
 
-            display: flex;
+    border:
+        1px solid
+        #cbb8a5;
 
-            justify-content: space-between;
+    background:
+        rgba(
+            255,
+            250,
+            242,
+            .35
+        );
 
-            align-items: center;
-        }
+    cursor:pointer;
 
+    font-family:Arial,sans-serif;
 
-        .back-button {
+    font-size:12px;
 
-            border: none;
+    color:#62544b;
 
-            background: transparent;
+    transition:
+        all
+        .25s
+        ease;
+}
 
-            font-family: Arial, sans-serif;
 
-            font-size: 10px;
+.option label:hover{
 
-            letter-spacing: 2px;
+    transform:
+        translateY(-2px);
 
-            color: #806e60;
+    background:
+        rgba(
+            255,
+            250,
+            242,
+            .75
+        );
+}
 
-            cursor: pointer;
 
-            text-transform: uppercase;
-        }
+.option input:checked + label{
 
+    background:#4c4038;
 
-        .continue-button {
+    color:white;
 
-            border: none;
+    border-color:#4c4038;
 
-            background: #4c4038;
+    transform:
+        translateY(-2px);
 
-            color: white;
+    box-shadow:
+        0 5px 12px
+        rgba(0,0,0,.12);
+}
 
-            padding:
-                14px 28px;
 
-            font-family: Arial, sans-serif;
+/* =====================================================
+   BUTTONS
+===================================================== */
 
-            font-size: 10px;
+.buttons{
 
-            letter-spacing: 3px;
+    margin-top:30px;
 
-            cursor: pointer;
+    display:flex;
 
-            transition:
-                all
-                0.25s
-                ease;
-        }
+    justify-content:space-between;
 
+    align-items:center;
+}
 
-        .continue-button:hover {
 
-            background: #67554a;
+.back-button{
 
-            transform:
-                translateY(-2px);
-        }
+    border:none;
 
+    background:transparent;
 
-        /* =====================================================
-           PROGRESS BAR
-        ===================================================== */
+    font-family:Arial,sans-serif;
 
-        .progress-container {
+    font-size:10px;
 
-            position: absolute;
+    letter-spacing:2px;
 
-            bottom: 0;
-            left: 0;
-            right: 0;
+    color:#806e60;
 
-            height: 5px;
+    cursor:pointer;
 
-            background:
-                rgba(
-                    110,
-                    85,
-                    65,
-                    0.12
-                );
-        }
+    text-transform:uppercase;
+}
 
 
-        .progress {
+.continue-button{
 
-            height: 100%;
+    border:none;
 
-            width: 14.28%;
+    background:#4c4038;
 
-            background:
-                #6d5a4d;
+    color:white;
 
-            transition:
-                width
-                0.5s
-                ease;
-        }
+    padding:
+        14px 28px;
 
+    font-family:Arial,sans-serif;
 
-        /* =====================================================
-           SUMMARY
-        ===================================================== */
+    font-size:10px;
 
-        .summary {
+    letter-spacing:3px;
 
-            display: none;
+    cursor:pointer;
 
-            text-align: center;
-        }
+    transition:
+        all
+        .25s
+        ease;
+}
 
 
-        .summary.active {
+.continue-button:hover{
 
-            display: block;
-        }
+    background:#67554a;
 
+    transform:
+        translateY(-2px);
+}
 
-        .summary-title {
 
-            font-size:
-                clamp(
-                    35px,
-                    6vw,
-                    58px
-                );
+/* =====================================================
+   PROGRESS
+===================================================== */
 
-            font-weight: normal;
+.progress-container{
 
-            line-height: 1.05;
+    position:absolute;
 
-            margin-bottom: 15px;
-        }
+    bottom:0;
 
+    left:0;
 
-        .summary-subtitle {
+    right:0;
 
-            font-family: Arial, sans-serif;
+    height:5px;
 
-            font-size: 12px;
+    background:
+        rgba(
+            110,
+            85,
+            65,
+            .12
+        );
+}
 
-            letter-spacing: 1.5px;
 
-            color: #806e60;
+.progress{
 
-            margin-bottom: 28px;
-        }
+    height:100%;
 
+    width:14.28%;
 
-        .summary-box {
+    background:#6d5a4d;
 
-            text-align: left;
+    transition:
+        width
+        .5s
+        ease;
+}
 
-            padding: 20px;
 
-            border:
-                1px solid
-                #cbb8a5;
+/* =====================================================
+   SUMMARY
+===================================================== */
 
-            background:
-                rgba(
-                    255,
-                    250,
-                    242,
-                    0.4
-                );
+.summary{
 
-            margin-bottom: 25px;
+    display:none;
 
-            font-family: Arial, sans-serif;
+    text-align:center;
+}
 
-            font-size: 12px;
 
-            line-height: 2;
+.summary.active{
 
-            color: #62544b;
-        }
+    display:block;
+}
 
 
-        .summary-box strong {
+.summary-title{
 
-            color: #40362f;
-        }
+    font-size:
+        clamp(
+            35px,
+            6vw,
+            58px
+        );
 
+    font-weight:normal;
 
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
+    line-height:1.05;
 
-        @media (max-width: 650px) {
+    margin-bottom:15px;
+}
 
-            .header {
 
-                padding:
-                    0 20px;
-            }
+.summary-subtitle{
 
+    font-family:Arial,sans-serif;
 
-            .card {
+    font-size:12px;
 
-                padding:
-                    45px 25px 38px;
+    letter-spacing:1.5px;
 
-                min-height:
-                    560px;
-            }
+    color:#806e60;
 
+    margin-bottom:28px;
+}
 
-            .options {
 
-                grid-template-columns:
-                    1fr;
-            }
+.summary-box{
 
+    text-align:left;
 
-            .stamp {
+    padding:20px;
 
-                width: 48px;
-                height: 58px;
+    border:
+        1px solid
+        #cbb8a5;
 
-                top: 14px;
-                right: 14px;
-            }
+    background:
+        rgba(
+            255,
+            250,
+            242,
+            .4
+        );
 
+    margin-bottom:25px;
 
-            .question-title {
+    font-family:Arial,sans-serif;
 
-                max-width:
-                    85%;
-            }
-        }
+    font-size:12px;
 
-    </style>
+    line-height:2;
+
+    color:#62544b;
+}
+
+
+.summary-box strong{
+
+    color:#40362f;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:650px){
+
+    .location{
+
+        top:18px;
+
+        left:20px;
+
+        font-size:9px;
+
+        letter-spacing:2px;
+    }
+
+
+    .header{
+
+        padding:
+            0 20px;
+    }
+
+
+    .card{
+
+        padding:
+            45px 25px 38px;
+
+        min-height:560px;
+    }
+
+
+    .options{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .stamp{
+
+        width:48px;
+
+        height:58px;
+
+        top:14px;
+
+        right:14px;
+    }
+
+
+    .question-title{
+
+        max-width:85%;
+    }
+}
+
+</style>
 
 </head>
 
@@ -801,928 +847,973 @@
 <body>
 
 
-    <!-- =====================================================
-         BACKGROUND
-    ====================================================== -->
+<!-- =====================================================
+     CHANGING WORLD BACKGROUND
+===================================================== -->
 
-    <div class="background"></div>
+<div class="background-world">
 
+    <div
+        class="background-image active"
+        id="backgroundA"
+    ></div>
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <div
+        class="background-image"
+        id="backgroundB"
+    ></div>
 
-    <header class="header">
+</div>
 
-        <div class="logo">
-            POSTCARDS
-        </div>
 
-        <div
-            class="step-counter"
-            id="stepCounter"
-        >
-            01 / 07
-        </div>
+<!-- =====================================================
+     LOCATION
+===================================================== -->
 
-    </header>
+<div
+    class="location"
+    id="location"
+>
+    Paris, France
+</div>
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-    <main class="main">
+<header class="header">
 
+    <div
+        class="step-counter"
+        id="stepCounter"
+    >
+        01 / 07
+    </div>
 
-        <section class="card">
+</header>
 
 
-            <div class="stamp">
-                YOUR<br>
-                JOURNEY
-            </div>
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
+<main class="main">
 
-            <div
-                class="content"
-                id="questionContent"
-            >
+<section class="card">
 
-                <!-- Questions are inserted here -->
 
-            </div>
+<div class="stamp">
 
+    YOUR<br>
+    JOURNEY
 
-            <div
-                class="summary"
-                id="summary"
-            >
+</div>
 
-                <div class="question-number">
-                    YOUR POSTCARD
-                </div>
 
+<div
+    class="content"
+    id="questionContent"
+>
+</div>
 
-                <h1 class="summary-title">
-                    Your journey<br>
-                    starts here.
-                </h1>
 
+<div
+    class="summary"
+    id="summary"
+>
 
-                <p class="summary-subtitle">
-                    Here's what we learned about you.
-                </p>
+    <div class="question-number">
+        YOUR POSTCARD
+    </div>
 
 
-                <div
-                    class="summary-box"
-                    id="summaryBox"
-                >
-                </div>
+    <h1 class="summary-title">
 
+        Your journey<br>
+        starts here.
 
-                <button
-                    class="continue-button"
-                    id="finishButton"
-                >
-                    EXPLORE MY UNIVERSITIES →
-                </button>
+    </h1>
 
-            </div>
 
+    <p class="summary-subtitle">
 
-            <div class="airmail"></div>
+        Here's what we learned about you.
 
+    </p>
 
-            <div class="progress-container">
 
-                <div
-                    class="progress"
-                    id="progress"
-                ></div>
+    <div
+        class="summary-box"
+        id="summaryBox"
+    ></div>
 
-            </div>
 
-        </section>
+    <button
+        class="continue-button"
+        id="finishButton"
+    >
 
-    </main>
+        EXPLORE MY UNIVERSITIES →
 
+    </button>
 
+</div>
 
-    <script>
 
-        /* =====================================================
-           QUESTION DATA
-        ===================================================== */
+<div class="airmail"></div>
 
-        const questions = [
 
-            {
-                title:
-                    "Where are you from?",
+<div class="progress-container">
 
-                description:
-                    "Tell us where you currently call home.",
+    <div
+        class="progress"
+        id="progress"
+    ></div>
 
-                type:
-                    "location"
-            },
+</div>
 
 
-            {
-                title:
-                    "Where could you see yourself studying?",
+</section>
 
-                description:
-                    "Choose the places you're interested in exploring.",
+</main>
 
-                type:
-                    "countries",
 
-                options: [
+<script>
 
-                    "United States",
-                    "Canada",
-                    "United Kingdom",
-                    "Spain",
-                    "France",
-                    "Italy",
-                    "Germany",
-                    "Netherlands",
-                    "Australia",
-                    "Japan",
-                    "South Korea",
-                    "Singapore",
-                    "Mexico",
-                    "Other"
+/* =====================================================
+   DESTINATIONS
+===================================================== */
 
-                ]
-            },
+const destinations = [
 
+    {
+        name:"Paris, France",
+        image:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2200&q=90"
+    },
 
-            {
-                title:
-                    "What would you like to study?",
+    {
+        name:"Tokyo, Japan",
+        image:"https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=2200&q=90"
+    },
 
-                description:
-                    "Don't worry if you haven't decided yet.",
+    {
+        name:"New York, USA",
+        image:"https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2200&q=90"
+    },
 
-                type:
-                    "study",
+    {
+        name:"Barcelona, Spain",
+        image:"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2200&q=90"
+    },
 
-                options: [
+    {
+        name:"Seoul, South Korea",
+        image:"https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=2200&q=90"
+    },
 
-                    "Business & Economics",
-                    "Engineering & Technology",
-                    "Medicine & Health",
-                    "Arts & Design",
-                    "Communication & Media",
-                    "Social Sciences",
-                    "Law",
-                    "Education",
-                    "Science",
-                    "Architecture",
-                    "I’m not sure yet"
+    {
+        name:"Santorini, Greece",
+        image:"https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2200&q=90"
+    },
 
-                ]
-            },
+    {
+        name:"London, England",
+        image:"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=90"
+    },
 
+    {
+        name:"Rome, Italy",
+        image:"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=2200&q=90"
+    }
 
-            {
-                title:
-                    "What matters most to you?",
+];
 
-                description:
-                    "Choose the things that would influence your university decision.",
 
-                type:
-                    "priorities",
+let currentDestination = 0;
 
-                multiple:
-                    true,
+let showingA = true;
 
-                options: [
 
-                    "Tuition",
-                    "Scholarships",
-                    "Academic reputation",
-                    "Location",
-                    "Campus life",
-                    "Career opportunities",
-                    "Internships",
-                    "Research opportunities",
-                    "Student diversity",
-                    "University size",
-                    "Housing",
-                    "Distance from home"
+const backgroundA =
+    document.getElementById("backgroundA");
 
-                ]
-            },
+const backgroundB =
+    document.getElementById("backgroundB");
 
+const locationText =
+    document.getElementById("location");
 
-            {
-                title:
-                    "What kind of place feels like home?",
 
-                description:
-                    "Choose the environments you would enjoy living in.",
+function preloadImages(){
 
-                type:
-                    "environment",
+    destinations.forEach(destination=>{
 
-                multiple:
-                    true,
+        const image =
+            new Image();
 
-                options: [
+        image.src =
+            destination.image;
 
-                    "Big city",
-                    "Small city",
-                    "Small town",
-                    "Warm climate",
-                    "Cold climate",
-                    "Coastal",
-                    "Urban",
-                    "Nature",
-                    "Fast-paced",
-                    "Quiet"
+    });
 
-                ]
-            },
+}
 
 
-            {
-                title:
-                    "What makes you, you?",
+function setInitialBackground(){
 
-                description:
-                    "Choose your interests so we can personalize your experience.",
+    backgroundA.style.backgroundImage =
+        `url("${destinations[0].image}")`;
 
-                type:
-                    "interests",
+    locationText.textContent =
+        destinations[0].name;
 
-                multiple:
-                    true,
+}
 
-                options: [
 
-                    "Reading",
-                    "Photography",
-                    "Travel",
-                    "Music",
-                    "Sports",
-                    "Technology",
-                    "Business",
-                    "Art",
-                    "Fashion",
-                    "Cooking",
-                    "Animals",
-                    "Environment",
-                    "Movies",
-                    "Gaming",
-                    "Volunteering"
+function changeDestination(){
 
-                ]
-            },
+    currentDestination++;
 
+    if(
+        currentDestination >=
+        destinations.length
+    ){
 
-            {
-                title:
-                    "Do you already have universities in mind?",
+        currentDestination = 0;
 
-                description:
-                    "This is completely optional. You can add universities later.",
+    }
 
-                type:
-                    "universities"
-            }
 
-        ];
+    const destination =
+        destinations[currentDestination];
 
 
-        /* =====================================================
-           VARIABLES
-        ===================================================== */
+    const nextBackground =
+        showingA
+            ? backgroundB
+            : backgroundA;
 
-        let currentQuestion = 0;
 
-        const answers = {};
+    const oldBackground =
+        showingA
+            ? backgroundA
+            : backgroundB;
 
 
-        /* =====================================================
-           ELEMENTS
-        ===================================================== */
+    const image =
+        new Image();
 
-        const questionContent =
-            document.getElementById(
-                "questionContent"
-            );
 
-        const summary =
-            document.getElementById(
-                "summary"
-            );
+    image.onload =
+        function(){
 
-        const summaryBox =
-            document.getElementById(
-                "summaryBox"
-            );
+            nextBackground.style.backgroundImage =
+                `url("${destination.image}")`;
 
-        const stepCounter =
-            document.getElementById(
-                "stepCounter"
-            );
-
-        const progress =
-            document.getElementById(
-                "progress"
-            );
-
-
-        /* =====================================================
-           RENDER QUESTION
-        ===================================================== */
-
-        function renderQuestion() {
-
-            const question =
-                questions[currentQuestion];
-
-
-            questionContent.innerHTML = "";
-
-
-            const number =
-                document.createElement("div");
-
-            number.className =
-                "question-number";
-
-            number.textContent =
-                `0${currentQuestion + 1} / 07`;
-
-
-            const title =
-                document.createElement("h1");
-
-            title.className =
-                "question-title";
-
-            title.textContent =
-                question.title;
-
-
-            const description =
-                document.createElement("p");
-
-            description.className =
-                "question-description";
-
-            description.textContent =
-                question.description;
-
-
-            questionContent.appendChild(number);
-
-            questionContent.appendChild(title);
-
-            questionContent.appendChild(description);
-
-
-            /* ==========================================
-               LOCATION
-            =========================================== */
-
-            if (
-                question.type ===
-                "location"
-            ) {
-
-                questionContent.innerHTML += `
-
-                    <input
-                        class="input"
-                        id="country"
-                        type="text"
-                        placeholder="Country"
-                        value="${answers.country || ""}"
-                    >
-
-                    <input
-                        class="input"
-                        id="city"
-                        type="text"
-                        placeholder="City"
-                        value="${answers.city || ""}"
-                    >
-
-                `;
-            }
-
-
-            /* ==========================================
-               UNIVERSITIES
-            =========================================== */
-
-            else if (
-                question.type ===
-                "universities"
-            ) {
-
-                questionContent.innerHTML += `
-
-                    <input
-                        class="input"
-                        id="universities"
-                        type="text"
-                        placeholder="e.g. NYU, Bocconi, UBC..."
-                        value="${answers.universities || ""}"
-                    >
-
-                `;
-
-            }
-
-
-            /* ==========================================
-               OPTIONS
-            =========================================== */
-
-            else {
-
-                const options =
-                    document.createElement(
-                        "div"
-                    );
-
-                options.className =
-                    "options";
-
-
-                question.options.forEach(
-                    (option, index) => {
-
-                        const wrapper =
-                            document.createElement(
-                                "div"
-                            );
-
-                        wrapper.className =
-                            "option";
-
-
-                        const id =
-                            `option-${currentQuestion}-${index}`;
-
-
-                        const input =
-                            document.createElement(
-                                "input"
-                            );
-
-                        input.type =
-                            question.multiple
-                                ? "checkbox"
-                                : "radio";
-
-                        input.name =
-                            question.type;
-
-                        input.id =
-                            id;
-
-                        input.value =
-                            option;
-
-
-                        /*
-                            Restore previous selections.
-                        */
-
-                        if (
-                            answers[
-                                question.type
-                            ] &&
-                            answers[
-                                question.type
-                            ].includes(option)
-                        ) {
-
-                            input.checked =
-                                true;
-                        }
-
-
-                        const label =
-                            document.createElement(
-                                "label"
-                            );
-
-                        label.htmlFor =
-                            id;
-
-                        label.textContent =
-                            option;
-
-
-                        wrapper.appendChild(
-                            input
-                        );
-
-                        wrapper.appendChild(
-                            label
-                        );
-
-                        options.appendChild(
-                            wrapper
-                        );
-
-                    }
-                );
-
-
-                questionContent.appendChild(
-                    options
-                );
-
-            }
-
-
-            /* ==========================================
-               BUTTONS
-            =========================================== */
-
-            const buttons =
-                document.createElement(
-                    "div"
-                );
-
-            buttons.className =
-                "buttons";
-
-
-            if (
-                currentQuestion > 0
-            ) {
-
-                const back =
-                    document.createElement(
-                        "button"
-                    );
-
-                back.className =
-                    "back-button";
-
-                back.textContent =
-                    "← Back";
-
-                back.onclick =
-                    previousQuestion;
-
-                buttons.appendChild(
-                    back
-                );
-
-            } else {
-
-                const empty =
-                    document.createElement(
-                        "div"
-                    );
-
-                buttons.appendChild(
-                    empty
-                );
-            }
-
-
-            const continueButton =
-                document.createElement(
-                    "button"
-                );
-
-            continueButton.className =
-                "continue-button";
-
-            continueButton.textContent =
-                currentQuestion ===
-                questions.length - 1
-                    ? "FINISH →"
-                    : "CONTINUE →";
-
-
-            continueButton.onclick =
-                nextQuestion;
-
-
-            buttons.appendChild(
-                continueButton
-            );
-
-
-            questionContent.appendChild(
-                buttons
-            );
-
-
-            /* ==========================================
-               PROGRESS
-            =========================================== */
-
-            const percentage =
-                (
-                    (currentQuestion + 1)
-                    /
-                    questions.length
-                ) * 100;
-
-
-            progress.style.width =
-                `${percentage}%`;
-
-
-            stepCounter.textContent =
-                `0${currentQuestion + 1} / 07`;
-
-        }
-
-
-        /* =====================================================
-           SAVE CURRENT ANSWER
-        ===================================================== */
-
-        function saveAnswer() {
-
-            const question =
-                questions[currentQuestion];
-
-
-            if (
-                question.type ===
-                "location"
-            ) {
-
-                const country =
-                    document.getElementById(
-                        "country"
-                    ).value.trim();
-
-                const city =
-                    document.getElementById(
-                        "city"
-                    ).value.trim();
-
-
-                answers.country =
-                    country;
-
-                answers.city =
-                    city;
-
-            }
-
-
-            else if (
-                question.type ===
-                "universities"
-            ) {
-
-                answers.universities =
-                    document.getElementById(
-                        "universities"
-                    ).value.trim();
-
-            }
-
-
-            else {
-
-                const selected =
-                    [
-                        ...document.querySelectorAll(
-                            `input[name="${question.type}"]:checked`
-                        )
-                    ].map(
-                        input =>
-                            input.value
-                    );
-
-
-                answers[
-                    question.type
-                ] = selected;
-
-            }
-
-
-            /*
-                Store the answers locally.
-            */
-
-            localStorage.setItem(
-                "postcardsAnswers",
-                JSON.stringify(
-                    answers
-                )
-            );
-
-        }
-
-
-        /* =====================================================
-           NEXT
-        ===================================================== */
-
-        function nextQuestion() {
-
-            saveAnswer();
-
-
-            if (
-                currentQuestion <
-                questions.length - 1
-            ) {
-
-                currentQuestion++;
-
-                renderQuestion();
-
-            }
-
-            else {
-
-                showSummary();
-
-            }
-
-        }
-
-
-        /* =====================================================
-           PREVIOUS
-        ===================================================== */
-
-        function previousQuestion() {
-
-            saveAnswer();
-
-            currentQuestion--;
-
-            renderQuestion();
-
-        }
-
-
-        /* =====================================================
-           SUMMARY
-        ===================================================== */
-
-        function showSummary() {
-
-            questionContent.style.display =
-                "none";
-
-            summary.classList.add(
+            nextBackground.classList.add(
                 "active"
             );
 
-
-            stepCounter.textContent =
-                "READY";
-
-
-            progress.style.width =
-                "100%";
-
-
-            const interests =
-                answers.interests?.join(
-                    ", "
-                ) || "Still discovering";
-
-
-            const study =
-                answers.study?.join(
-                    ", "
-                ) || "Still exploring";
-
-
-            const countries =
-                answers.countries?.join(
-                    ", "
-                ) || "Open to possibilities";
-
-
-            const priorities =
-                answers.priorities?.join(
-                    ", "
-                ) || "We'll discover them together";
-
-
-            summaryBox.innerHTML = `
-
-                <strong>HOME</strong><br>
-
-                ${
-                    answers.city || "Your city"
-                },
-                ${
-                    answers.country || "Your country"
-                }
-
-                <br><br>
-
-
-                <strong>PLACES TO EXPLORE</strong><br>
-
-                ${countries}
-
-
-                <br><br>
-
-
-                <strong>FIELD OF STUDY</strong><br>
-
-                ${study}
-
-
-                <br><br>
-
-
-                <strong>WHAT MATTERS TO YOU</strong><br>
-
-                ${priorities}
-
-
-                <br><br>
-
-
-                <strong>INTERESTS</strong><br>
-
-                ${interests}
-
-            `;
-
-        }
-
-
-        /* =====================================================
-           FINISH
-        ===================================================== */
-
-        document
-            .getElementById(
-                "finishButton"
-            )
-            .addEventListener(
-                "click",
-                function() {
-
-                    alert(
-                        "Your personalized Postcards experience is ready!\n\n" +
-                        "Next, we'll build your university discovery page."
-                    );
-
-                }
+            oldBackground.classList.remove(
+                "active"
             );
 
+            showingA =
+                !showingA;
 
-        /* =====================================================
-           START
-        ===================================================== */
+            locationText.textContent =
+                destination.name;
 
-        const savedAnswers =
-            localStorage.getItem(
-                "postcardsAnswers"
-            );
+        };
 
 
-        if (savedAnswers) {
+    image.src =
+        destination.image;
 
-            try {
+}
 
-                Object.assign(
-                    answers,
-                    JSON.parse(
-                        savedAnswers
-                    )
-                );
 
-            } catch (error) {
+setInitialBackground();
 
-                console.log(
-                    "Starting a new questionnaire."
-                );
+preloadImages();
+
+setInterval(
+    changeDestination,
+    7000
+);
+
+
+/* =====================================================
+   QUESTION DATA
+===================================================== */
+
+const questions = [
+
+    {
+        title:"Where are you from?",
+        description:"Tell us where you currently call home.",
+        type:"location"
+    },
+
+    {
+        title:"Where could you see yourself studying?",
+        description:"Choose the places you're interested in exploring.",
+        type:"countries",
+        options:[
+            "United States",
+            "Canada",
+            "United Kingdom",
+            "Spain",
+            "France",
+            "Italy",
+            "Germany",
+            "Netherlands",
+            "Australia",
+            "Japan",
+            "South Korea",
+            "Singapore",
+            "Mexico",
+            "Other"
+        ]
+    },
+
+    {
+        title:"What would you like to study?",
+        description:"Don't worry if you haven't decided yet.",
+        type:"study",
+        options:[
+            "Business & Economics",
+            "Engineering & Technology",
+            "Medicine & Health",
+            "Arts & Design",
+            "Communication & Media",
+            "Social Sciences",
+            "Law",
+            "Education",
+            "Science",
+            "Architecture",
+            "I'm not sure yet"
+        ]
+    },
+
+    {
+        title:"What matters most to you?",
+        description:"Choose the things that would influence your university decision.",
+        type:"priorities",
+        multiple:true,
+        options:[
+            "Tuition",
+            "Scholarships",
+            "Academic reputation",
+            "Location",
+            "Campus life",
+            "Career opportunities",
+            "Internships",
+            "Research opportunities",
+            "Student diversity",
+            "University size",
+            "Housing",
+            "Distance from home"
+        ]
+    },
+
+    {
+        title:"What kind of place feels like home?",
+        description:"Choose the environments you would enjoy living in.",
+        type:"environment",
+        multiple:true,
+        options:[
+            "Big city",
+            "Small city",
+            "Small town",
+            "Warm climate",
+            "Cold climate",
+            "Coastal",
+            "Urban",
+            "Nature",
+            "Fast-paced",
+            "Quiet"
+        ]
+    },
+
+    {
+        title:"What makes you, you?",
+        description:"Choose your interests so we can personalize your experience.",
+        type:"interests",
+        multiple:true,
+        options:[
+            "Reading",
+            "Photography",
+            "Travel",
+            "Music",
+            "Sports",
+            "Technology",
+            "Business",
+            "Art",
+            "Fashion",
+            "Cooking",
+            "Animals",
+            "Environment",
+            "Movies",
+            "Gaming",
+            "Volunteering"
+        ]
+    },
+
+    {
+        title:"Do you already have universities in mind?",
+        description:"This is completely optional. You can add universities later.",
+        type:"universities"
+    }
+
+];
+
+
+let currentQuestion = 0;
+
+const answers = {};
+
+
+const questionContent =
+    document.getElementById(
+        "questionContent"
+    );
+
+const summary =
+    document.getElementById(
+        "summary"
+    );
+
+const summaryBox =
+    document.getElementById(
+        "summaryBox"
+    );
+
+const stepCounter =
+    document.getElementById(
+        "stepCounter"
+    );
+
+const progress =
+    document.getElementById(
+        "progress"
+    );
+
+
+/* =====================================================
+   RENDER QUESTION
+===================================================== */
+
+function renderQuestion(){
+
+    const question =
+        questions[currentQuestion];
+
+
+    questionContent.innerHTML = "";
+
+
+    const number =
+        document.createElement("div");
+
+    number.className =
+        "question-number";
+
+    number.textContent =
+        `0${currentQuestion + 1} / 07`;
+
+
+    const title =
+        document.createElement("h1");
+
+    title.className =
+        "question-title";
+
+    title.textContent =
+        question.title;
+
+
+    const description =
+        document.createElement("p");
+
+    description.className =
+        "question-description";
+
+    description.textContent =
+        question.description;
+
+
+    questionContent.appendChild(number);
+
+    questionContent.appendChild(title);
+
+    questionContent.appendChild(description);
+
+
+    if(
+        question.type ===
+        "location"
+    ){
+
+        questionContent.innerHTML += `
+
+            <input
+                class="input"
+                id="country"
+                type="text"
+                placeholder="Country"
+                value="${answers.country || ""}"
+            >
+
+            <input
+                class="input"
+                id="city"
+                type="text"
+                placeholder="City"
+                value="${answers.city || ""}"
+            >
+
+        `;
+
+    }
+
+
+    else if(
+        question.type ===
+        "universities"
+    ){
+
+        questionContent.innerHTML += `
+
+            <input
+                class="input"
+                id="universities"
+                type="text"
+                placeholder="e.g. NYU, Bocconi, UBC..."
+                value="${answers.universities || ""}"
+            >
+
+        `;
+
+    }
+
+
+    else{
+
+        const options =
+            document.createElement("div");
+
+        options.className =
+            "options";
+
+
+        question.options.forEach(
+            (option,index)=>{
+
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.className =
+                    "option";
+
+
+                const id =
+                    `option-${currentQuestion}-${index}`;
+
+
+                const input =
+                    document.createElement("input");
+
+                input.type =
+                    question.multiple
+                        ? "checkbox"
+                        : "radio";
+
+                input.name =
+                    question.type;
+
+                input.id =
+                    id;
+
+                input.value =
+                    option;
+
+
+                if(
+                    answers[
+                        question.type
+                    ] &&
+                    answers[
+                        question.type
+                    ].includes(option)
+                ){
+
+                    input.checked =
+                        true;
+
+                }
+
+
+                const label =
+                    document.createElement("label");
+
+                label.htmlFor =
+                    id;
+
+                label.textContent =
+                    option;
+
+
+                wrapper.appendChild(input);
+
+                wrapper.appendChild(label);
+
+                options.appendChild(wrapper);
 
             }
+        );
 
-        }
 
+        questionContent.appendChild(options);
+
+    }
+
+
+    const buttons =
+        document.createElement("div");
+
+    buttons.className =
+        "buttons";
+
+
+    if(
+        currentQuestion > 0
+    ){
+
+        const back =
+            document.createElement("button");
+
+        back.className =
+            "back-button";
+
+        back.textContent =
+            "← Back";
+
+        back.onclick =
+            previousQuestion;
+
+        buttons.appendChild(back);
+
+    }
+
+    else{
+
+        const empty =
+            document.createElement("div");
+
+        buttons.appendChild(empty);
+
+    }
+
+
+    const continueButton =
+        document.createElement("button");
+
+    continueButton.className =
+        "continue-button";
+
+    continueButton.textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "FINISH →"
+            : "CONTINUE →";
+
+
+    continueButton.onclick =
+        nextQuestion;
+
+
+    buttons.appendChild(
+        continueButton
+    );
+
+
+    questionContent.appendChild(
+        buttons
+    );
+
+
+    const percentage =
+        (
+            (currentQuestion + 1)
+            /
+            questions.length
+        ) * 100;
+
+
+    progress.style.width =
+        `${percentage}%`;
+
+
+    stepCounter.textContent =
+        `0${currentQuestion + 1} / 07`;
+
+}
+
+
+/* =====================================================
+   SAVE ANSWER
+===================================================== */
+
+function saveAnswer(){
+
+    const question =
+        questions[currentQuestion];
+
+
+    if(
+        question.type ===
+        "location"
+    ){
+
+        answers.country =
+            document.getElementById(
+                "country"
+            ).value.trim();
+
+
+        answers.city =
+            document.getElementById(
+                "city"
+            ).value.trim();
+
+    }
+
+
+    else if(
+        question.type ===
+        "universities"
+    ){
+
+        answers.universities =
+            document.getElementById(
+                "universities"
+            ).value.trim();
+
+    }
+
+
+    else{
+
+        const selected =
+            [
+                ...document.querySelectorAll(
+                    `input[name="${question.type}"]:checked`
+                )
+            ].map(
+                input =>
+                    input.value
+            );
+
+
+        answers[
+            question.type
+        ] = selected;
+
+    }
+
+
+    localStorage.setItem(
+        "postcardsAnswers",
+        JSON.stringify(answers)
+    );
+
+}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+function nextQuestion(){
+
+    saveAnswer();
+
+
+    if(
+        currentQuestion <
+        questions.length - 1
+    ){
+
+        currentQuestion++;
 
         renderQuestion();
 
-    </script>
+    }
+
+    else{
+
+        showSummary();
+
+    }
+
+}
+
+
+/* =====================================================
+   PREVIOUS
+===================================================== */
+
+function previousQuestion(){
+
+    saveAnswer();
+
+    currentQuestion--;
+
+    renderQuestion();
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function showSummary(){
+
+    questionContent.style.display =
+        "none";
+
+    summary.classList.add(
+        "active"
+    );
+
+    stepCounter.textContent =
+        "READY";
+
+    progress.style.width =
+        "100%";
+
+
+    const interests =
+        answers.interests?.join(", ")
+        ||
+        "Still discovering";
+
+
+    const study =
+        answers.study?.join(", ")
+        ||
+        "Still exploring";
+
+
+    const countries =
+        answers.countries?.join(", ")
+        ||
+        "Open to possibilities";
+
+
+    const priorities =
+        answers.priorities?.join(", ")
+        ||
+        "We'll discover them together";
+
+
+    summaryBox.innerHTML = `
+
+        <strong>HOME</strong><br>
+
+        ${answers.city || "Your city"},
+        ${answers.country || "Your country"}
+
+        <br><br>
+
+        <strong>PLACES TO EXPLORE</strong><br>
+
+        ${countries}
+
+        <br><br>
+
+        <strong>FIELD OF STUDY</strong><br>
+
+        ${study}
+
+        <br><br>
+
+        <strong>WHAT MATTERS TO YOU</strong><br>
+
+        ${priorities}
+
+        <br><br>
+
+        <strong>INTERESTS</strong><br>
+
+        ${interests}
+
+    `;
+
+}
+
+
+/* =====================================================
+   FINISH
+===================================================== */
+
+document
+    .getElementById("finishButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            alert(
+                "Your personalized Postcards experience is ready!\n\n" +
+                "Next, we'll build your university discovery page."
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   LOAD SAVED ANSWERS
+===================================================== */
+
+const savedAnswers =
+    localStorage.getItem(
+        "postcardsAnswers"
+    );
+
+
+if(savedAnswers){
+
+    try{
+
+        Object.assign(
+            answers,
+            JSON.parse(savedAnswers)
+        );
+
+    }
+
+    catch(error){
+
+        console.log(
+            "Starting a new questionnaire."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderQuestion();
+
+</script>
 
 </body>
-
 </html>
