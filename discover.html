@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Postcards — Discover</title>
 
@@ -24,65 +19,74 @@
     box-sizing: border-box;
 }
 
-html,
-body {
-    min-height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    color: #40362f;
-
-    background:
-        #eee1d0;
-
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #272522;
+    background: #e8e4dc;
     overflow-x: hidden;
 }
 
 
 /* =====================================================
-   BACKGROUND
+   CHANGING BACKGROUND
 ===================================================== */
 
 .background {
-
     position: fixed;
-
     inset: 0;
-
     z-index: -10;
 
     background:
         linear-gradient(
-            135deg,
-            #e8d7c4,
-            #f4eadf
+            120deg,
+            #dcd8cf,
+            #eeeae2,
+            #d5ddd9
+        );
+
+    background-size: 300% 300%;
+
+    animation:
+        backgroundMove 18s ease infinite;
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,.55),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(120,120,110,.12),
+            transparent 35%
         );
 }
 
-.background::before {
+@keyframes backgroundMove {
 
-    content: "";
+    0% {
+        background-position: 0% 50%;
+    }
 
-    position: absolute;
+    50% {
+        background-position: 100% 50%;
+    }
 
-    inset: 0;
+    100% {
+        background-position: 0% 50%;
+    }
 
-    background-image:
-        radial-gradient(
-            rgba(90,65,50,0.07)
-            0.7px,
-            transparent 0.7px
-        );
-
-    background-size: 5px 5px;
-
-    opacity: .45;
 }
 
 
@@ -91,71 +95,48 @@ body {
 ===================================================== */
 
 .header {
-
     position: sticky;
-
     top: 0;
-
     z-index: 50;
 
-    height: 76px;
+    height: 72px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
-    padding:
-        0 38px;
+    padding: 0 42px;
 
-    background:
-        rgba(
-            251,
-            240,
-            223,
-            0.92
-        );
+    background: rgba(245,243,238,.82);
 
-    backdrop-filter:
-        blur(12px);
+    backdrop-filter: blur(18px);
 
     border-bottom:
         1px solid
-        rgba(110,85,65,.15);
+        rgba(39,37,34,.12);
 }
 
 .logo {
-
-    font-family: Arial, sans-serif;
-
     font-size: 13px;
+    font-weight: 600;
 
     letter-spacing: 5px;
 
-    color: #40362f;
+    color: #272522;
 }
 
 .header-right {
-
     display: flex;
-
     align-items: center;
-
-    gap: 20px;
+    gap: 25px;
 }
 
 .profile {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 10px;
-
+    font-size: 9px;
     letter-spacing: 2px;
-
-    color: #806e60;
-
     text-transform: uppercase;
+
+    color: #77736c;
 }
 
 
@@ -164,18 +145,12 @@ body {
 ===================================================== */
 
 .main {
+    width: min(1380px, 92vw);
 
-    width:
-        min(
-            1400px,
-            94vw
-        );
-
-    margin:
-        0 auto;
+    margin: 0 auto;
 
     padding:
-        50px 0 80px;
+        65px 0 100px;
 }
 
 
@@ -184,73 +159,85 @@ body {
 ===================================================== */
 
 .intro {
-
     display: grid;
 
     grid-template-columns:
         1.3fr
         .7fr;
 
-    gap: 50px;
+    gap: 70px;
 
     align-items: end;
 
-    margin-bottom: 38px;
+    margin-bottom: 55px;
 }
 
 .eyebrow {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: 4px;
 
-    color: #9a806e;
-
-    margin-bottom: 14px;
-
     text-transform: uppercase;
+
+    color: #77736c;
+
+    margin-bottom: 17px;
 }
 
 .intro h1 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size:
         clamp(
-            42px,
-            6vw,
-            72px
+            52px,
+            7vw,
+            92px
         );
 
     font-weight: normal;
 
-    line-height: .98;
+    line-height: .92;
 
-    color: #40362f;
+    letter-spacing: -3px;
+
+    color: #272522;
 }
 
 .intro-text {
+    max-width: 390px;
 
-    font-family: Arial, sans-serif;
+    font-size: 12px;
 
-    font-size: 13px;
+    line-height: 1.8;
 
-    line-height: 1.7;
-
-    color: #806e60;
-
-    max-width: 400px;
-
-    justify-self: end;
+    color: #68645e;
 }
 
 
 /* =====================================================
-   SEARCH
+   DIVIDER
+===================================================== */
+
+.section-line {
+    width: 100%;
+
+    height: 1px;
+
+    background:
+        rgba(39,37,34,.15);
+
+    margin-bottom: 25px;
+}
+
+
+/* =====================================================
+   SEARCH AREA
 ===================================================== */
 
 .search-area {
-
     display: grid;
 
     grid-template-columns:
@@ -258,95 +245,83 @@ body {
         auto
         auto;
 
-    gap: 10px;
+    gap: 9px;
 
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
 .search-box {
-
     position: relative;
 }
 
 .search-box input {
-
     width: 100%;
 
-    height: 52px;
-
-    border:
-        1px solid
-        #cbb8a5;
-
-    background:
-        rgba(
-            255,
-            250,
-            242,
-            .72
-        );
+    height: 54px;
 
     padding:
         0 18px;
 
+    border:
+        1px solid
+        rgba(39,37,34,.2);
+
     outline: none;
 
-    font-family: Arial, sans-serif;
+    background:
+        rgba(250,249,245,.72);
 
-    font-size: 13px;
+    font-size: 12px;
 
-    color: #40362f;
+    color: #272522;
+
+    transition:
+        border .2s ease,
+        background .2s ease;
 }
 
 .search-box input:focus {
-
     border-color:
-        #806e60;
+        #272522;
+
+    background:
+        rgba(255,255,255,.9);
 }
 
 .search-box input::placeholder {
-
-    color:
-        #a18e7e;
+    color: #96918a;
 }
 
 .control-button {
-
-    height: 52px;
+    height: 54px;
 
     padding:
-        0 20px;
+        0 21px;
 
     border:
         1px solid
-        #cbb8a5;
+        rgba(39,37,34,.2);
 
     background:
-        rgba(
-            255,
-            250,
-            242,
-            .72
-        );
+        rgba(250,249,245,.72);
 
-    font-family: Arial, sans-serif;
+    color: #4f4b45;
 
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: 2px;
 
     text-transform: uppercase;
 
-    color: #62544b;
-
     cursor: pointer;
+
+    transition:
+        .2s ease;
 }
 
-.control-button:hover {
-
-    background:
-        #4c4038;
-
+.control-button:hover,
+.control-button.active {
+    background: #272522;
     color: white;
 }
 
@@ -356,40 +331,33 @@ body {
 ===================================================== */
 
 .filters {
-
     display: flex;
 
     flex-wrap: wrap;
 
-    gap: 8px;
+    gap: 7px;
 
-    margin-bottom: 35px;
+    margin-bottom: 48px;
 }
 
 .filter {
-
     border:
         1px solid
-        #cbb8a5;
+        rgba(39,37,34,.18);
 
     background:
-        rgba(
-            255,
-            250,
-            242,
-            .45
-        );
+        rgba(250,249,245,.45);
 
     padding:
-        9px 14px;
+        9px 13px;
 
-    font-family: Arial, sans-serif;
+    font-size: 8px;
 
-    font-size: 10px;
+    letter-spacing: 1.5px;
 
-    letter-spacing: 1px;
+    text-transform: uppercase;
 
-    color: #806e60;
+    color: #6e6962;
 
     cursor: pointer;
 
@@ -399,14 +367,11 @@ body {
 
 .filter:hover,
 .filter.active {
+    background: #272522;
 
-    background:
-        #4c4038;
+    border-color: #272522;
 
     color: white;
-
-    border-color:
-        #4c4038;
 }
 
 
@@ -415,36 +380,31 @@ body {
 ===================================================== */
 
 .results-header {
-
     display: flex;
 
     align-items: center;
 
     justify-content: space-between;
 
-    margin-bottom: 18px;
+    margin-bottom: 17px;
 }
 
 .results-title {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: 3px;
 
     text-transform: uppercase;
 
-    color: #806e60;
+    color: #5e5952;
 }
 
 .result-count {
+    font-size: 9px;
 
-    font-family: Arial, sans-serif;
+    letter-spacing: 1px;
 
-    font-size: 10px;
-
-    color: #9a806e;
+    color: #8b867e;
 }
 
 
@@ -453,16 +413,12 @@ body {
 ===================================================== */
 
 .grid {
-
     display: grid;
 
     grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
+        repeat(3, 1fr);
 
-    gap: 18px;
+    gap: 17px;
 }
 
 
@@ -471,52 +427,44 @@ body {
 ===================================================== */
 
 .university-card {
-
     position: relative;
 
-    min-height: 405px;
-
     background:
-        linear-gradient(
-            135deg,
-            #fbf0df,
-            #f3e3cf
-        );
+        rgba(248,247,243,.86);
 
     border:
-        7px solid
-        #fffaf2;
-
-    box-shadow:
-        0 18px 35px
-        rgba(70,50,35,.14);
+        1px solid
+        rgba(39,37,34,.13);
 
     overflow: hidden;
 
+    cursor: pointer;
+
     transition:
-        transform .3s ease,
-        box-shadow .3s ease;
+        transform .35s ease,
+        box-shadow .35s ease,
+        background .35s ease;
 }
 
 .university-card:hover {
-
     transform:
-        translateY(-6px)
-        rotate(-.3deg);
+        translateY(-7px);
+
+    background:
+        rgba(255,255,255,.96);
 
     box-shadow:
-        0 25px 45px
-        rgba(70,50,35,.22);
+        0 25px 50px
+        rgba(35,32,28,.15);
 }
 
 
 /* =====================================================
-   CARD IMAGE
+   IMAGE
 ===================================================== */
 
 .card-image {
-
-    height: 145px;
+    height: 190px;
 
     position: relative;
 
@@ -528,7 +476,6 @@ body {
 }
 
 .card-image::after {
-
     content: "";
 
     position: absolute;
@@ -537,24 +484,22 @@ body {
 
     background:
         linear-gradient(
-            transparent,
-            rgba(40,30,25,.48)
+            to bottom,
+            rgba(0,0,0,.02),
+            rgba(0,0,0,.45)
         );
 }
 
 .card-country {
-
     position: absolute;
 
-    left: 16px;
+    left: 17px;
 
-    bottom: 13px;
+    bottom: 15px;
 
     z-index: 2;
 
-    font-family: Arial, sans-serif;
-
-    font-size: 9px;
+    font-size: 8px;
 
     letter-spacing: 2px;
 
@@ -569,48 +514,67 @@ body {
 ===================================================== */
 
 .save-button {
-
     position: absolute;
 
     top: 13px;
-
     right: 13px;
 
     z-index: 10;
 
-    width: 35px;
-
-    height: 35px;
+    width: 34px;
+    height: 34px;
 
     border: none;
 
     border-radius: 50%;
 
     background:
-        rgba(
-            255,
-            250,
-            242,
-            .9
-        );
+        rgba(250,249,245,.92);
 
-    color: #66554a;
+    color: #393631;
 
-    font-size: 17px;
+    font-size: 16px;
 
     cursor: pointer;
 
-    box-shadow:
-        0 4px 12px
-        rgba(0,0,0,.14);
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.save-button:hover {
+    transform: scale(1.08);
 }
 
 .save-button.saved {
+    background: #272522;
+    color: white;
+}
+
+
+/* =====================================================
+   MATCH
+===================================================== */
+
+.match {
+    position: absolute;
+
+    top: 174px;
+    left: 16px;
+
+    z-index: 5;
+
+    padding:
+        6px 9px;
 
     background:
-        #4c4038;
+        #f7f5ef;
 
-    color: white;
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    color: #4f4b45;
 }
 
 
@@ -619,27 +583,27 @@ body {
 ===================================================== */
 
 .card-content {
-
     padding:
-        20px 19px 19px;
+        21px 19px 20px;
 }
 
 .card-kicker {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 9px;
+    font-size: 8px;
 
     letter-spacing: 2px;
 
-    color: #9a806e;
-
     text-transform: uppercase;
 
-    margin-bottom: 7px;
+    color: #89847c;
+
+    margin-bottom: 8px;
 }
 
 .card-title {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size: 25px;
 
@@ -647,20 +611,17 @@ body {
 
     line-height: 1.05;
 
-    color: #40362f;
+    color: #292723;
 
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 }
 
 .card-location {
+    font-size: 10px;
 
-    font-family: Arial, sans-serif;
+    color: #77726a;
 
-    font-size: 11px;
-
-    color: #806e60;
-
-    margin-bottom: 16px;
+    margin-bottom: 17px;
 }
 
 
@@ -669,36 +630,27 @@ body {
 ===================================================== */
 
 .tags {
-
     display: flex;
 
     flex-wrap: wrap;
 
     gap: 5px;
 
-    margin-bottom: 15px;
+    margin-bottom: 17px;
 }
 
 .tag {
-
     padding:
         5px 7px;
 
     background:
-        rgba(
-            180,
-            150,
-            125,
-            .12
-        );
+        rgba(39,37,34,.06);
 
-    font-family: Arial, sans-serif;
+    font-size: 7px;
 
-    font-size: 8px;
+    letter-spacing: .7px;
 
-    letter-spacing: .5px;
-
-    color: #766358;
+    color: #68635d;
 }
 
 
@@ -707,76 +659,39 @@ body {
 ===================================================== */
 
 .card-info {
-
     display: grid;
 
     grid-template-columns:
         1fr
         1fr;
 
-    gap: 8px;
+    gap: 10px;
+
+    padding-top: 13px;
 
     border-top:
         1px solid
-        #d8c6b4;
-
-    padding-top: 12px;
-
-    margin-top: 5px;
+        rgba(39,37,34,.13);
 }
 
 .info-item {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 9px;
+    font-size: 8px;
 
     line-height: 1.5;
 
-    color: #8b7767;
+    color: #817b73;
 }
 
 .info-item strong {
-
     display: block;
 
-    color: #54473e;
-
-    font-size: 9px;
-
-    margin-bottom: 2px;
-}
-
-
-/* =====================================================
-   MATCH SCORE
-===================================================== */
-
-.match {
-
-    position: absolute;
-
-    top: 168px;
-
-    left: 18px;
-
-    padding:
-        5px 9px;
-
-    background:
-        #fffaf2;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 8px;
+    font-size: 7px;
 
     letter-spacing: 1px;
 
-    color: #66554a;
+    color: #4d4943;
 
-    box-shadow:
-        0 3px 8px
-        rgba(0,0,0,.12);
+    margin-bottom: 2px;
 }
 
 
@@ -785,60 +700,53 @@ body {
 ===================================================== */
 
 .empty {
-
-    grid-column:
-        1 / -1;
+    grid-column: 1 / -1;
 
     padding:
-        80px 20px;
+        100px 20px;
 
     text-align: center;
 
     background:
-        rgba(
-            255,
-            250,
-            242,
-            .55
-        );
+        rgba(250,249,245,.65);
 
     border:
         1px dashed
-        #c4af9b;
+        rgba(39,37,34,.25);
 }
 
 .empty h2 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    font-size: 34px;
+    font-size: 38px;
 
     font-weight: normal;
 
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .empty p {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-
-    line-height: 1.6;
-
-    color: #806e60;
-
     max-width: 430px;
 
     margin:
-        0 auto 20px;
+        0 auto 22px;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    color: #77726a;
 }
 
 
 /* =====================================================
-   DETAIL MODAL
+   MODAL
 ===================================================== */
 
 .modal {
-
     position: fixed;
 
     inset: 0;
@@ -854,27 +762,22 @@ body {
     padding: 25px;
 
     background:
-        rgba(
-            45,
-            35,
-            29,
-            .55
-        );
+        rgba(28,26,23,.62);
 
     backdrop-filter:
-        blur(7px);
+        blur(12px);
 }
 
 .modal.active {
-
     display: flex;
 }
 
 .modal-card {
+    position: relative;
 
     width:
         min(
-            780px,
+            820px,
             95vw
         );
 
@@ -883,30 +786,26 @@ body {
 
     overflow-y: auto;
 
+    padding:
+        40px;
+
     background:
-        #f8ecdc;
+        #f5f2eb;
 
     border:
-        8px solid
-        #fffaf2;
-
-    padding:
-        35px;
+        1px solid
+        rgba(255,255,255,.5);
 
     box-shadow:
-        0 30px 70px
+        0 35px 80px
         rgba(0,0,0,.35);
-
-    position: relative;
 }
 
 .close {
-
     position: absolute;
 
-    top: 15px;
-
-    right: 17px;
+    top: 17px;
+    right: 20px;
 
     border: none;
 
@@ -914,122 +813,105 @@ body {
 
     font-size: 25px;
 
-    color: #66554a;
+    color: #514c45;
 
     cursor: pointer;
 }
 
 .modal-eyebrow {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 9px;
+    font-size: 8px;
 
     letter-spacing: 3px;
 
-    color: #9a806e;
-
     text-transform: uppercase;
 
-    margin-bottom: 10px;
+    color: #8a847c;
+
+    margin-bottom: 11px;
 }
 
 .modal-title {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
     font-size:
         clamp(
-            35px,
+            38px,
             6vw,
-            58px
+            65px
         );
 
     font-weight: normal;
 
-    line-height: 1;
+    line-height: .95;
 
-    margin-bottom: 8px;
+    letter-spacing: -2px;
+
+    margin-bottom: 9px;
 }
 
 .modal-location {
+    font-size: 11px;
 
-    font-family: Arial, sans-serif;
+    color: #77726a;
 
-    font-size: 12px;
-
-    color: #806e60;
-
-    margin-bottom: 25px;
+    margin-bottom: 27px;
 }
 
 .modal-description {
+    max-width: 680px;
 
-    font-family: Arial, sans-serif;
+    font-size: 12px;
 
-    font-size: 13px;
+    line-height: 1.8;
 
-    line-height: 1.7;
+    color: #5f5a53;
 
-    color: #62544b;
-
-    margin-bottom: 25px;
+    margin-bottom: 27px;
 }
 
 .modal-grid {
-
     display: grid;
 
     grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
+        repeat(2, 1fr);
 
-    gap: 10px;
+    gap: 9px;
 }
 
 .modal-info {
-
-    padding: 15px;
+    padding: 16px;
 
     border:
         1px solid
-        #d2bdab;
+        rgba(39,37,34,.15);
 
     background:
-        rgba(
-            255,
-            250,
-            242,
-            .45
-        );
+        rgba(255,255,255,.35);
 }
 
 .modal-info span {
-
     display: block;
 
-    font-family: Arial, sans-serif;
-
-    font-size: 8px;
+    font-size: 7px;
 
     letter-spacing: 2px;
 
-    color: #9a806e;
-
     text-transform: uppercase;
 
-    margin-bottom: 5px;
+    color: #8b857d;
+
+    margin-bottom: 6px;
 }
 
 .modal-info strong {
-
-    font-family: Arial, sans-serif;
-
-    font-size: 11px;
+    font-size: 10px;
 
     line-height: 1.5;
 
-    color: #51443b;
+    color: #403c36;
 }
 
 
@@ -1037,73 +919,81 @@ body {
    RESPONSIVE
 ===================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 1050px) {
 
     .grid {
-
         grid-template-columns:
-            repeat(
-                2,
-                1fr
-            );
+            repeat(2, 1fr);
     }
 
     .intro {
-
         grid-template-columns:
             1fr;
     }
 
     .intro-text {
-
         justify-self: start;
     }
+
 }
 
 
-@media (max-width: 650px) {
+@media (max-width: 680px) {
 
     .header {
-
         padding:
             0 20px;
     }
 
     .main {
+        width: 90vw;
 
-        width: 92vw;
+        padding-top: 45px;
+    }
 
-        padding-top: 35px;
+    .intro h1 {
+        font-size: 54px;
+
+        letter-spacing: -2px;
     }
 
     .search-area {
-
         grid-template-columns:
             1fr;
     }
 
     .grid {
-
         grid-template-columns:
             1fr;
-    }
-
-    .university-card {
-
-        min-height: 390px;
     }
 
     .modal-card {
-
         padding:
-            28px 20px;
+            30px 21px;
     }
 
     .modal-grid {
-
         grid-template-columns:
             1fr;
     }
+
+}
+
+
+/* =====================================================
+   SUBTLE SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e8e5de;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #aaa59d;
 }
 
 </style>
@@ -1112,7 +1002,6 @@ body {
 
 
 <body>
-
 
 <div class="background"></div>
 
@@ -1140,21 +1029,19 @@ body {
 <main class="main">
 
 
-    <!-- =================================================
-         INTRO
-    ================================================== -->
+    <!-- INTRO -->
 
     <section class="intro">
 
         <div>
 
             <div class="eyebrow">
-                Your university map
+                Discover
             </div>
 
             <h1>
-                Where will<br>
-                you go next?
+                Where could<br>
+                you go?
             </h1>
 
         </div>
@@ -1162,20 +1049,21 @@ body {
 
         <p class="intro-text">
 
-            Explore universities around the world,
-            discover places that fit your interests,
-            and collect the ones that feel like
-            your next chapter.
+            Explore universities, cities and
+            possibilities around the world.
+            Find places that match the person
+            you're becoming — and save the ones
+            worth coming back to.
 
         </p>
 
     </section>
 
 
+    <div class="section-line"></div>
 
-    <!-- =================================================
-         SEARCH
-    ================================================== -->
+
+    <!-- SEARCH -->
 
     <section class="search-area">
 
@@ -1184,7 +1072,7 @@ body {
             <input
                 id="searchInput"
                 type="text"
-                placeholder="Search a country, city, university, field, climate..."
+                placeholder="Search a university, country, city, field or interest..."
             >
 
         </div>
@@ -1208,10 +1096,7 @@ body {
     </section>
 
 
-
-    <!-- =================================================
-         FILTERS
-    ================================================== -->
+    <!-- FILTERS -->
 
     <section
         class="filters"
@@ -1291,10 +1176,7 @@ body {
     </section>
 
 
-
-    <!-- =================================================
-         RESULTS
-    ================================================== -->
+    <!-- RESULTS -->
 
     <section>
 
@@ -1324,10 +1206,7 @@ body {
 </main>
 
 
-
-<!-- =====================================================
-     MODAL
-===================================================== -->
+<!-- MODAL -->
 
 <div
     class="modal"
@@ -1343,25 +1222,30 @@ body {
             ×
         </button>
 
+
         <div
             class="modal-eyebrow"
             id="modalEyebrow"
         ></div>
+
 
         <h2
             class="modal-title"
             id="modalTitle"
         ></h2>
 
+
         <div
             class="modal-location"
             id="modalLocation"
         ></div>
 
+
         <p
             class="modal-description"
             id="modalDescription"
         ></p>
+
 
         <div
             class="modal-grid"
@@ -1373,7 +1257,6 @@ body {
 </div>
 
 
-
 <script>
 
 /* =====================================================
@@ -1383,27 +1266,35 @@ body {
 const universities = [
 
 {
-name:"University of Buenos Aires",
-country:"Argentina",
-city:"Buenos Aires",
-fields:[
+name: "University of Buenos Aires",
+country: "Argentina",
+city: "Buenos Aires",
+
+fields: [
 "Business & Economics",
 "Social Sciences",
 "Science",
 "Law",
 "Medicine"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Lower-cost public option",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Lower-cost public option",
+
+keywords: [
 "uba",
 "argentina",
 "buenos aires",
@@ -1412,32 +1303,44 @@ keywords:[
 "science",
 "law"
 ],
-image:"https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "One of Latin America's best-known universities, located in the heart of Buenos Aires with a broad academic offering."
 },
 
+
 {
-name:"Universidad de Palermo",
-country:"Argentina",
-city:"Buenos Aires",
-fields:[
+name: "Universidad de Palermo",
+country: "Argentina",
+city: "Buenos Aires",
+
+fields: [
 "Business & Economics",
 "Communication & Media",
 "Arts & Design",
 "Law"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Private",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Private",
+
+keywords: [
 "palermo",
 "argentina",
 "buenos aires",
@@ -1446,32 +1349,44 @@ keywords:[
 "media",
 "design"
 ],
-image:"https://images.unsplash.com/photo-1612294037637-2c3c0f5e8f9e?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1612294037637-2c3c0f5e8f9e?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A private university in Buenos Aires with programs spanning business, design, communication and social sciences."
 },
 
+
 {
-name:"Tecnológico de Monterrey",
-country:"Mexico",
-city:"Monterrey",
-fields:[
+name: "Tecnológico de Monterrey",
+country: "Mexico",
+city: "Monterrey",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Communication & Media",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Private",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Private",
+
+keywords: [
 "tec",
 "monterrey",
 "mexico",
@@ -1480,32 +1395,44 @@ keywords:[
 "technology",
 "marketing"
 ],
-image:"https://images.unsplash.com/photo-1518659526054-190340b32735?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1518659526054-190340b32735?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major Mexican private university known for technology, entrepreneurship, business and innovation."
 },
 
+
 {
-name:"Universidad de los Andes",
-country:"Colombia",
-city:"Bogotá",
-fields:[
+name: "Universidad de los Andes",
+country: "Colombia",
+city: "Bogotá",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Social Sciences",
 "Arts & Design"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Private",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Private",
+
+keywords: [
 "andes",
 "colombia",
 "bogota",
@@ -1513,33 +1440,45 @@ keywords:[
 "engineering",
 "economics"
 ],
-image:"https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A leading Colombian university in Bogotá with a strong interdisciplinary and international profile."
 },
 
+
 {
-name:"University of Toronto",
-country:"Canada",
-city:"Toronto",
-fields:[
+name: "University of Toronto",
+country: "Canada",
+city: "Toronto",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Science",
 "Medicine & Health",
 "Social Sciences"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Higher international tuition",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Higher international tuition",
+
+keywords: [
 "toronto",
 "canada",
 "business",
@@ -1547,34 +1486,46 @@ keywords:[
 "science",
 "medicine"
 ],
-image:"https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A globally recognized Canadian research university offering a huge range of programs in a major international city."
 },
 
+
 {
-name:"University of British Columbia",
-country:"Canada",
-city:"Vancouver",
-fields:[
+name: "University of British Columbia",
+country: "Canada",
+city: "Vancouver",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Science",
 "Arts & Design",
 "Social Sciences"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Coastal",
 "Nature",
 "Urban"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Higher international tuition",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Higher international tuition",
+
+keywords: [
 "ubc",
 "vancouver",
 "canada",
@@ -1583,33 +1534,45 @@ keywords:[
 "nature",
 "coastal"
 ],
-image:"https://images.unsplash.com/photo-1548793977-f4e08d2e7b9e?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1548793977-f4e08d2e7b9e?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A research-intensive university in Vancouver combining a major urban setting with mountains, ocean and outdoor life."
 },
 
+
 {
-name:"McGill University",
-country:"Canada",
-city:"Montreal",
-fields:[
+name: "McGill University",
+country: "Canada",
+city: "Montreal",
+
+fields: [
 "Business & Economics",
 "Medicine & Health",
 "Science",
 "Social Sciences",
 "Arts & Design"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Higher international tuition",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Higher international tuition",
+
+keywords: [
 "mcgill",
 "montreal",
 "canada",
@@ -1617,31 +1580,43 @@ keywords:[
 "medicine",
 "science"
 ],
-image:"https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "An internationally oriented university in Montreal with a strong reputation across many disciplines."
 },
 
+
 {
-name:"University of Waterloo",
-country:"Canada",
-city:"Waterloo",
-fields:[
+name: "University of Waterloo",
+country: "Canada",
+city: "Waterloo",
+
+fields: [
 "Engineering & Technology",
 "Business & Economics",
 "Science"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Small city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Higher international tuition",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Higher international tuition",
+
+keywords: [
 "waterloo",
 "canada",
 "engineering",
@@ -1650,33 +1625,45 @@ keywords:[
 "business",
 "co-op"
 ],
-image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A Canadian university especially well known for technology, engineering, science and work-integrated learning."
 },
 
+
 {
-name:"New York University",
-country:"United States",
-city:"New York",
-fields:[
+name: "New York University",
+country: "United States",
+city: "New York",
+
+fields: [
 "Business & Economics",
 "Arts & Design",
 "Communication & Media",
 "Social Sciences",
 "Engineering & Technology"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Very strong",
-scholarships:"Available",
-cost:"Very high",
-keywords:[
+
+type: "Private",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Very high",
+
+keywords: [
 "nyu",
 "new york",
 "usa",
@@ -1687,32 +1674,44 @@ keywords:[
 "film",
 "arts"
 ],
-image:"https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A highly international university embedded directly in New York City, with especially broad options in business, media and the arts."
 },
 
+
 {
-name:"Boston University",
-country:"United States",
-city:"Boston",
-fields:[
+name: "Boston University",
+country: "United States",
+city: "Boston",
+
+fields: [
 "Business & Economics",
 "Communication & Media",
 "Medicine & Health",
 "Engineering & Technology",
 "Social Sciences"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Very high",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Very high",
+
+keywords: [
 "bu",
 "boston",
 "usa",
@@ -1721,16 +1720,21 @@ keywords:[
 "medicine",
 "engineering"
 ],
-image:"https://images.unsplash.com/photo-1501975558162-0be7b8ca95ea?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1501975558162-0be7b8ca95ea?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A large private research university in Boston with extensive academic and professional opportunities."
 },
 
+
 {
-name:"University of California, Los Angeles",
-country:"United States",
-city:"Los Angeles",
-fields:[
+name: "University of California, Los Angeles",
+country: "United States",
+city: "Los Angeles",
+
+fields: [
 "Arts & Design",
 "Business & Economics",
 "Engineering & Technology",
@@ -1738,17 +1742,24 @@ fields:[
 "Science",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "ucla",
 "los angeles",
 "usa",
@@ -1758,33 +1769,45 @@ keywords:[
 "media",
 "engineering"
 ],
-image:"https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major public research university in Los Angeles with strong connections to entertainment, technology and entrepreneurship."
 },
 
+
 {
-name:"University of Miami",
-country:"United States",
-city:"Miami",
-fields:[
+name: "University of Miami",
+country: "United States",
+city: "Miami",
+
+fields: [
 "Business & Economics",
 "Communication & Media",
 "Medicine & Health",
 "Arts & Design"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Coastal",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Very high",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Very high",
+
+keywords: [
 "miami",
 "usa",
 "business",
@@ -1793,33 +1816,45 @@ keywords:[
 "coastal",
 "warm"
 ],
-image:"https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A private university in South Florida offering a warm coastal setting and programs across business, media and health."
 },
 
+
 {
-name:"University of Oxford",
-country:"United Kingdom",
-city:"Oxford",
-fields:[
+name: "University of Oxford",
+country: "United Kingdom",
+city: "Oxford",
+
+fields: [
 "Business & Economics",
 "Social Sciences",
 "Science",
 "Medicine & Health",
 "Arts & Design"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Small city",
 "Historic",
 "Quiet"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "oxford",
 "uk",
 "united kingdom",
@@ -1828,33 +1863,45 @@ keywords:[
 "science",
 "history"
 ],
-image:"https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "One of the world's most historic universities, known for intensive academic study and a highly international community."
 },
 
+
 {
-name:"University College London",
-country:"United Kingdom",
-city:"London",
-fields:[
+name: "University College London",
+country: "United Kingdom",
+city: "London",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Arts & Design",
 "Social Sciences",
 "Science"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "ucl",
 "london",
 "uk",
@@ -1863,32 +1910,44 @@ keywords:[
 "business",
 "architecture"
 ],
-image:"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A highly international London university with extensive options across technology, business, design and social sciences."
 },
 
+
 {
-name:"King's College London",
-country:"United Kingdom",
-city:"London",
-fields:[
+name: "King's College London",
+country: "United Kingdom",
+city: "London",
+
+fields: [
 "Medicine & Health",
 "Social Sciences",
 "Business & Economics",
 "Arts & Design"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "kcl",
 "kings",
 "london",
@@ -1896,65 +1955,89 @@ keywords:[
 "business",
 "social sciences"
 ],
-image:"https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major London university particularly strong in health, social sciences and internationally focused programs."
 },
 
+
 {
-name:"University of Manchester",
-country:"United Kingdom",
-city:"Manchester",
-fields:[
+name: "University of Manchester",
+country: "United Kingdom",
+city: "Manchester",
+
+fields: [
 "Engineering & Technology",
 "Business & Economics",
 "Science",
 "Social Sciences"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "manchester",
 "uk",
 "engineering",
 "business",
 "science"
 ],
-image:"https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A large research university in Manchester with broad international opportunities and strong STEM offerings."
 },
 
+
 {
-name:"IE University",
-country:"Spain",
-city:"Madrid",
-fields:[
+name: "IE University",
+country: "Spain",
+city: "Madrid",
+
+fields: [
 "Business & Economics",
 "Communication & Media",
 "Law",
 "Arts & Design",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Private",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "ie",
 "madrid",
 "spain",
@@ -1963,34 +2046,46 @@ keywords:[
 "marketing",
 "media"
 ],
-image:"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "An international private university with a strong focus on business, entrepreneurship, innovation and global careers."
 },
 
+
 {
-name:"Universitat de Barcelona",
-country:"Spain",
-city:"Barcelona",
-fields:[
+name: "Universitat de Barcelona",
+country: "Spain",
+city: "Barcelona",
+
+fields: [
 "Business & Economics",
 "Science",
 "Medicine & Health",
 "Social Sciences",
 "Arts & Design"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Coastal",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "barcelona",
 "spain",
 "economics",
@@ -1998,64 +2093,87 @@ keywords:[
 "science",
 "medicine"
 ],
-image:"https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major public university in Barcelona with broad academic offerings and a strong international profile."
 },
 
+
 {
-name:"ESADE",
-country:"Spain",
-city:"Barcelona",
-fields:[
+name: "ESADE",
+country: "Spain",
+city: "Barcelona",
+
+fields: [
 "Business & Economics",
 "Law",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Coastal",
 "Urban"
 ],
-type:"Private",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Private",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "esade",
 "barcelona",
 "spain",
 "business",
 "economics",
-"law",
-"mba"
+"law"
 ],
-image:"https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "An internationally oriented institution in Barcelona particularly known for business, management and law."
 },
 
+
 {
-name:"Bocconi University",
-country:"Italy",
-city:"Milan",
-fields:[
+name: "Bocconi University",
+country: "Italy",
+city: "Milan",
+
+fields: [
 "Business & Economics",
 "Social Sciences",
 "Law"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Private",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "bocconi",
 "milan",
 "italy",
@@ -2064,32 +2182,44 @@ keywords:[
 "finance",
 "management"
 ],
-image:"https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "An internationally focused Milan university specializing in economics, management, finance and related social sciences."
 },
 
+
 {
-name:"Politecnico di Milano",
-country:"Italy",
-city:"Milan",
-fields:[
+name: "Politecnico di Milano",
+country: "Italy",
+city: "Milan",
+
+fields: [
 "Engineering & Technology",
 "Arts & Design",
 "Architecture",
 "Science"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "politecnico",
 "milan",
 "italy",
@@ -2097,32 +2227,44 @@ keywords:[
 "architecture",
 "design"
 ],
-image:"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A leading Italian institution for engineering, architecture and design in Milan."
 },
 
+
 {
-name:"University of Amsterdam",
-country:"Netherlands",
-city:"Amsterdam",
-fields:[
+name: "University of Amsterdam",
+country: "Netherlands",
+city: "Amsterdam",
+
+fields: [
 "Business & Economics",
 "Social Sciences",
 "Science",
 "Communication & Media"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "amsterdam",
 "netherlands",
 "economics",
@@ -2130,31 +2272,43 @@ keywords:[
 "media",
 "science"
 ],
-image:"https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A highly international Dutch university in Amsterdam with extensive English-taught study opportunities."
 },
 
+
 {
-name:"Delft University of Technology",
-country:"Netherlands",
-city:"Delft",
-fields:[
+name: "Delft University of Technology",
+country: "Netherlands",
+city: "Delft",
+
+fields: [
 "Engineering & Technology",
 "Science",
 "Architecture"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Small city",
 "Urban",
 "Quiet"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "delft",
 "tu delft",
 "netherlands",
@@ -2162,31 +2316,43 @@ keywords:[
 "technology",
 "architecture"
 ],
-image:"https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A technology-focused Dutch university known for engineering, architecture and scientific innovation."
 },
 
+
 {
-name:"Technical University of Munich",
-country:"Germany",
-city:"Munich",
-fields:[
+name: "Technical University of Munich",
+country: "Germany",
+city: "Munich",
+
+fields: [
 "Engineering & Technology",
 "Science",
 "Business & Economics"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Nature"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Lower public tuition structure",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Lower public tuition structure",
+
+keywords: [
 "tum",
 "munich",
 "germany",
@@ -2195,64 +2361,43 @@ keywords:[
 "science",
 "business"
 ],
-image:"https://images.unsplash.com/photo-1595867818082-083862f3d630?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1595867818082-083862f3d630?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major German technical university with strong engineering, science, technology and entrepreneurship connections."
 },
 
-{
-name:"Ludwig Maximilian University of Munich",
-country:"Germany",
-city:"Munich",
-fields:[
-"Science",
-"Social Sciences",
-"Business & Economics",
-"Medicine & Health"
-],
-climate:"cold",
-environment:[
-"Big city",
-"Urban",
-"Nature"
-],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Lower public tuition structure",
-keywords:[
-"lmu",
-"munich",
-"germany",
-"science",
-"medicine",
-"economics"
-],
-image:"https://images.unsplash.com/photo-1595867818082-083862f3d630?auto=format&fit=crop&w=1200&q=85",
-description:
-"A large public research university in Munich with a wide academic portfolio."
-},
 
 {
-name:"ETH Zurich",
-country:"Switzerland",
-city:"Zurich",
-fields:[
+name: "ETH Zurich",
+country: "Switzerland",
+city: "Zurich",
+
+fields: [
 "Engineering & Technology",
 "Science",
 "Architecture"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Nature",
 "Urban"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "eth",
 "zurich",
 "switzerland",
@@ -2260,97 +2405,133 @@ keywords:[
 "science",
 "technology"
 ],
-image:"https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A globally recognized Swiss institution specializing in science, engineering, technology and architecture."
 },
 
+
 {
-name:"University of Copenhagen",
-country:"Denmark",
-city:"Copenhagen",
-fields:[
+name: "University of Copenhagen",
+country: "Denmark",
+city: "Copenhagen",
+
+fields: [
 "Science",
 "Medicine & Health",
 "Social Sciences",
 "Business & Economics"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Coastal",
 "Urban",
 "Quiet"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "copenhagen",
 "denmark",
 "science",
 "medicine",
 "business"
 ],
-image:"https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major Nordic research university in a coastal European capital."
 },
 
+
 {
-name:"University of Lisbon",
-country:"Portugal",
-city:"Lisbon",
-fields:[
+name: "University of Lisbon",
+country: "Portugal",
+city: "Lisbon",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Arts & Design",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Coastal",
 "Urban"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "lisbon",
 "portugal",
 "business",
 "engineering",
 "design"
 ],
-image:"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A large Portuguese university in a sunny coastal capital with broad academic options."
 },
 
+
 {
-name:"University of Tokyo",
-country:"Japan",
-city:"Tokyo",
-fields:[
+name: "University of Tokyo",
+country: "Japan",
+city: "Tokyo",
+
+fields: [
 "Science",
 "Engineering & Technology",
 "Business & Economics",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "tokyo",
 "japan",
 "utokyo",
@@ -2359,32 +2540,44 @@ keywords:[
 "science",
 "technology"
 ],
-image:"https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "Japan's leading national university, located in one of the world's largest and most dynamic cities."
 },
 
+
 {
-name:"Waseda University",
-country:"Japan",
-city:"Tokyo",
-fields:[
+name: "Waseda University",
+country: "Japan",
+city: "Tokyo",
+
+fields: [
 "Business & Economics",
 "Social Sciences",
 "Communication & Media",
 "Engineering & Technology"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate to high",
-keywords:[
+
+type: "Private",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Moderate to high",
+
+keywords: [
 "waseda",
 "tokyo",
 "japan",
@@ -2392,32 +2585,44 @@ keywords:[
 "economics",
 "media"
 ],
-image:"https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A highly international private university in Tokyo with broad programs and a large international student community."
 },
 
+
 {
-name:"Keio University",
-country:"Japan",
-city:"Tokyo",
-fields:[
+name: "Keio University",
+country: "Japan",
+city: "Tokyo",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Social Sciences",
 "Communication & Media"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate to high",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate to high",
+
+keywords: [
 "keio",
 "tokyo",
 "japan",
@@ -2425,65 +2630,44 @@ keywords:[
 "economics",
 "technology"
 ],
-image:"https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "One of Japan's best-known private universities with strong connections to business and technology."
 },
 
-{
-name:"Kyoto University",
-country:"Japan",
-city:"Kyoto",
-fields:[
-"Science",
-"Engineering & Technology",
-"Medicine & Health",
-"Social Sciences"
-],
-climate:"cold",
-environment:[
-"Big city",
-"Historic",
-"Quiet",
-"Nature"
-],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
-"kyoto",
-"japan",
-"science",
-"engineering",
-"medicine"
-],
-image:"https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=85",
-description:
-"A prestigious Japanese research university in the historic city of Kyoto."
-},
 
 {
-name:"Seoul National University",
-country:"South Korea",
-city:"Seoul",
-fields:[
+name: "Seoul National University",
+country: "South Korea",
+city: "Seoul",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Science",
 "Social Sciences"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "snu",
 "seoul",
 "korea",
@@ -2492,32 +2676,44 @@ keywords:[
 "engineering",
 "economics"
 ],
-image:"https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A leading South Korean national university located in Seoul with strong academic and research programs."
 },
 
+
 {
-name:"Yonsei University",
-country:"South Korea",
-city:"Seoul",
-fields:[
+name: "Yonsei University",
+country: "South Korea",
+city: "Seoul",
+
+fields: [
 "Business & Economics",
 "Communication & Media",
 "Social Sciences",
 "Engineering & Technology"
 ],
-climate:"cold",
-environment:[
+
+climate: "cold",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Private",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate to high",
-keywords:[
+
+type: "Private",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "Moderate to high",
+
+keywords: [
 "yonsei",
 "seoul",
 "korea",
@@ -2525,32 +2721,44 @@ keywords:[
 "media",
 "economics"
 ],
-image:"https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A globally oriented private university in Seoul with strong business, media and social science programs."
 },
 
+
 {
-name:"National University of Singapore",
-country:"Singapore",
-city:"Singapore",
-fields:[
+name: "National University of Singapore",
+country: "Singapore",
+city: "Singapore",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Science",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "nus",
 "singapore",
 "business",
@@ -2558,67 +2766,45 @@ keywords:[
 "technology",
 "economics"
 ],
-image:"https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A leading Asian university in a global business and technology hub."
 },
 
-{
-name:"University of Hong Kong",
-country:"Hong Kong",
-city:"Hong Kong",
-fields:[
-"Business & Economics",
-"Engineering & Technology",
-"Medicine & Health",
-"Social Sciences"
-],
-climate:"warm",
-environment:[
-"Big city",
-"Coastal",
-"Urban",
-"Fast-paced"
-],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
-"hku",
-"hong kong",
-"business",
-"engineering",
-"medicine",
-"economics"
-],
-image:"https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&w=1200&q=85",
-description:
-"A highly international university in one of Asia's major financial and cultural centers."
-},
 
 {
-name:"University of Melbourne",
-country:"Australia",
-city:"Melbourne",
-fields:[
+name: "University of Melbourne",
+country: "Australia",
+city: "Melbourne",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Arts & Design",
 "Science",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Coastal"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "melbourne",
 "australia",
 "business",
@@ -2626,33 +2812,45 @@ keywords:[
 "design",
 "science"
 ],
-image:"https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A major Australian university in a multicultural city known for arts, business, technology and research."
 },
 
+
 {
-name:"University of Sydney",
-country:"Australia",
-city:"Sydney",
-fields:[
+name: "University of Sydney",
+country: "Australia",
+city: "Sydney",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Medicine & Health",
 "Arts & Design"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Coastal",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
+
+type: "Public",
+
+international: "Very strong",
+
+scholarships: "Available",
+
+cost: "High",
+
+keywords: [
 "sydney",
 "australia",
 "business",
@@ -2660,66 +2858,45 @@ keywords:[
 "medicine",
 "coastal"
 ],
-image:"https://images.unsplash.com/photo-1506973035872-a4f3e8d8d7b3?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1506973035872-a4f3e8d8d7b3?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A highly international Australian university in a major coastal city."
 },
 
-{
-name:"University of Auckland",
-country:"New Zealand",
-city:"Auckland",
-fields:[
-"Business & Economics",
-"Engineering & Technology",
-"Science",
-"Social Sciences"
-],
-climate:"warm",
-environment:[
-"Big city",
-"Coastal",
-"Nature"
-],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
-"auckland",
-"new zealand",
-"business",
-"engineering",
-"nature",
-"coastal"
-],
-image:"https://images.unsplash.com/photo-1507699622108-4be3abd695ad?auto=format&fit=crop&w=1200&q=85",
-description:
-"New Zealand's largest university in a city surrounded by coastline and natural landscapes."
-},
 
 {
-name:"University of São Paulo",
-country:"Brazil",
-city:"São Paulo",
-fields:[
+name: "University of São Paulo",
+country: "Brazil",
+city: "São Paulo",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Science",
 "Medicine & Health",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Fast-paced"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Lower-cost public option",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Lower-cost public option",
+
+keywords: [
 "sao paulo",
 "brazil",
 "usp",
@@ -2727,32 +2904,44 @@ keywords:[
 "engineering",
 "science"
 ],
-image:"https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "One of Brazil's major public research universities in one of Latin America's largest cities."
 },
 
+
 {
-name:"Pontificia Universidad Católica de Chile",
-country:"Chile",
-city:"Santiago",
-fields:[
+name: "Pontificia Universidad Católica de Chile",
+country: "Chile",
+city: "Santiago",
+
+fields: [
 "Business & Economics",
 "Engineering & Technology",
 "Arts & Design",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Urban",
 "Nature"
 ],
-type:"Private",
-international:"Strong",
-scholarships:"Available",
-cost:"Private",
-keywords:[
+
+type: "Private",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Private",
+
+keywords: [
 "puc chile",
 "santiago",
 "chile",
@@ -2760,64 +2949,44 @@ keywords:[
 "engineering",
 "economics"
 ],
-image:"https://images.unsplash.com/photo-1534190239940-9ba8944ea261?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1534190239940-9ba8944ea261?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A leading Chilean university in Santiago with strong programs in business, engineering and social sciences."
 },
 
-{
-name:"University of the Andes",
-country:"Bolivia",
-city:"La Paz",
-fields:[
-"Business & Economics",
-"Engineering & Technology",
-"Social Sciences",
-"Law"
-],
-climate:"cold",
-environment:[
-"Big city",
-"Urban",
-"Nature"
-],
-type:"Private",
-international:"Developing",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
-"bolivia",
-"la paz",
-"business",
-"engineering",
-"economics"
-],
-image:"https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=1200&q=85",
-description:
-"A Bolivian university option for students interested in studying within the region."
-},
 
 {
-name:"University of Cape Town",
-country:"South Africa",
-city:"Cape Town",
-fields:[
+name: "University of Cape Town",
+country: "South Africa",
+city: "Cape Town",
+
+fields: [
 "Business & Economics",
 "Science",
 "Engineering & Technology",
 "Social Sciences"
 ],
-climate:"warm",
-environment:[
+
+climate: "warm",
+
+environment: [
 "Big city",
 "Coastal",
 "Nature"
 ],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
+
+type: "Public",
+
+international: "Strong",
+
+scholarships: "Available",
+
+cost: "Moderate",
+
+keywords: [
 "cape town",
 "south africa",
 "uct",
@@ -2825,172 +2994,12 @@ keywords:[
 "science",
 "engineering"
 ],
-image:"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1200&q=85",
+
+image:
+"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1200&q=85",
+
 description:
 "A leading African university in a spectacular coastal city with strong research and international links."
-},
-
-{
-name:"University of Nairobi",
-country:"Kenya",
-city:"Nairobi",
-fields:[
-"Business & Economics",
-"Science",
-"Engineering & Technology",
-"Social Sciences"
-],
-climate:"warm",
-environment:[
-"Big city",
-"Urban",
-"Nature"
-],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
-"nairobi",
-"kenya",
-"business",
-"science",
-"engineering"
-],
-image:"https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=1200&q=85",
-description:
-"A major East African university in Nairobi with broad academic options."
-},
-
-{
-name:"University of Zurich",
-country:"Switzerland",
-city:"Zurich",
-fields:[
-"Business & Economics",
-"Science",
-"Medicine & Health",
-"Social Sciences"
-],
-climate:"cold",
-environment:[
-"Big city",
-"Nature",
-"Urban"
-],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
-"zurich",
-"switzerland",
-"economics",
-"science",
-"medicine"
-],
-image:"https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1200&q=85",
-description:
-"A major Swiss research university with broad programs and an international academic environment."
-},
-
-{
-name:"Trinity College Dublin",
-country:"Ireland",
-city:"Dublin",
-fields:[
-"Business & Economics",
-"Social Sciences",
-"Science",
-"Arts & Design"
-],
-climate:"cold",
-environment:[
-"Big city",
-"Urban",
-"Coastal"
-],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
-"trinity",
-"dublin",
-"ireland",
-"business",
-"economics",
-"science"
-],
-image:"https://images.unsplash.com/photo-1549918864-48ac9f5f5d3d?auto=format&fit=crop&w=1200&q=85",
-description:
-"Ireland's best-known university, located in the center of Dublin."
-},
-
-{
-name:"University of Vienna",
-country:"Austria",
-city:"Vienna",
-fields:[
-"Business & Economics",
-"Social Sciences",
-"Science",
-"Arts & Design"
-],
-climate:"cold",
-environment:[
-"Big city",
-"Historic",
-"Urban"
-],
-type:"Public",
-international:"Strong",
-scholarships:"Available",
-cost:"Moderate",
-keywords:[
-"vienna",
-"austria",
-"business",
-"economics",
-"science",
-"arts"
-],
-image:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=1200&q=85",
-description:
-"A historic European university in Vienna with a broad range of academic disciplines."
-},
-
-{
-name:"University of Hong Kong",
-country:"Hong Kong",
-city:"Hong Kong",
-fields:[
-"Business & Economics",
-"Engineering & Technology",
-"Medicine & Health",
-"Social Sciences"
-],
-climate:"warm",
-environment:[
-"Big city",
-"Coastal",
-"Urban",
-"Fast-paced"
-],
-type:"Public",
-international:"Very strong",
-scholarships:"Available",
-cost:"High",
-keywords:[
-"hku",
-"hong kong",
-"business",
-"engineering",
-"medicine"
-],
-image:"https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&w=1200&q=85",
-description:
-"A highly international university in one of Asia's major financial and cultural centers."
 }
 
 ];
@@ -3001,48 +3010,32 @@ description:
 ===================================================== */
 
 const grid =
-document.getElementById(
-    "universityGrid"
-);
+document.getElementById("universityGrid");
 
 const searchInput =
-document.getElementById(
-    "searchInput"
-);
+document.getElementById("searchInput");
 
 const resultCount =
-document.getElementById(
-    "resultCount"
-);
+document.getElementById("resultCount");
 
 const resetButton =
-document.getElementById(
-    "resetButton"
-);
+document.getElementById("resetButton");
 
 const recommendedButton =
-document.getElementById(
-    "recommendedButton"
-);
+document.getElementById("recommendedButton");
 
 const filters =
-document.querySelectorAll(
-    ".filter"
-);
+document.querySelectorAll(".filter");
 
 const modal =
-document.getElementById(
-    "modal"
-);
+document.getElementById("modal");
 
 const closeModal =
-document.getElementById(
-    "closeModal"
-);
+document.getElementById("closeModal");
 
 
 /* =====================================================
-   ONBOARDING DATA
+   ONBOARDING
 ===================================================== */
 
 let onboarding = {};
@@ -3057,15 +3050,14 @@ if (savedAnswers) {
     try {
 
         onboarding =
-            JSON.parse(
-                savedAnswers
-            );
+            JSON.parse(savedAnswers);
 
-    } catch (error) {
+    } catch {
 
         onboarding = {};
 
     }
+
 }
 
 
@@ -3096,15 +3088,13 @@ let recommendedMode = false;
 
 function normalize(value) {
 
-    return String(
-        value || ""
-    )
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(
-        /[\u0300-\u036f]/g,
-        ""
-    );
+    return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        );
 
 }
 
@@ -3129,12 +3119,15 @@ function getMatchScore(university) {
 
         possible += 3;
 
-        const study =
-            onboarding.study[0];
+        const studies =
+            onboarding.study.map(normalize);
 
         if (
-            university.fields.includes(
-                study
+            university.fields.some(
+                field =>
+                studies.includes(
+                    normalize(field)
+                )
             )
         ) {
 
@@ -3154,13 +3147,13 @@ function getMatchScore(university) {
 
         possible += 3;
 
-        const selectedCountries =
+        const countries =
             onboarding.countries.map(
                 normalize
             );
 
         if (
-            selectedCountries.includes(
+            countries.includes(
                 normalize(
                     university.country
                 )
@@ -3183,7 +3176,7 @@ function getMatchScore(university) {
 
         possible += 2;
 
-        const environment =
+        const preferred =
             onboarding.environment.map(
                 normalize
             );
@@ -3191,7 +3184,7 @@ function getMatchScore(university) {
         if (
             university.environment.some(
                 item =>
-                environment.includes(
+                preferred.includes(
                     normalize(item)
                 )
             )
@@ -3211,12 +3204,12 @@ function getMatchScore(university) {
         onboarding.priorities.length
     ) {
 
-        possible += 2;
-
         const priorities =
             onboarding.priorities.map(
                 normalize
             );
+
+        possible += 2;
 
         if (
             priorities.includes(
@@ -3242,9 +3235,7 @@ function getMatchScore(university) {
     }
 
 
-    if (
-        possible === 0
-    ) {
+    if (!possible) {
 
         return 70;
 
@@ -3262,7 +3253,7 @@ function getMatchScore(university) {
 
 
 /* =====================================================
-   SEARCH MATCH
+   SEARCH
 ===================================================== */
 
 function matchesSearch(
@@ -3271,34 +3262,22 @@ function matchesSearch(
 ) {
 
     if (!query.trim()) {
-
         return true;
-
     }
-
 
     const searchable = [
 
         university.name,
-
         university.country,
-
         university.city,
-
         university.type,
-
         university.climate,
-
         university.international,
-
         university.scholarships,
-
         university.cost,
 
         ...university.fields,
-
         ...university.environment,
-
         ...university.keywords
 
     ]
@@ -3321,7 +3300,7 @@ function matchesSearch(
 
 
 /* =====================================================
-   FILTER MATCH
+   FILTER
 ===================================================== */
 
 function matchesFilter(
@@ -3329,8 +3308,7 @@ function matchesFilter(
 ) {
 
     if (
-        activeFilter ===
-        "all"
+        activeFilter === "all"
     ) {
 
         return true;
@@ -3339,34 +3317,25 @@ function matchesFilter(
 
 
     if (
-        activeFilter ===
-        "warm"
+        activeFilter === "warm"
     ) {
 
-        return (
-            university.climate ===
-            "warm"
-        );
+        return university.climate === "warm";
 
     }
 
 
     if (
-        activeFilter ===
-        "cold"
+        activeFilter === "cold"
     ) {
 
-        return (
-            university.climate ===
-            "cold"
-        );
+        return university.climate === "cold";
 
     }
 
 
     if (
-        activeFilter ===
-        "city"
+        activeFilter === "city"
     ) {
 
         return university.environment.includes(
@@ -3384,21 +3353,17 @@ function matchesFilter(
 
 
 /* =====================================================
-   GET RESULTS
+   RESULTS
 ===================================================== */
 
 function getResults() {
-
-    const query =
-        searchInput.value;
-
 
     let results =
         universities.filter(
             university =>
             matchesSearch(
                 university,
-                query
+                searchInput.value
             ) &&
             matchesFilter(
                 university
@@ -3406,15 +3371,10 @@ function getResults() {
         );
 
 
-    if (
-        recommendedMode
-    ) {
+    if (recommendedMode) {
 
         results.sort(
-            (
-                a,
-                b
-            ) =>
+            (a,b) =>
             getMatchScore(b) -
             getMatchScore(a)
         );
@@ -3437,41 +3397,39 @@ function render() {
         getResults();
 
 
-    grid.innerHTML =
-        "";
+    grid.innerHTML = "";
 
 
     resultCount.textContent =
         `${results.length} ${
             results.length === 1
-                ? "result"
-                : "results"
+            ? "result"
+            : "results"
         }`;
 
 
-    if (
-        results.length === 0
-    ) {
+    if (!results.length) {
 
         grid.innerHTML = `
 
             <div class="empty">
 
                 <h2>
-                    No postcards found.
+                    Nothing here yet.
                 </h2>
 
                 <p>
-                    Try searching for a country,
-                    city, university, field of study,
-                    climate or interest.
+                    Try another country,
+                    city, university or field.
+                    Your next postcard might
+                    be somewhere unexpected.
                 </p>
 
                 <button
                     class="control-button"
                     onclick="resetEverything()"
                 >
-                    SHOW ALL UNIVERSITIES
+                    SHOW ALL
                 </button>
 
             </div>
@@ -3512,15 +3470,15 @@ function render() {
                 <button
                     class="save-button ${
                         isSaved
-                            ? "saved"
-                            : ""
+                        ? "saved"
+                        : ""
                     }"
                     aria-label="Save university"
                 >
                     ${
                         isSaved
-                            ? "♥"
-                            : "♡"
+                        ? "♥"
+                        : "♡"
                     }
                 </button>
 
@@ -3562,7 +3520,8 @@ function render() {
                     </h2>
 
                     <div class="card-location">
-                        ${university.city}, ${university.country}
+                        ${university.city},
+                        ${university.country}
                     </div>
 
 
@@ -3571,18 +3530,19 @@ function render() {
                         ${university.fields
                             .slice(0,3)
                             .map(
-                                field =>
-                                `<span class="tag">
-                                    ${field
-                                        .replace(
-                                            " & Economics",
-                                            ""
-                                        )
-                                        .replace(
-                                            " & Technology",
-                                            ""
-                                        )}
-                                </span>`
+                                field => `
+                                    <span class="tag">
+                                        ${field
+                                            .replace(
+                                                " & Economics",
+                                                ""
+                                            )
+                                            .replace(
+                                                " & Technology",
+                                                ""
+                                            )}
+                                    </span>
+                                `
                             )
                             .join("")
                         }
@@ -3652,7 +3612,7 @@ function render() {
 
             saveButton.addEventListener(
                 "click",
-                function(event) {
+                event => {
 
                     event.stopPropagation();
 
@@ -3668,7 +3628,7 @@ function render() {
 
             card.addEventListener(
                 "click",
-                function() {
+                () => {
 
                     openUniversity(
                         university
@@ -3678,9 +3638,7 @@ function render() {
             );
 
 
-            grid.appendChild(
-                card
-            );
+            grid.appendChild(card);
 
         }
     );
@@ -3762,12 +3720,6 @@ function openUniversity(
         university.description;
 
 
-    const modalGrid =
-        document.getElementById(
-            "modalGrid"
-        );
-
-
     const information = [
 
         [
@@ -3786,7 +3738,7 @@ function openUniversity(
         ],
 
         [
-            "INTERNATIONAL PROFILE",
+            "INTERNATIONAL",
             university.international
         ],
 
@@ -3796,24 +3748,27 @@ function openUniversity(
         ],
 
         [
-            "COST CATEGORY",
+            "COST",
             university.cost
         ],
 
         [
-            "PERSONAL MATCH",
+            "YOUR MATCH",
             `${getMatchScore(university)}%`
         ],
 
         [
-            "UNIVERSITY TYPE",
+            "TYPE",
             university.type
         ]
 
     ];
 
 
-    modalGrid.innerHTML =
+    document.getElementById(
+        "modalGrid"
+    ).innerHTML =
+
         information
         .map(
             item => `
@@ -3844,7 +3799,7 @@ function openUniversity(
 
 closeModal.addEventListener(
     "click",
-    function() {
+    () => {
 
         modal.classList.remove(
             "active"
@@ -3856,7 +3811,7 @@ closeModal.addEventListener(
 
 modal.addEventListener(
     "click",
-    function(event) {
+    event => {
 
         if (
             event.target === modal
@@ -3881,7 +3836,7 @@ filters.forEach(
 
         filter.addEventListener(
             "click",
-            function() {
+            () => {
 
                 filters.forEach(
                     item =>
@@ -3915,51 +3870,32 @@ filters.forEach(
 
 searchInput.addEventListener(
     "input",
-    function() {
-
-        render();
-
-    }
+    render
 );
 
 
 /* =====================================================
-   RECOMMENDED
+   FOR ME
 ===================================================== */
 
 recommendedButton.addEventListener(
     "click",
-    function() {
+    () => {
 
         recommendedMode =
             !recommendedMode;
 
 
-        if (
+        recommendedButton.classList.toggle(
+            "active",
             recommendedMode
-        ) {
+        );
 
-            recommendedButton.textContent =
-                "FOR YOU";
 
-            recommendedButton.style.background =
-                "#4c4038";
-
-            recommendedButton.style.color =
-                "white";
-
-        } else {
-
-            recommendedButton.textContent =
-                "FOR ME";
-
-            recommendedButton.style.background =
-                "";
-
-            recommendedButton.style.color =
-                "";
-
-        }
+        recommendedButton.textContent =
+            recommendedMode
+            ? "FOR YOU"
+            : "FOR ME";
 
 
         render();
@@ -3974,24 +3910,18 @@ recommendedButton.addEventListener(
 
 function resetEverything() {
 
-    searchInput.value =
-        "";
+    searchInput.value = "";
 
-    activeFilter =
-        "all";
+    activeFilter = "all";
 
-    recommendedMode =
-        false;
+    recommendedMode = false;
 
 
     filters.forEach(
-        filter => {
-
-            filter.classList.remove(
-                "active"
-            );
-
-        }
+        filter =>
+        filter.classList.remove(
+            "active"
+        )
     );
 
 
@@ -4004,14 +3934,13 @@ function resetEverything() {
         );
 
 
+    recommendedButton.classList.remove(
+        "active"
+    );
+
+
     recommendedButton.textContent =
         "FOR ME";
-
-    recommendedButton.style.background =
-        "";
-
-    recommendedButton.style.color =
-        "";
 
 
     render();
@@ -4026,14 +3955,8 @@ resetButton.addEventListener(
 
 
 /* =====================================================
-   PROFILE TEXT
+   PROFILE
 ===================================================== */
-
-const profileText =
-document.getElementById(
-    "profileText"
-);
-
 
 if (
     onboarding.city
@@ -4046,7 +3969,29 @@ if (
 
 
 /* =====================================================
-   INITIAL RENDER
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            modal.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL
 ===================================================== */
 
 render();
@@ -4054,5 +3999,4 @@ render();
 </script>
 
 </body>
-
 </html>
