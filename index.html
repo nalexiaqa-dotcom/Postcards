@@ -34,19 +34,30 @@
       position: fixed;
       inset: 0;
       z-index: -2;
+      overflow: hidden;
+      background: #e8e1d5;
+    }
+
+    .background-image {
+      position: absolute;
+      inset: 0;
 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
 
-      transition:
-        background-image 1.2s ease,
-        transform 1.5s ease;
+      opacity: 0;
+
+      transition: opacity 1.5s ease-in-out;
 
       transform: scale(1.02);
     }
 
-    .background::after {
+    .background-image.active {
+      opacity: 1;
+    }
+
+    .background-image::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -341,6 +352,128 @@
     }
 
     /* =========================
+       LOGIN / SIGNUP SCREEN
+    ========================= */
+
+    .auth-screen {
+      position: fixed;
+      inset: 0;
+
+      z-index: 100;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      background: #e8e1d5;
+    }
+
+    .auth-screen.active {
+      display: flex;
+    }
+
+    .auth-card {
+      width: min(480px, 92vw);
+
+      background: #f4efe5;
+
+      padding: 45px;
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.18);
+
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .auth-card h2 {
+      margin-top: 35px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 52px;
+
+      font-weight: 400;
+
+      line-height: 0.95;
+    }
+
+    .auth-form {
+      margin-top: 35px;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 14px;
+    }
+
+    .auth-form input {
+      width: 100%;
+
+      padding: 15px;
+
+      border: 1px solid rgba(0, 0, 0, 0.25);
+
+      background: transparent;
+
+      font-family: inherit;
+
+      font-size: 13px;
+
+      outline: none;
+    }
+
+    .auth-form input:focus {
+      border-color: #222;
+    }
+
+    .auth-submit {
+      margin-top: 5px;
+
+      width: 100%;
+
+      padding: 16px;
+
+      border: 1px solid #222;
+
+      background: #222;
+
+      color: #f4efe5;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.16em;
+
+      cursor: pointer;
+    }
+
+    .auth-back {
+      margin-top: 20px;
+
+      border: none;
+
+      background: none;
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.14em;
+
+      opacity: 0.6;
+    }
+
+    /* =========================
        RESPONSIVE
     ========================= */
 
@@ -387,6 +520,14 @@
         top: 18px;
         left: 18px;
       }
+
+      .auth-card {
+        padding: 28px;
+      }
+
+      .auth-card h2 {
+        font-size: 42px;
+      }
     }
 
     @media (max-height: 650px) {
@@ -410,17 +551,35 @@
        CHANGING BACKGROUND
   ========================= -->
 
-  <div class="background" id="background"></div>
+  <div class="background">
 
-  <!-- LOCATION OF CURRENT PHOTO -->
+    <div
+      class="background-image active"
+      id="backgroundOne"
+    ></div>
 
-  <div class="photo-location" id="photoLocation">
+    <div
+      class="background-image"
+      id="backgroundTwo"
+    ></div>
+
+  </div>
+
+
+  <!-- =========================
+       PHOTO LOCATION
+  ========================= -->
+
+  <div
+    class="photo-location"
+    id="photoLocation"
+  >
     Paris, France
   </div>
 
 
   <!-- =========================
-       PAGE
+       MAIN PAGE
   ========================= -->
 
   <main class="page">
@@ -480,6 +639,7 @@
           <div class="back-left">
 
             <div>
+
               <div class="brand">
                 POSTCARDS
               </div>
@@ -488,6 +648,7 @@
                 Let's<br>
                 find out.
               </h2>
+
             </div>
 
 
@@ -531,6 +692,128 @@
   </main>
 
 
+  <!-- =========================
+       LOGIN SCREEN
+  ========================= -->
+
+  <div
+    class="auth-screen"
+    id="loginScreen"
+  >
+
+    <div class="auth-card">
+
+      <div class="brand">
+        POSTCARDS
+      </div>
+
+      <h2>
+        Welcome<br>
+        back.
+      </h2>
+
+      <form
+        class="auth-form"
+        onsubmit="loginSubmit(event)"
+      >
+
+        <input
+          type="email"
+          placeholder="Email"
+          required
+        >
+
+        <input
+          type="password"
+          placeholder="Password"
+          required
+        >
+
+        <button
+          type="submit"
+          class="auth-submit"
+        >
+          Log in
+        </button>
+
+      </form>
+
+      <button
+        class="auth-back"
+        onclick="closeAuth()"
+      >
+        ← Back to postcard
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SIGN UP SCREEN
+  ========================= -->
+
+  <div
+    class="auth-screen"
+    id="signupScreen"
+  >
+
+    <div class="auth-card">
+
+      <div class="brand">
+        POSTCARDS
+      </div>
+
+      <h2>
+        Start<br>
+        your journey.
+      </h2>
+
+      <form
+        class="auth-form"
+        onsubmit="signupSubmit(event)"
+      >
+
+        <input
+          type="text"
+          placeholder="Name"
+          required
+        >
+
+        <input
+          type="email"
+          placeholder="Email"
+          required
+        >
+
+        <input
+          type="password"
+          placeholder="Password"
+          required
+        >
+
+        <button
+          type="submit"
+          class="auth-submit"
+        >
+          Sign up
+        </button>
+
+      </form>
+
+      <button
+        class="auth-back"
+        onclick="closeAuth()"
+      >
+        ← Back to postcard
+      </button>
+
+    </div>
+
+  </div>
+
+
   <script>
 
     /* =========================
@@ -540,58 +823,143 @@
     const backgrounds = [
 
       {
-        image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=85",
-        location: "Paris, France"
+        image:
+          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=85",
+
+        location:
+          "Paris, France"
       },
 
       {
-        image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2000&q=85",
-        location: "Barcelona, Spain"
+        image:
+          "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2000&q=85",
+
+        location:
+          "Barcelona, Spain"
       },
 
       {
-        image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=85",
-        location: "London, United Kingdom"
+        image:
+          "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=85",
+
+        location:
+          "London, United Kingdom"
       },
 
       {
-        image: "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2000&q=85",
-        location: "New York City, USA"
+        image:
+          "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2000&q=85",
+
+        location:
+          "New York City, USA"
       },
 
       {
-        image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=2000&q=85",
-        location: "Tokyo, Japan"
+        image:
+          "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=2000&q=85",
+
+        location:
+          "Tokyo, Japan"
       }
 
     ];
 
-    const background =
-      document.getElementById("background");
+
+    const backgroundOne =
+      document.getElementById("backgroundOne");
+
+    const backgroundTwo =
+      document.getElementById("backgroundTwo");
 
     const photoLocation =
       document.getElementById("photoLocation");
 
+
     let currentBackground = 0;
+
+    let showingFirst = true;
 
 
     function changeBackground() {
 
-      const current = backgrounds[currentBackground];
+      const next =
+        backgrounds[currentBackground];
 
-      background.style.backgroundImage =
-        `url("${current.image}")`;
 
-      photoLocation.textContent =
-        current.location;
+      const nextLayer =
+        showingFirst
+          ? backgroundTwo
+          : backgroundOne;
+
+      const currentLayer =
+        showingFirst
+          ? backgroundOne
+          : backgroundTwo;
+
+
+      /*
+        Load the next image into the
+        hidden layer first.
+      */
+
+      nextLayer.style.backgroundImage =
+        `url("${next.image}")`;
+
+
+      /*
+        Only reveal the new image after
+        it has been assigned.
+      */
+
+      requestAnimationFrame(() => {
+
+        nextLayer.classList.add("active");
+
+        currentLayer.classList.remove("active");
+
+      });
+
+
+      /*
+        Update the location at the same
+        time as the new photograph.
+      */
+
+      photoLocation.style.opacity = "0";
+
+
+      setTimeout(() => {
+
+        photoLocation.textContent =
+          next.location;
+
+        photoLocation.style.opacity = "1";
+
+      }, 500);
+
+
+      showingFirst = !showingFirst;
 
       currentBackground =
-        (currentBackground + 1) % backgrounds.length;
+        (currentBackground + 1) %
+        backgrounds.length;
 
     }
 
 
-    changeBackground();
+    /*
+      Start with the first photograph.
+    */
+
+    backgroundOne.style.backgroundImage =
+      `url("${backgrounds[0].image}")`;
+
+
+    /*
+      Change automatically every 6 seconds.
+      No clicking, typing, or other action
+      is required.
+    */
 
     setInterval(changeBackground, 6000);
 
@@ -616,11 +984,6 @@
 
     wrapper.addEventListener("click", function(event) {
 
-      /*
-        Don't flip when the user clicks
-        one of the authentication buttons.
-      */
-
       if (
         event.target.closest(".auth-button")
       ) {
@@ -632,7 +995,9 @@
     });
 
 
-    /* Keyboard accessibility */
+    /* =========================
+       KEYBOARD ACCESSIBILITY
+    ========================= */
 
     wrapper.addEventListener("keydown", function(event) {
 
@@ -651,23 +1016,74 @@
 
 
     /* =========================
-       NAVIGATION
+       LOGIN
     ========================= */
 
     function goToLogin(event) {
 
       event.stopPropagation();
 
-      window.location.href = "login.html";
+      document
+        .getElementById("loginScreen")
+        .classList.add("active");
 
     }
 
+
+    /* =========================
+       SIGN UP
+    ========================= */
 
     function goToSignup(event) {
 
       event.stopPropagation();
 
-      window.location.href = "signup.html";
+      document
+        .getElementById("signupScreen")
+        .classList.add("active");
+
+    }
+
+
+    /* =========================
+       CLOSE AUTH SCREEN
+    ========================= */
+
+    function closeAuth() {
+
+      document
+        .getElementById("loginScreen")
+        .classList.remove("active");
+
+      document
+        .getElementById("signupScreen")
+        .classList.remove("active");
+
+    }
+
+
+    /* =========================
+       LOGIN FORM
+    ========================= */
+
+    function loginSubmit(event) {
+
+      event.preventDefault();
+
+      alert("Login connected — your account system can be added next.");
+
+    }
+
+
+    /* =========================
+       SIGN UP FORM
+    ========================= */
+
+    function signupSubmit(event) {
+
+      event.preventDefault();
+
+      alert("Sign up connected — your account system can be added next.");
 
     }
 
