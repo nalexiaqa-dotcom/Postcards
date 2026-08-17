@@ -1,844 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
-    <title>Postcards — Create Your Account</title>
-
-
+    <title>Postcards — Let's Find Out</title>
     <style>
-
         /* =====================================================
            RESET
         ===================================================== */
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-
         html,
         body {
             width: 100%;
             height: 100%;
         }
-
-
         body {
-
             overflow: hidden;
-
             font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-
-            color: #40362f;
-
-            background: #d8c8b8;
+                Arial,
+                Helvetica,
+                sans-serif;
+            color: #202020;
+            background: #e9e4da;
         }
-
-
         /* =====================================================
-           WORLD BACKGROUND
+           MOVING WORLD BACKGROUND
         ===================================================== */
-
         .world {
-
             position: fixed;
-
             inset: 0;
-
             overflow: hidden;
-
-            background: #cbbba9;
+            background: #d9d3c8;
+            z-index: -2;
         }
-
-
         .background-image {
-
             position: absolute;
-
-            inset: -3%;
-
+            inset: -4%;
             background-size: cover;
-
             background-position: center;
-
             opacity: 0;
-
+            transform: scale(1.05);
             transition:
-                opacity 2s ease,
+                opacity 1.5s ease,
                 transform 8s ease;
-
-            transform: scale(1.03);
         }
-
-
         .background-image.active {
-
             opacity: 1;
-
             transform: scale(1);
         }
-
-
         .world::after {
-
             content: "";
-
             position: absolute;
-
             inset: 0;
-
             background:
                 linear-gradient(
-                    135deg,
-                    rgba(35, 27, 23, 0.35),
-                    rgba(35, 27, 23, 0.12)
+                    90deg,
+                    rgba(15, 15, 15, 0.48),
+                    rgba(15, 15, 15, 0.16)
                 );
-
             z-index: 3;
-
             pointer-events: none;
         }
-
-
         /* =====================================================
-           LOCATION
+           TOP NAVIGATION
         ===================================================== */
-
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding:
+                28px 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+            color: white;
+        }
         .location {
-
-            position: fixed;
-
-            top: 28px;
-
-            left: 32px;
-
-            z-index: 10;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.92
-                );
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size: 11px;
-
-            letter-spacing: 3px;
-
+            font-size: 10px;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-
-            text-shadow:
-                0 2px 10px
-                rgba(0,0,0,0.25);
+            opacity: 0.9;
         }
-
-
-        /* =====================================================
-           LOGO
-        ===================================================== */
-
         .logo {
-
-            position: fixed;
-
-            top: 28px;
-
-            right: 32px;
-
-            z-index: 10;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.92
-                );
-
-            font-family:
-                Arial,
-                sans-serif;
-
             font-size: 11px;
-
-            letter-spacing: 5px;
-
-            text-shadow:
-                0 2px 10px
-                rgba(0,0,0,0.25);
+            font-weight: 700;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
         }
-
-
         /* =====================================================
            MAIN
         ===================================================== */
-
         .screen {
-
             position: relative;
-
-            z-index: 5;
-
+            z-index: 10;
             width: 100%;
-
             height: 100vh;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
-            padding: 30px;
+            padding: 90px 25px 35px;
         }
-
-
         /* =====================================================
-           ACCOUNT CARD
+           POSTCARD ACCOUNT CARD
         ===================================================== */
-
         .account-card {
-
+            position: relative;
             width:
                 min(
-                    560px,
-                    90vw
+                    780px,
+                    92vw
                 );
-
-            max-height: 88vh;
-
+            min-height: 500px;
             background:
-                linear-gradient(
-                    135deg,
-                    #fbf0df,
-                    #f3e3cf
+                rgba(
+                    247,
+                    244,
+                    237,
+                    0.97
                 );
-
-            border:
-                8px solid
-                #fffaf2;
-
-            border-radius: 4px;
-
             box-shadow:
-                0 30px 60px
-                rgba(0,0,0,0.38);
-
-            position: relative;
-
+                0 30px 70px
+                rgba(0, 0, 0, 0.28);
+            display: grid;
+            grid-template-columns:
+                0.9fr 1.1fr;
             overflow: hidden;
-
-            padding:
-                48px 55px 42px;
-
             animation:
                 cardEntrance
                 0.8s
                 cubic-bezier(.2,.8,.2,1)
                 forwards;
         }
-
-
         @keyframes cardEntrance {
-
             from {
-
                 opacity: 0;
-
                 transform:
-                    translateY(35px)
-                    rotate(-1deg);
+                    translateY(30px)
+                    scale(0.98);
             }
-
             to {
-
                 opacity: 1;
-
                 transform:
                     translateY(0)
-                    rotate(0);
+                    scale(1);
             }
         }
-
-
         /* =====================================================
-           PAPER TEXTURE
+           LEFT SIDE
         ===================================================== */
-
-        .account-card::before {
-
-            content: "";
-
-            position: absolute;
-
-            inset: 0;
-
-            background-image:
-                radial-gradient(
-                    rgba(
-                        75,
-                        55,
-                        40,
-                        0.09
-                    )
-                    0.7px,
-                    transparent 0.7px
-                );
-
-            background-size: 5px 5px;
-
-            opacity: 0.28;
-
-            pointer-events: none;
-
-            z-index: 1;
-        }
-
-
-        /* =====================================================
-           CONTENT
-        ===================================================== */
-
-        .content {
-
+        .intro {
             position: relative;
-
-            z-index: 5;
-
-            text-align: center;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background:
+                #ebe6dc;
+            border-right:
+                1px solid
+                rgba(0,0,0,0.12);
         }
-
-
-        .eyebrow {
-
-            font-family:
-                Arial,
-                sans-serif;
-
+        .intro-brand {
             font-size: 10px;
-
-            letter-spacing: 4px;
-
-            color: #9a806e;
-
-            margin-bottom: 17px;
-
+            font-weight: 700;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
         }
-
-
-        h1 {
-
+        .intro-main {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        .eyebrow {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #777168;
+            margin-bottom: 18px;
+        }
+        .intro h1 {
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
             font-size:
                 clamp(
-                    34px,
+                    42px,
                     6vw,
-                    52px
+                    68px
                 );
-
-            font-weight: normal;
-
-            line-height: 1.05;
-
-            color: #40362f;
-
-            margin-bottom: 12px;
+            font-weight: 400;
+            line-height: 0.93;
+            letter-spacing:
+                -0.045em;
+            text-transform: uppercase;
         }
-
-
-        .description {
-
-            font-family:
-                Arial,
-                sans-serif;
-
+        .intro-description {
+            max-width: 270px;
+            margin-top: 25px;
             font-size: 12px;
-
-            line-height: 1.6;
-
-            color: #806e60;
-
-            max-width: 410px;
-
-            margin:
-                0 auto 28px;
+            line-height: 1.65;
+            color: #65615a;
         }
-
-
+        .intro-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 15px;
+        }
+        .route {
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #777168;
+        }
+        .number {
+            font-family:
+                Georgia,
+                serif;
+            font-size: 30px;
+            line-height: 1;
+        }
+        /* =====================================================
+           RIGHT SIDE / FORM
+        ===================================================== */
+        .form-section {
+            padding:
+                48px 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .form-heading {
+            margin-bottom: 27px;
+        }
+        .form-heading h2 {
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: 31px;
+            font-weight: 400;
+            letter-spacing: -0.025em;
+            margin-bottom: 8px;
+        }
+        .form-heading p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #777168;
+        }
         /* =====================================================
            FORM
         ===================================================== */
-
         .form {
-
             width: 100%;
-
-            text-align: left;
         }
-
-
         .name-row {
-
             display: grid;
-
             grid-template-columns:
                 1fr 1fr;
-
-            gap: 18px;
+            gap: 15px;
         }
-
-
         .field {
-
-            margin-bottom: 16px;
+            margin-bottom: 17px;
         }
-
-
         .field label {
-
             display: block;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size: 9px;
-
-            letter-spacing: 2px;
-
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-
-            color: #806e60;
-
-            margin-bottom: 5px;
+            color: #777168;
+            margin-bottom: 7px;
         }
-
-
         .input {
-
             width: 100%;
-
             padding:
-                12px 5px;
-
+                11px 0;
             border: none;
-
             border-bottom:
                 1px solid
-                #baa493;
-
+                #aaa59c;
             background: transparent;
-
             outline: none;
-
             font-family:
                 Arial,
+                Helvetica,
                 sans-serif;
-
-            font-size: 14px;
-
-            color: #40362f;
-
+            font-size: 13px;
+            color: #202020;
             transition:
                 border-color
                 0.25s ease;
         }
-
-
         .input::placeholder {
-
-            color: #a08c7c;
+            color: #aaa59c;
         }
-
-
         .input:focus {
-
             border-bottom:
                 1px solid
-                #625248;
+                #202020;
         }
-
-
-        /* =====================================================
-           PASSWORD NOTE
-        ===================================================== */
-
         .password-note {
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size: 9px;
-
-            color: #9a8879;
-
             margin-top: -8px;
-
-            margin-bottom: 17px;
+            margin-bottom: 16px;
+            font-size: 8px;
+            color: #97928a;
         }
-
-
         /* =====================================================
-           CREATE BUTTON
+           CREATE ACCOUNT BUTTON
         ===================================================== */
-
         .create-button {
-
             width: 100%;
-
-            border: none;
-
-            background: #4c4038;
-
-            color: #fffaf3;
-
-            padding: 15px;
-
-            margin-top: 4px;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size: 10px;
-
-            letter-spacing: 3px;
-
+            margin-top: 5px;
+            padding: 15px 18px;
+            border:
+                1px solid
+                #202020;
+            background:
+                #202020;
+            color:
+                #f7f4ed;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
             cursor: pointer;
-
             transition:
-                transform
-                0.25s ease,
-                background
-                0.25s ease;
+                background 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease;
         }
-
-
         .create-button:hover {
-
-            background: #67554a;
-
+            background:
+                transparent;
+            color:
+                #202020;
             transform:
                 translateY(-2px);
         }
-
-
         /* =====================================================
-           LOGIN LINK
+           LOGIN
         ===================================================== */
-
         .login-link {
-
+            margin-top: 18px;
             text-align: center;
-
-            margin-top: 17px;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size: 10px;
-
-            color: #827064;
+            font-size: 9px;
+            color: #777168;
         }
-
-
         .login-link button {
-
             border: none;
-
-            background: none;
-
+            background: transparent;
             padding: 0;
-
+            margin-left: 4px;
+            color: #202020;
             font-family: inherit;
-
             font-size: inherit;
-
-            color: #4c4038;
-
-            text-decoration: underline;
-
+            text-decoration:
+                underline;
+            text-underline-offset: 3px;
             cursor: pointer;
         }
-
-
         /* =====================================================
-           STAMP
+           POSTCARD DETAILS
         ===================================================== */
-
-        .stamp {
-
+        .postmark {
             position: absolute;
-
-            top: 18px;
-
-            right: 20px;
-
-            width: 58px;
-
-            height: 68px;
-
+            top: 25px;
+            right: 28px;
+            width: 54px;
+            height: 54px;
             border:
-                2px dashed
-                #aa8d76;
-
+                1px solid
+                rgba(0,0,0,0.3);
+            border-radius: 50%;
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             text-align: center;
-
-            font-family:
-                Arial,
-                sans-serif;
-
             font-size: 7px;
-
-            letter-spacing: 1.5px;
-
-            line-height: 1.5;
-
-            color: #806b5c;
-
+            letter-spacing: 0.08em;
+            line-height: 1.4;
+            text-transform: uppercase;
+            color: #777168;
             transform:
-                rotate(3deg);
-
-            opacity: 0.75;
+                rotate(-12deg);
+            opacity: 0.7;
         }
-
-
-        /* =====================================================
-           AIRMAIL
-        ===================================================== */
-
-        .airmail {
-
+        .line {
             position: absolute;
-
-            left: 14px;
-
-            right: 14px;
-
-            bottom: 12px;
-
-            height: 4px;
-
+            top: 25px;
+            left: 48px;
+            right: 100px;
+            height: 1px;
             background:
-                repeating-linear-gradient(
-                    135deg,
-                    #a17d6b 0 13px,
-                    transparent 13px 22px,
-                    #897c86 22px 35px,
-                    transparent 35px 44px
-                );
-
-            opacity: 0.6;
+                rgba(0,0,0,0.12);
         }
-
-
         /* =====================================================
            RESPONSIVE
         ===================================================== */
-
-        @media (max-width: 650px) {
-
-            .account-card {
-
-                width: 92vw;
-
-                padding:
-                    42px 25px 38px;
+        @media (max-width: 720px) {
+            body {
+                overflow-y: auto;
             }
-
-
-            .name-row {
-
+            .screen {
+                min-height: 100vh;
+                height: auto;
+                padding:
+                    90px 18px 30px;
+            }
+            .account-card {
+                width: 94vw;
                 grid-template-columns:
                     1fr;
-
-                gap: 0;
+                min-height: auto;
             }
-
-
-            .location {
-
-                top: 18px;
-
-                left: 20px;
-
-                font-size: 9px;
-
-                letter-spacing: 2px;
+            .intro {
+                min-height: 300px;
+                padding: 32px;
+                border-right: none;
+                border-bottom:
+                    1px solid
+                    rgba(0,0,0,0.12);
             }
-
-
-            .logo {
-
-                top: 18px;
-
+            .intro h1 {
+                font-size: 50px;
+            }
+            .form-section {
+                padding:
+                    34px 30px 38px;
+            }
+            .line {
+                left: 32px;
+                right: 95px;
+                top: 20px;
+            }
+            .postmark {
+                top: 19px;
                 right: 20px;
-
-                font-size: 9px;
-
-                letter-spacing: 3px;
-            }
-
-
-            .stamp {
-
-                width: 48px;
-
-                height: 56px;
-
-                top: 12px;
-
-                right: 12px;
-
-                font-size: 6px;
             }
         }
-
+        @media (max-width: 480px) {
+            .top-bar {
+                padding:
+                    20px;
+            }
+            .location {
+                font-size: 8px;
+            }
+            .logo {
+                font-size: 9px;
+                letter-spacing:
+                    0.22em;
+            }
+            .name-row {
+                grid-template-columns:
+                    1fr;
+                gap: 0;
+            }
+            .intro {
+                min-height: 280px;
+            }
+            .intro h1 {
+                font-size: 43px;
+            }
+        }
     </style>
-
 </head>
-
-
 <body>
-
-
     <!-- =====================================================
          WORLD BACKGROUND
     ====================================================== -->
-
     <div class="world">
-
         <div
             class="background-image active"
             id="backgroundA"
         ></div>
-
-
         <div
             class="background-image"
             id="backgroundB"
         ></div>
-
     </div>
-
-
-
     <!-- =====================================================
-         LOCATION
+         TOP BAR
     ====================================================== -->
-
-    <div
-        class="location"
-        id="location"
-    >
-        Paris, France
-    </div>
-
-
-
-    <!-- =====================================================
-         LOGO
-    ====================================================== -->
-
-    <div class="logo">
-        POSTCARDS
-    </div>
-
-
-
+    <header class="top-bar">
+        <div
+            class="location"
+            id="location"
+        >
+            Paris, France
+        </div>
+        <div class="logo">
+            POSTCARDS
+        </div>
+    </header>
     <!-- =====================================================
          MAIN
     ====================================================== -->
-
     <main class="screen">
-
-
         <section class="account-card">
-
-
-            <div class="stamp">
-
-                YOUR<br>
-                JOURNEY
-
-            </div>
-
-
-            <div class="content">
-
-
-                <div class="eyebrow">
-
-                    WELCOME TO POSTCARDS
-
+            <!-- ==============================================
+                 LEFT INTRO
+            =============================================== -->
+            <div class="intro">
+                <div>
+                    <div class="intro-brand">
+                        POSTCARDS
+                    </div>
                 </div>
-
-
-                <h1>
-
-                    Create your<br>
-                    account.
-
-                </h1>
-
-
-                <p class="description">
-
-                    Before we begin your journey,
-                    tell us a little about yourself.
-
-                </p>
-
-
-
-                <!-- ==========================================
-                     FORM
-                =========================================== -->
-
+                <div class="intro-main">
+                    <div class="eyebrow">
+                        YOUR JOURNEY STARTS HERE
+                    </div>
+                    <h1>
+                        Let's<br>
+                        find out.
+                    </h1>
+                    <p class="intro-description">
+                        Create your account and start
+                        exploring universities,
+                        countries, and possibilities
+                        around the world.
+                    </p>
+                </div>
+                <div class="intro-footer">
+                    <div class="route">
+                        Your next chapter
+                    </div>
+                    <div class="number">
+                        01
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="postmark">
+                    EXPLORE<br>
+                    THE<br>
+                    WORLD
+                </div>
+            </div>
+            <!-- ==============================================
+                 FORM
+            =============================================== -->
+            <div class="form-section">
+                <div class="form-heading">
+                    <h2>
+                        Create your account
+                    </h2>
+                    <p>
+                        Tell us a little about yourself
+                        before we begin.
+                    </p>
+                </div>
                 <form
                     class="form"
                     id="accountForm"
                 >
-
-
                     <!-- NAME -->
-
                     <div class="name-row">
-
-
                         <div class="field">
-
                             <label for="firstName">
                                 First name
                             </label>
-
-
                             <input
                                 class="input"
                                 id="firstName"
@@ -847,18 +579,11 @@
                                 autocomplete="given-name"
                                 required
                             >
-
                         </div>
-
-
-
                         <div class="field">
-
                             <label for="lastName">
                                 Last name
                             </label>
-
-
                             <input
                                 class="input"
                                 id="lastName"
@@ -867,23 +592,13 @@
                                 autocomplete="family-name"
                                 required
                             >
-
                         </div>
-
-
                     </div>
-
-
-
                     <!-- EMAIL -->
-
                     <div class="field">
-
                         <label for="email">
                             Email address
                         </label>
-
-
                         <input
                             class="input"
                             id="email"
@@ -892,20 +607,12 @@
                             autocomplete="email"
                             required
                         >
-
                     </div>
-
-
-
                     <!-- PASSWORD -->
-
                     <div class="field">
-
                         <label for="password">
                             Password
                         </label>
-
-
                         <input
                             class="input"
                             id="password"
@@ -914,27 +621,15 @@
                             autocomplete="new-password"
                             required
                         >
-
                     </div>
-
-
                     <div class="password-note">
-
                         Use at least 8 characters.
-
                     </div>
-
-
-
                     <!-- CONFIRM PASSWORD -->
-
                     <div class="field">
-
                         <label for="confirmPassword">
                             Confirm password
                         </label>
-
-
                         <input
                             class="input"
                             id="confirmPassword"
@@ -943,435 +638,242 @@
                             autocomplete="new-password"
                             required
                         >
-
                     </div>
-
-
-
                     <!-- CREATE -->
-
                     <button
                         class="create-button"
                         type="submit"
                     >
-
-                        CREATE MY ACCOUNT →
-
+                        Create my account →
                     </button>
-
-
                 </form>
-
-
-
-                <!-- ==========================================
-                     LOGIN
-                =========================================== -->
-
+                <!-- LOGIN -->
                 <div class="login-link">
-
                     Already have an account?
-
                     <button
                         id="loginLink"
                         type="button"
                     >
-
                         Log in
-
                     </button>
-
                 </div>
-
-
             </div>
-
-
-            <!-- AIRMAIL -->
-
-            <div class="airmail"></div>
-
-
         </section>
-
-
     </main>
-
-
-
     <script>
-
         /* =====================================================
            DESTINATIONS
         ===================================================== */
-
         const destinations = [
-
             {
                 name: "Paris, France",
-
                 image:
                     "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "Tokyo, Japan",
-
                 image:
                     "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "New York, USA",
-
                 image:
                     "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "Barcelona, Spain",
-
                 image:
                     "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "Seoul, South Korea",
-
                 image:
                     "https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "Santorini, Greece",
-
                 image:
                     "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "London, England",
-
                 image:
                     "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=90"
             },
-
-
             {
                 name: "Rome, Italy",
-
                 image:
                     "https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=2200&q=90"
             }
-
         ];
-
-
-
         /* =====================================================
            ELEMENTS
         ===================================================== */
-
         const backgroundA =
             document.getElementById(
                 "backgroundA"
             );
-
-
         const backgroundB =
             document.getElementById(
                 "backgroundB"
             );
-
-
         const locationText =
             document.getElementById(
                 "location"
             );
-
-
         const accountForm =
             document.getElementById(
                 "accountForm"
             );
-
-
         const loginLink =
             document.getElementById(
                 "loginLink"
             );
-
-
-
         /* =====================================================
            BACKGROUND SYSTEM
         ===================================================== */
-
         let currentDestination = 0;
-
         let showingA = true;
-
-
         function preloadImages() {
-
             destinations.forEach(
                 destination => {
-
                     const image =
                         new Image();
-
                     image.src =
                         destination.image;
-
                 }
             );
-
         }
-
-
         function setInitialBackground() {
-
             backgroundA.style.backgroundImage =
                 `url("${destinations[0].image}")`;
-
             locationText.textContent =
                 destinations[0].name;
-
         }
-
-
         function changeDestination() {
-
             currentDestination++;
-
             if (
                 currentDestination >=
                 destinations.length
             ) {
-
                 currentDestination = 0;
-
             }
-
-
             const destination =
                 destinations[
                     currentDestination
                 ];
-
-
             const nextBackground =
                 showingA
                     ? backgroundB
                     : backgroundA;
-
-
             const oldBackground =
                 showingA
                     ? backgroundA
                     : backgroundB;
-
-
             nextBackground.style.backgroundImage =
                 `url("${destination.image}")`;
-
-
-            const img =
+            const image =
                 new Image();
-
-
-            img.onload =
+            image.onload =
                 function() {
-
                     nextBackground.classList.add(
                         "active"
                     );
-
-
                     oldBackground.classList.remove(
                         "active"
                     );
-
-
                     showingA =
                         !showingA;
-
-
                     locationText.textContent =
                         destination.name;
-
                 };
-
-
-            img.src =
+            image.src =
                 destination.image;
-
         }
-
-
         setInitialBackground();
-
         preloadImages();
-
-
         setInterval(
             changeDestination,
             7000
         );
-
-
-
         /* =====================================================
            ACCOUNT CREATION
+           KEEPING YOUR ORIGINAL FUNCTIONALITY
         ===================================================== */
-
         accountForm.addEventListener(
             "submit",
             function(event) {
-
                 event.preventDefault();
-
-
                 const firstName =
                     document.getElementById(
                         "firstName"
                     ).value.trim();
-
-
                 const lastName =
                     document.getElementById(
                         "lastName"
                     ).value.trim();
-
-
                 const email =
                     document.getElementById(
                         "email"
                     ).value.trim();
-
-
                 const password =
                     document.getElementById(
                         "password"
                     ).value;
-
-
                 const confirmPassword =
                     document.getElementById(
                         "confirmPassword"
                     ).value;
-
-
-
-                /* ==========================================
-                   PASSWORD LENGTH
-                =========================================== */
-
+                /* PASSWORD LENGTH */
                 if (
                     password.length < 8
                 ) {
-
                     alert(
                         "Your password must contain at least 8 characters."
                     );
-
                     return;
-
                 }
-
-
-
-                /* ==========================================
-                   PASSWORD MATCH
-                =========================================== */
-
+                /* PASSWORD MATCH */
                 if (
                     password !==
                     confirmPassword
                 ) {
-
                     alert(
                         "The passwords do not match."
                     );
-
                     return;
-
                 }
-
-
-
-                /* ==========================================
-                   SAVE ACCOUNT INFORMATION
-                =========================================== */
-
+                /* SAVE ACCOUNT */
                 const account = {
-
                     firstName:
                         firstName,
-
                     lastName:
                         lastName,
-
                     email:
                         email
-
                 };
-
-
                 localStorage.setItem(
                     "postcardsAccount",
                     JSON.stringify(
                         account
                     )
                 );
-
-
-
-                /*
-                    We intentionally do NOT save
-                    the password in localStorage.
-
-                    A real account system will
-                    eventually handle authentication
-                    securely through a backend.
-                */
-
-
-
-                /* ==========================================
-                   GO TO ONBOARDING
-                =========================================== */
-
+                /* GO TO ONBOARDING */
                 window.location.href =
                     "onboarding.html";
-
             }
         );
-
-
-
         /* =====================================================
-           LOGIN LINK
+           LOGIN
+           FIXED — NOW GOES TO LOGIN.HTML
         ===================================================== */
-
         loginLink.addEventListener(
             "click",
             function() {
-
                 window.location.href =
-                    "index.html";
-
+                    "login.html";
             }
         );
-
     </script>
-
 </body>
-
 </html>
