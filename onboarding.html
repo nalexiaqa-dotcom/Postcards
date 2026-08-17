@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Postcards — Create Your Journey</title>
+    <title>Postcards — Tell Us About You</title>
 
 
     <style>
@@ -36,20 +36,21 @@
         body {
 
             font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
+                Arial,
+                Helvetica,
+                sans-serif;
 
-            color: #40362f;
+            color: #202020;
 
             overflow-x: hidden;
 
-            background: #eee0cf;
+            background: #e8e3da;
         }
 
 
+
         /* =====================================================
-           BACKGROUND
+           WORLD BACKGROUND
         ===================================================== */
 
         .world {
@@ -62,7 +63,7 @@
 
             overflow: hidden;
 
-            background: #cbbba9;
+            background: #d8d3ca;
         }
 
 
@@ -70,7 +71,7 @@
 
             position: absolute;
 
-            inset: -3%;
+            inset: -4%;
 
             background-size: cover;
 
@@ -78,11 +79,11 @@
 
             opacity: 0;
 
-            transition:
-                opacity 2s ease,
-                transform 8s ease;
+            transform: scale(1.05);
 
-            transform: scale(1.03);
+            transition:
+                opacity 1.5s ease,
+                transform 8s ease;
         }
 
 
@@ -104,9 +105,9 @@
 
             background:
                 linear-gradient(
-                    135deg,
-                    rgba(35, 27, 23, 0.42),
-                    rgba(35, 27, 23, 0.18)
+                    90deg,
+                    rgba(15, 15, 15, 0.50),
+                    rgba(15, 15, 15, 0.17)
                 );
 
             z-index: 3;
@@ -115,42 +116,59 @@
         }
 
 
+
         /* =====================================================
-           LOCATION
+           TOP BAR
         ===================================================== */
 
-        .location {
+        .top-bar {
 
             position: fixed;
 
-            top: 28px;
+            top: 0;
 
-            left: 32px;
+            left: 0;
 
-            z-index: 10;
+            right: 0;
 
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.94
-                );
+            padding:
+                28px 34px;
 
-            font-family:
-                Arial,
-                sans-serif;
+            display: flex;
 
-            font-size: 11px;
+            align-items: center;
 
-            letter-spacing: 3px;
+            justify-content: space-between;
+
+            z-index: 20;
+
+            color: white;
+        }
+
+
+        .location {
+
+            font-size: 10px;
+
+            letter-spacing: 0.22em;
 
             text-transform: uppercase;
 
-            text-shadow:
-                0 2px 10px
-                rgba(0,0,0,0.25);
+            opacity: 0.9;
         }
+
+
+        .logo {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.32em;
+
+            text-transform: uppercase;
+        }
+
 
 
         /* =====================================================
@@ -168,52 +186,50 @@
             justify-content: center;
 
             padding:
-                100px 20px 80px;
+                95px 20px 50px;
         }
 
 
+
         /* =====================================================
-           QUESTION CARD
+           MAIN QUESTION CARD
         ===================================================== */
 
         .card {
 
             width:
                 min(
-                    680px,
+                    820px,
                     94vw
                 );
 
-            min-height: 520px;
+            min-height: 555px;
 
             background:
-                linear-gradient(
-                    135deg,
-                    #fbf0df,
-                    #f3e3cf
+                rgba(
+                    247,
+                    244,
+                    237,
+                    0.97
                 );
 
-            border:
-                8px solid
-                #fffaf2;
-
-            border-radius: 4px;
-
             box-shadow:
-                0 30px 60px
-                rgba(0,0,0,0.35);
+                0 30px 70px
+                rgba(0,0,0,0.28);
 
             position: relative;
 
             overflow: hidden;
 
-            padding:
-                55px 60px 45px;
+            display: flex;
+
+            flex-direction: column;
 
             animation:
                 cardEntrance
                 0.8s
-                ease forwards;
+                cubic-bezier(.2,.8,.2,1)
+                forwards;
         }
 
 
@@ -224,8 +240,8 @@
                 opacity: 0;
 
                 transform:
-                    translateY(35px)
-                    rotate(-1deg);
+                    translateY(30px)
+                    scale(0.98);
             }
 
             to {
@@ -234,112 +250,60 @@
 
                 transform:
                     translateY(0)
-                    rotate(0);
+                    scale(1);
             }
         }
 
 
-        /* =====================================================
-           PAPER TEXTURE
-        ===================================================== */
-
-        .card::before {
-
-            content: "";
-
-            position: absolute;
-
-            inset: 0;
-
-            background-image:
-                radial-gradient(
-                    rgba(75,55,40,0.09)
-                    0.7px,
-                    transparent 0.7px
-                );
-
-            background-size: 5px 5px;
-
-            opacity: 0.28;
-
-            pointer-events: none;
-        }
-
 
         /* =====================================================
-           STAMP
+           HEADER
         ===================================================== */
 
-        .stamp {
+        .card-header {
 
-            position: absolute;
+            padding:
+                27px 42px 22px;
 
-            top: 20px;
-
-            right: 22px;
-
-            width: 60px;
-
-            height: 70px;
-
-            border:
-                2px dashed
-                #aa8d76;
+            border-bottom:
+                1px solid
+                rgba(0,0,0,0.11);
 
             display: flex;
 
             align-items: center;
 
-            justify-content: center;
-
-            text-align: center;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size: 7px;
-
-            letter-spacing: 1.5px;
-
-            line-height: 1.6;
-
-            color: #806b5c;
-
-            transform:
-                rotate(3deg);
-
-            opacity: 0.8;
+            justify-content: space-between;
         }
 
 
-        /* =====================================================
-           AIRMAIL
-        ===================================================== */
+        .header-label {
 
-        .airmail {
+            font-size: 9px;
 
-            position: absolute;
+            font-weight: 700;
 
-            bottom: 12px;
+            letter-spacing: 0.23em;
 
-            left: 14px;
+            text-transform: uppercase;
 
-            right: 14px;
-
-            height: 4px;
-
-            background:
-                repeating-linear-gradient(
-                    135deg,
-                    #a17d6b 0 13px,
-                    transparent 13px 22px,
-                    #897c86 22px 35px,
-                    transparent 35px 44px
-                );
-
-            opacity: 0.6;
+            color: #77736c;
         }
+
+
+        .step-counter {
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.17em;
+
+            text-transform: uppercase;
+
+            color: #77736c;
+        }
+
 
 
         /* =====================================================
@@ -348,67 +312,81 @@
 
         .content {
 
-            position: relative;
+            flex: 1;
 
-            z-index: 5;
+            padding:
+                45px 55px 35px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
         }
 
 
         .question-number {
 
-            font-family:
-                Arial,
-                sans-serif;
+            font-size: 9px;
 
-            font-size: 10px;
+            font-weight: 700;
 
-            letter-spacing: 4px;
+            letter-spacing: 0.22em;
 
-            color: #9a806e;
+            text-transform: uppercase;
 
-            margin-bottom: 18px;
+            color: #817c74;
+
+            margin-bottom: 16px;
         }
 
 
         .question-title {
 
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
             font-size:
                 clamp(
-                    32px,
-                    5vw,
-                    50px
+                    38px,
+                    6vw,
+                    66px
                 );
 
-            font-weight: normal;
+            font-weight: 400;
 
-            line-height: 1.05;
+            line-height: 0.96;
 
-            margin-bottom: 12px;
+            letter-spacing:
+                -0.045em;
 
-            color: #40362f;
+            color: #202020;
+
+            max-width: 680px;
+
+            margin-bottom: 16px;
         }
 
 
         .question-description {
 
-            font-family:
-                Arial,
-                sans-serif;
+            font-size: 12px;
 
-            font-size: 13px;
+            line-height: 1.65;
 
-            line-height: 1.6;
+            color: #77736c;
 
-            color: #806e60;
+            max-width: 500px;
 
-            margin-bottom: 30px;
-
-            max-width: 520px;
+            margin-bottom: 29px;
         }
 
 
+
         /* =====================================================
-           INPUTS
+           TEXT INPUTS
         ===================================================== */
 
         .input {
@@ -416,7 +394,7 @@
             width: 100%;
 
             padding:
-                15px 5px;
+                13px 2px;
 
             margin-bottom: 15px;
 
@@ -424,25 +402,30 @@
 
             border-bottom:
                 1px solid
-                #baa493;
+                #aaa69e;
 
-            background: transparent;
+            background:
+                transparent;
 
             outline: none;
 
             font-family:
                 Arial,
+                Helvetica,
                 sans-serif;
 
-            font-size: 15px;
+            font-size: 14px;
 
-            color: #40362f;
+            color: #202020;
+
+            transition:
+                border-color 0.25s ease;
         }
 
 
         .input::placeholder {
 
-            color: #a08c7c;
+            color: #aaa69e;
         }
 
 
@@ -450,8 +433,9 @@
 
             border-bottom:
                 1px solid
-                #625248;
+                #202020;
         }
+
 
 
         /* =====================================================
@@ -464,17 +448,30 @@
 
             grid-template-columns:
                 repeat(
-                    2,
+                    3,
                     1fr
                 );
 
-            gap: 12px;
+            gap: 9px;
 
-            max-height: 280px;
+            max-height: 225px;
 
             overflow-y: auto;
 
-            padding-right: 5px;
+            padding-right: 4px;
+        }
+
+
+        .options::-webkit-scrollbar {
+
+            width: 4px;
+        }
+
+
+        .options::-webkit-scrollbar-thumb {
+
+            background:
+                #aaa69e;
         }
 
 
@@ -496,71 +493,73 @@
 
         .option label {
 
-            display: block;
+            display: flex;
+
+            align-items: center;
+
+            min-height: 48px;
 
             padding:
-                15px 17px;
+                11px 13px;
 
             border:
                 1px solid
-                #cbb8a5;
+                #c9c5bd;
 
             background:
                 rgba(
                     255,
-                    250,
-                    242,
+                    255,
+                    255,
                     0.35
                 );
 
             cursor: pointer;
 
-            font-family:
-                Arial,
-                sans-serif;
+            font-size: 10px;
 
-            font-size: 12px;
+            line-height: 1.3;
 
-            color: #62544b;
+            color: #55514b;
 
             transition:
-                all
-                0.25s
-                ease;
+                all 0.22s ease;
         }
 
 
         .option label:hover {
 
-            transform:
-                translateY(-2px);
+            border-color:
+                #77736c;
 
             background:
                 rgba(
                     255,
-                    250,
-                    242,
-                    0.75
+                    255,
+                    255,
+                    0.7
                 );
+
+            transform:
+                translateY(-1px);
         }
 
 
         .option input:checked + label {
 
-            background: #4c4038;
-
-            color: white;
+            background:
+                #202020;
 
             border-color:
-                #4c4038;
+                #202020;
+
+            color:
+                #f7f4ed;
 
             transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 5px 12px
-                rgba(0,0,0,0.12);
+                translateY(-1px);
         }
+
 
 
         /* =====================================================
@@ -569,13 +568,13 @@
 
         .buttons {
 
-            margin-top: 30px;
+            margin-top: 27px;
 
             display: flex;
 
-            justify-content: space-between;
-
             align-items: center;
+
+            justify-content: space-between;
         }
 
 
@@ -583,84 +582,91 @@
 
             border: none;
 
-            background: transparent;
+            background:
+                transparent;
 
-            font-family:
-                Arial,
-                sans-serif;
+            font-size: 9px;
 
-            font-size: 10px;
+            font-weight: 700;
 
-            letter-spacing: 2px;
+            letter-spacing: 0.18em;
 
-            color: #806e60;
+            text-transform: uppercase;
+
+            color: #77736c;
 
             cursor: pointer;
 
-            text-transform: uppercase;
+            padding: 8px 0;
+
+            transition:
+                color 0.2s ease;
+        }
+
+
+        .back-button:hover {
+
+            color:
+                #202020;
         }
 
 
         .continue-button {
 
-            border: none;
+            border:
+                1px solid
+                #202020;
 
-            background: #4c4038;
+            background:
+                #202020;
 
-            color: white;
+            color:
+                #f7f4ed;
 
             padding:
-                14px 28px;
+                14px 25px;
 
-            font-family:
-                Arial,
-                sans-serif;
+            font-size: 9px;
 
-            font-size: 10px;
+            font-weight: 700;
 
-            letter-spacing: 3px;
+            letter-spacing: 0.18em;
+
+            text-transform: uppercase;
 
             cursor: pointer;
 
             transition:
-                all
-                0.25s
-                ease;
+                all 0.25s ease;
         }
 
 
         .continue-button:hover {
 
-            background: #67554a;
+            background:
+                transparent;
+
+            color:
+                #202020;
 
             transform:
                 translateY(-2px);
         }
 
 
+
         /* =====================================================
-           PROGRESS
+           PROGRESS BAR
         ===================================================== */
 
         .progress-container {
 
-            position: absolute;
+            height: 4px;
 
-            bottom: 0;
-
-            left: 0;
-
-            right: 0;
-
-            height: 5px;
+            width: 100%;
 
             background:
-                rgba(
-                    110,
-                    85,
-                    65,
-                    0.12
-                );
+                #d9d5cd;
         }
 
 
@@ -671,13 +677,12 @@
             width: 14.28%;
 
             background:
-                #6d5a4d;
+                #202020;
 
             transition:
-                width
-                0.5s
-                ease;
+                width 0.5s ease;
         }
+
 
 
         /* =====================================================
@@ -688,100 +693,242 @@
 
             display: none;
 
-            text-align: center;
+            flex: 1;
+
+            padding:
+                45px 55px 40px;
+
+            flex-direction: column;
+
+            justify-content: center;
         }
 
 
         .summary.active {
 
-            display: block;
+            display: flex;
+        }
+
+
+        .summary .question-number {
+
+            margin-bottom: 17px;
         }
 
 
         .summary-title {
 
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
             font-size:
                 clamp(
-                    35px,
+                    42px,
                     6vw,
-                    58px
+                    68px
                 );
 
-            font-weight: normal;
+            font-weight: 400;
 
-            line-height: 1.05;
+            line-height: 0.95;
 
-            margin-bottom: 15px;
+            letter-spacing:
+                -0.045em;
+
+            margin-bottom: 14px;
         }
 
 
         .summary-subtitle {
 
-            font-family:
-                Arial,
-                sans-serif;
-
             font-size: 12px;
 
-            letter-spacing: 1.5px;
+            line-height: 1.6;
 
-            color: #806e60;
+            color: #77736c;
 
-            margin-bottom: 28px;
+            margin-bottom: 25px;
         }
 
 
         .summary-box {
 
-            text-align: left;
-
-            padding: 20px;
+            padding:
+                20px 22px;
 
             border:
                 1px solid
-                #cbb8a5;
+                #cbc7bf;
 
             background:
                 rgba(
                     255,
-                    250,
-                    242,
-                    0.4
+                    255,
+                    255,
+                    0.35
                 );
 
-            margin-bottom: 25px;
+            font-size: 10px;
 
-            font-family:
-                Arial,
-                sans-serif;
+            line-height: 1.8;
 
-            font-size: 12px;
+            color: #66615a;
 
-            line-height: 2;
+            margin-bottom: 24px;
 
-            color: #62544b;
+            max-height: 180px;
+
+            overflow-y: auto;
         }
 
 
         .summary-box strong {
 
-            color: #40362f;
+            color:
+                #202020;
+
+            font-size: 8px;
+
+            letter-spacing:
+                0.14em;
         }
+
+
+
+        /* =====================================================
+           DECORATIVE NUMBER
+        ===================================================== */
+
+        .corner-number {
+
+            position: absolute;
+
+            right: 30px;
+
+            bottom: 25px;
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 38px;
+
+            line-height: 1;
+
+            color:
+                rgba(
+                    32,
+                    32,
+                    32,
+                    0.08
+                );
+
+            pointer-events: none;
+        }
+
 
 
         /* =====================================================
            RESPONSIVE
         ===================================================== */
 
-        @media (max-width: 650px) {
+        @media (max-width: 760px) {
+
+            .main {
+
+                padding:
+                    90px 15px 35px;
+            }
+
 
             .card {
 
-                padding:
-                    45px 25px 38px;
+                width: 95vw;
 
                 min-height:
-                    560px;
+                    600px;
+            }
+
+
+            .card-header {
+
+                padding:
+                    22px 25px 18px;
+            }
+
+
+            .content {
+
+                padding:
+                    35px 28px 30px;
+            }
+
+
+            .options {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        1fr
+                    );
+
+                max-height:
+                    260px;
+            }
+
+
+            .question-title {
+
+                font-size:
+                    clamp(
+                        38px,
+                        10vw,
+                        55px
+                    );
+            }
+
+
+            .summary {
+
+                padding:
+                    35px 28px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .top-bar {
+
+                padding:
+                    20px;
+            }
+
+
+            .location {
+
+                font-size: 8px;
+
+                letter-spacing:
+                    0.15em;
+            }
+
+
+            .logo {
+
+                font-size: 9px;
+
+                letter-spacing:
+                    0.23em;
+            }
+
+
+            .card {
+
+                min-height:
+                    650px;
             }
 
 
@@ -789,27 +936,31 @@
 
                 grid-template-columns:
                     1fr;
+
+                max-height:
+                    260px;
             }
 
 
-            .stamp {
+            .option label {
 
-                width: 48px;
-
-                height: 58px;
-
-                top: 14px;
-
-                right: 14px;
+                min-height:
+                    44px;
             }
 
 
-            .question-title {
+            .buttons {
 
-                max-width:
-                    85%;
+                margin-top:
+                    20px;
             }
 
+
+            .continue-button {
+
+                padding:
+                    13px 18px;
+            }
         }
 
     </style>
@@ -821,7 +972,7 @@
 
 
     <!-- =====================================================
-         WORLD BACKGROUND
+         CHANGING WORLD BACKGROUND
     ====================================================== -->
 
     <div class="world">
@@ -840,16 +991,27 @@
     </div>
 
 
+
     <!-- =====================================================
-         LOCATION
+         TOP BAR
     ====================================================== -->
 
-    <div
-        class="location"
-        id="location"
-    >
-        Paris, France
-    </div>
+    <header class="top-bar">
+
+        <div
+            class="location"
+            id="location"
+        >
+            Paris, France
+        </div>
+
+
+        <div class="logo">
+            POSTCARDS
+        </div>
+
+    </header>
+
 
 
     <!-- =====================================================
@@ -858,25 +1020,42 @@
 
     <main class="main">
 
+
         <section class="card">
 
-            <div class="stamp">
 
-                YOUR<br>
-                JOURNEY
+            <!-- HEADER -->
+
+            <div class="card-header">
+
+                <div class="header-label">
+                    Tell us about you
+                </div>
+
+
+                <div
+                    class="step-counter"
+                    id="stepCounter"
+                >
+                    01 / 07
+                </div>
 
             </div>
 
+
+
+            <!-- QUESTIONS -->
 
             <div
                 class="content"
                 id="questionContent"
             >
 
-                <!-- Questions inserted by JavaScript -->
-
             </div>
 
+
+
+            <!-- SUMMARY -->
 
             <div
                 class="summary"
@@ -884,24 +1063,19 @@
             >
 
                 <div class="question-number">
-
                     YOUR POSTCARD
-
                 </div>
 
 
                 <h1 class="summary-title">
-
                     Your journey<br>
                     starts here.
-
                 </h1>
 
 
                 <p class="summary-subtitle">
-
-                    Here's what we learned about you.
-
+                    We've got a better idea of what
+                    you're looking for.
                 </p>
 
 
@@ -915,16 +1089,25 @@
                     class="continue-button"
                     id="finishButton"
                 >
-
-                    EXPLORE MY UNIVERSITIES →
-
+                    Explore my universities →
                 </button>
 
             </div>
 
 
-            <div class="airmail"></div>
 
+            <!-- DECORATIVE NUMBER -->
+
+            <div
+                class="corner-number"
+                id="cornerNumber"
+            >
+                01
+            </div>
+
+
+
+            <!-- PROGRESS -->
 
             <div class="progress-container">
 
@@ -935,7 +1118,9 @@
 
             </div>
 
+
         </section>
+
 
     </main>
 
@@ -954,7 +1139,7 @@
                     "Where are you from?",
 
                 description:
-                    "Tell us where you currently call home.",
+                    "Start with where you currently call home.",
 
                 type:
                     "location"
@@ -966,10 +1151,13 @@
                     "Where could you see yourself studying?",
 
                 description:
-                    "Choose the places you're interested in exploring.",
+                    "Choose the places you'd like to explore. You can select more than one.",
 
                 type:
                     "countries",
+
+                multiple:
+                    true,
 
                 options: [
 
@@ -1002,6 +1190,9 @@
                 type:
                     "study",
 
+                multiple:
+                    true,
+
                 options: [
 
                     "Business & Economics",
@@ -1014,7 +1205,7 @@
                     "Education",
                     "Science",
                     "Architecture",
-                    "I’m not sure yet"
+                    "I'm not sure yet"
 
                 ]
             },
@@ -1025,7 +1216,7 @@
                     "What matters most to you?",
 
                 description:
-                    "Choose the things that would influence your university decision.",
+                    "Choose the factors that could influence your decision.",
 
                 type:
                     "priorities",
@@ -1057,7 +1248,7 @@
                     "What kind of place feels like home?",
 
                 description:
-                    "Choose the environments you would enjoy living in.",
+                    "Choose the environments you'd enjoy living in.",
 
                 type:
                     "environment",
@@ -1087,7 +1278,7 @@
                     "What makes you, you?",
 
                 description:
-                    "Choose your interests so we can personalize your experience.",
+                    "Choose a few interests so we can personalize your experience.",
 
                 type:
                     "interests",
@@ -1122,13 +1313,14 @@
                     "Do you already have universities in mind?",
 
                 description:
-                    "This is completely optional. You can add universities later.",
+                    "Optional. You can always discover and save universities later.",
 
                 type:
                     "universities"
             }
 
         ];
+
 
 
         /* =====================================================
@@ -1138,6 +1330,7 @@
         let currentQuestion = 0;
 
         const answers = {};
+
 
 
         /* =====================================================
@@ -1174,6 +1367,12 @@
             );
 
 
+        const cornerNumber =
+            document.getElementById(
+                "cornerNumber"
+            );
+
+
         const locationText =
             document.getElementById(
                 "location"
@@ -1190,6 +1389,7 @@
             document.getElementById(
                 "backgroundB"
             );
+
 
 
         /* =====================================================
@@ -1277,6 +1477,11 @@
         let showingA = true;
 
 
+
+        /* =====================================================
+           BACKGROUND FUNCTIONS
+        ===================================================== */
+
         function preloadImages() {
 
             destinations.forEach(
@@ -1341,11 +1546,11 @@
                 `url("${destination.image}")`;
 
 
-            const img =
+            const image =
                 new Image();
 
 
-            img.onload =
+            image.onload =
                 function() {
 
                     nextBackground.classList.add(
@@ -1368,7 +1573,7 @@
                 };
 
 
-            img.src =
+            image.src =
                 destination.image;
 
         }
@@ -1385,6 +1590,7 @@
         );
 
 
+
         /* =====================================================
            RENDER QUESTION
         ===================================================== */
@@ -1398,37 +1604,58 @@
             questionContent.innerHTML = "";
 
 
+            questionContent.style.display =
+                "flex";
+
+
+            summary.classList.remove(
+                "active"
+            );
+
+
+            /* QUESTION NUMBER */
+
             const number =
                 document.createElement(
                     "div"
                 );
 
+
             number.className =
                 "question-number";
+
 
             number.textContent =
                 `0${currentQuestion + 1} / 07`;
 
+
+            /* TITLE */
 
             const title =
                 document.createElement(
                     "h1"
                 );
 
+
             title.className =
                 "question-title";
+
 
             title.textContent =
                 question.title;
 
+
+            /* DESCRIPTION */
 
             const description =
                 document.createElement(
                     "p"
                 );
 
+
             description.className =
                 "question-description";
+
 
             description.textContent =
                 question.description;
@@ -1438,18 +1665,21 @@
                 number
             );
 
+
             questionContent.appendChild(
                 title
             );
+
 
             questionContent.appendChild(
                 description
             );
 
 
-            /* ==========================================
+
+            /* =================================================
                LOCATION
-            =========================================== */
+            ================================================= */
 
             if (
                 question.type ===
@@ -1479,9 +1709,10 @@
             }
 
 
-            /* ==========================================
+
+            /* =================================================
                UNIVERSITIES
-            =========================================== */
+            ================================================= */
 
             else if (
                 question.type ===
@@ -1503,9 +1734,10 @@
             }
 
 
-            /* ==========================================
+
+            /* =================================================
                OPTIONS
-            =========================================== */
+            ================================================= */
 
             else {
 
@@ -1513,6 +1745,7 @@
                     document.createElement(
                         "div"
                     );
+
 
                 options.className =
                     "options";
@@ -1525,6 +1758,7 @@
                             document.createElement(
                                 "div"
                             );
+
 
                         wrapper.className =
                             "option";
@@ -1558,13 +1792,17 @@
                             option;
 
 
+                        const previous =
+                            answers[
+                                question.type
+                            ];
+
+
                         if (
-                            answers[
-                                question.type
-                            ] &&
-                            answers[
-                                question.type
-                            ].includes(
+                            Array.isArray(
+                                previous
+                            ) &&
+                            previous.includes(
                                 option
                             )
                         ) {
@@ -1614,9 +1852,10 @@
             }
 
 
-            /* ==========================================
+
+            /* =================================================
                BUTTONS
-            =========================================== */
+            ================================================= */
 
             const buttons =
                 document.createElement(
@@ -1642,6 +1881,10 @@
                     "back-button";
 
 
+                back.type =
+                    "button";
+
+
                 back.textContent =
                     "← Back";
 
@@ -1659,14 +1902,14 @@
 
             else {
 
-                const empty =
+                const spacer =
                     document.createElement(
                         "div"
                     );
 
 
                 buttons.appendChild(
-                    empty
+                    spacer
                 );
 
             }
@@ -1682,11 +1925,15 @@
                 "continue-button";
 
 
+            continueButton.type =
+                "button";
+
+
             continueButton.textContent =
                 currentQuestion ===
                 questions.length - 1
-                    ? "FINISH →"
-                    : "CONTINUE →";
+                    ? "Finish →"
+                    : "Continue →";
 
 
             continueButton.onclick =
@@ -1703,9 +1950,10 @@
             );
 
 
-            /* ==========================================
+
+            /* =================================================
                PROGRESS
-            =========================================== */
+            ================================================= */
 
             const percentage =
                 (
@@ -1722,7 +1970,12 @@
             stepCounter.textContent =
                 `0${currentQuestion + 1} / 07`;
 
+
+            cornerNumber.textContent =
+                `0${currentQuestion + 1}`;
+
         }
+
 
 
         /* =====================================================
@@ -1790,7 +2043,8 @@
 
                 answers[
                     question.type
-                ] = selected;
+                ] =
+                    selected;
 
             }
 
@@ -1805,8 +2059,9 @@
         }
 
 
+
         /* =====================================================
-           NEXT QUESTION
+           NEXT
         ===================================================== */
 
         function nextQuestion() {
@@ -1835,19 +2090,23 @@
         }
 
 
+
         /* =====================================================
-           PREVIOUS QUESTION
+           BACK
         ===================================================== */
 
         function previousQuestion() {
 
             saveAnswer();
 
+
             currentQuestion--;
+
 
             renderQuestion();
 
         }
+
 
 
         /* =====================================================
@@ -1867,6 +2126,10 @@
 
             stepCounter.textContent =
                 "READY";
+
+
+            cornerNumber.textContent =
+                "08";
 
 
             progress.style.width =
@@ -1921,7 +2184,6 @@
 
                 ${countries}
 
-
                 <br><br>
 
 
@@ -1929,14 +2191,12 @@
 
                 ${study}
 
-
                 <br><br>
 
 
                 <strong>WHAT MATTERS TO YOU</strong><br>
 
                 ${priorities}
-
 
                 <br><br>
 
@@ -1950,10 +2210,9 @@
         }
 
 
+
         /* =====================================================
-           FINISH → DISCOVER
-           
-           THIS IS THE CONNECTION WE FIXED.
+           FINISH
         ===================================================== */
 
         document
@@ -1964,19 +2223,12 @@
                 "click",
                 function() {
 
-                    /*
-                        The answers have already been
-                        saved to localStorage.
-
-                        Now send the user to the
-                        EXISTING discover.html file.
-                    */
-
                     window.location.href =
                         "discover.html";
 
                 }
             );
+
 
 
         /* =====================================================
@@ -2011,6 +2263,7 @@
             }
 
         }
+
 
 
         /* =====================================================
