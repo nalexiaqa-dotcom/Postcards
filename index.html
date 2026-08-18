@@ -34,13 +34,18 @@
       position: fixed;
       inset: 0;
       z-index: -2;
-      overflow: hidden;
-      background: #e8e1d5;
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      transform: scale(1.02);
     }
 
-    .background-image {
-      position: absolute;
+    .background-next {
+      position: fixed;
       inset: 0;
+      z-index: -1;
 
       background-size: cover;
       background-position: center;
@@ -48,16 +53,13 @@
 
       opacity: 0;
 
-      transition: opacity 1.5s ease-in-out;
+      transition: opacity 1.2s ease-in-out;
 
       transform: scale(1.02);
     }
 
-    .background-image.active {
-      opacity: 1;
-    }
-
-    .background-image::after {
+    .background::after,
+    .background-next::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -70,11 +72,12 @@
     }
 
     /* =========================
-       PHOTO LOCATION
+       LOCATION
     ========================= */
 
-    .photo-location {
+    .location {
       position: fixed;
+
       top: 24px;
       left: 30px;
 
@@ -85,8 +88,9 @@
       font-size: 11px;
       font-weight: 700;
 
-      text-transform: uppercase;
       letter-spacing: 0.18em;
+
+      text-transform: uppercase;
 
       text-shadow:
         0 1px 8px rgba(0, 0, 0, 0.35);
@@ -352,14 +356,15 @@
     }
 
     /* =========================
-       LOGIN / SIGNUP SCREEN
+       AUTH SCREEN
     ========================= */
 
     .auth-screen {
       position: fixed;
+
       inset: 0;
 
-      z-index: 100;
+      z-index: 20;
 
       display: none;
 
@@ -368,7 +373,7 @@
 
       padding: 30px;
 
-      background: #e8e1d5;
+      background: transparent;
     }
 
     .auth-screen.active {
@@ -376,37 +381,50 @@
     }
 
     .auth-card {
-      width: min(480px, 92vw);
+      width: min(430px, 90vw);
 
-      background: #f4efe5;
+      padding: 42px;
 
-      padding: 45px;
-
-      box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.18);
+      background: rgba(248, 245, 238, 0.96);
 
       border: 1px solid rgba(0, 0, 0, 0.08);
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.22);
     }
 
     .auth-card h2 {
-      margin-top: 35px;
+      margin-top: 25px;
 
       font-family: Georgia, "Times New Roman", serif;
 
-      font-size: 52px;
+      font-size: 48px;
 
       font-weight: 400;
 
       line-height: 0.95;
+
+      letter-spacing: -0.04em;
+    }
+
+    .auth-card p {
+      margin-top: 18px;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
+      color: #555;
     }
 
     .auth-form {
-      margin-top: 35px;
+      margin-top: 28px;
 
       display: flex;
+
       flex-direction: column;
 
-      gap: 14px;
+      gap: 12px;
     }
 
     .auth-form input {
@@ -430,9 +448,9 @@
     }
 
     .auth-submit {
-      margin-top: 5px;
-
       width: 100%;
+
+      margin-top: 5px;
 
       padding: 16px;
 
@@ -453,16 +471,16 @@
       cursor: pointer;
     }
 
-    .auth-back {
+    .back-button {
       margin-top: 20px;
+
+      width: 100%;
+
+      padding: 12px;
 
       border: none;
 
-      background: none;
-
-      cursor: pointer;
-
-      font-family: inherit;
+      background: transparent;
 
       font-size: 10px;
 
@@ -470,7 +488,13 @@
 
       letter-spacing: 0.14em;
 
+      cursor: pointer;
+
       opacity: 0.6;
+    }
+
+    .back-button:hover {
+      opacity: 1;
     }
 
     /* =========================
@@ -481,6 +505,11 @@
 
       .page {
         padding: 18px;
+      }
+
+      .location {
+        top: 18px;
+        left: 20px;
       }
 
       .postcard-wrapper {
@@ -516,17 +545,8 @@
         font-size: 40px;
       }
 
-      .photo-location {
-        top: 18px;
-        left: 18px;
-      }
-
       .auth-card {
         padding: 28px;
-      }
-
-      .auth-card h2 {
-        font-size: 42px;
       }
     }
 
@@ -548,32 +568,19 @@
 <body>
 
   <!-- =========================
-       CHANGING BACKGROUND
+       BACKGROUNDS
   ========================= -->
 
-  <div class="background">
+  <div class="background" id="background"></div>
 
-    <div
-      class="background-image active"
-      id="backgroundOne"
-    ></div>
-
-    <div
-      class="background-image"
-      id="backgroundTwo"
-    ></div>
-
-  </div>
+  <div class="background-next" id="backgroundNext"></div>
 
 
   <!-- =========================
        PHOTO LOCATION
   ========================= -->
 
-  <div
-    class="photo-location"
-    id="photoLocation"
-  >
+  <div class="location" id="location">
     Paris, France
   </div>
 
@@ -582,7 +589,7 @@
        MAIN PAGE
   ========================= -->
 
-  <main class="page">
+  <main class="page" id="mainPage">
 
     <div
       class="postcard-wrapper"
@@ -693,13 +700,10 @@
 
 
   <!-- =========================
-       LOGIN SCREEN
+       LOGIN / SIGN UP SCREEN
   ========================= -->
 
-  <div
-    class="auth-screen"
-    id="loginScreen"
-  >
+  <div class="auth-screen" id="authScreen">
 
     <div class="auth-card">
 
@@ -707,15 +711,16 @@
         POSTCARDS
       </div>
 
-      <h2>
-        Welcome<br>
-        back.
+      <h2 id="authTitle">
+        Welcome back.
       </h2>
 
-      <form
-        class="auth-form"
-        onsubmit="loginSubmit(event)"
-      >
+      <p id="authDescription">
+        Continue your journey and discover where your next chapter could take you.
+      </p>
+
+
+      <form class="auth-form" onsubmit="handleAuth(event)">
 
         <input
           type="email"
@@ -730,81 +735,18 @@
         >
 
         <button
-          type="submit"
           class="auth-submit"
+          type="submit"
         >
           Log in
         </button>
 
       </form>
 
-      <button
-        class="auth-back"
-        onclick="closeAuth()"
-      >
-        ← Back to postcard
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       SIGN UP SCREEN
-  ========================= -->
-
-  <div
-    class="auth-screen"
-    id="signupScreen"
-  >
-
-    <div class="auth-card">
-
-      <div class="brand">
-        POSTCARDS
-      </div>
-
-      <h2>
-        Start<br>
-        your journey.
-      </h2>
-
-      <form
-        class="auth-form"
-        onsubmit="signupSubmit(event)"
-      >
-
-        <input
-          type="text"
-          placeholder="Name"
-          required
-        >
-
-        <input
-          type="email"
-          placeholder="Email"
-          required
-        >
-
-        <input
-          type="password"
-          placeholder="Password"
-          required
-        >
-
-        <button
-          type="submit"
-          class="auth-submit"
-        >
-          Sign up
-        </button>
-
-      </form>
 
       <button
-        class="auth-back"
-        onclick="closeAuth()"
+        class="back-button"
+        onclick="closeAuth(event)"
       >
         ← Back to postcard
       </button>
@@ -818,150 +760,167 @@
 
     /* =========================
        CHANGING BACKGROUNDS
+       4 SECOND INTERVAL
     ========================= */
 
     const backgrounds = [
 
       {
         image:
-          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=85",
-
+          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=90",
         location:
           "Paris, France"
       },
 
       {
         image:
-          "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2000&q=85",
-
+          "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2000&q=90",
         location:
           "Barcelona, Spain"
       },
 
       {
         image:
-          "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=85",
-
+          "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=90",
         location:
-          "London, United Kingdom"
+          "Queenstown, New Zealand"
       },
 
       {
         image:
-          "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2000&q=85",
+          "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Rome, Italy"
+      },
 
+      {
+        image:
+          "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Kyoto, Japan"
+      },
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2000&q=90",
         location:
           "New York City, USA"
-      },
-
-      {
-        image:
-          "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=2000&q=85",
-
-        location:
-          "Tokyo, Japan"
       }
 
     ];
 
 
-    const backgroundOne =
-      document.getElementById("backgroundOne");
+    const background =
+      document.getElementById("background");
 
-    const backgroundTwo =
-      document.getElementById("backgroundTwo");
+    const backgroundNext =
+      document.getElementById("backgroundNext");
 
-    const photoLocation =
-      document.getElementById("photoLocation");
+    const locationText =
+      document.getElementById("location");
 
 
     let currentBackground = 0;
 
-    let showingFirst = true;
 
+    /*
+      Preload every image first.
+      This prevents the white flash while
+      the next photograph loads.
+    */
 
-    function changeBackground() {
+    backgrounds.forEach(function(place) {
 
-      const next =
-        backgrounds[currentBackground];
+      const image = new Image();
 
+      image.src = place.image;
 
-      const nextLayer =
-        showingFirst
-          ? backgroundTwo
-          : backgroundOne;
-
-      const currentLayer =
-        showingFirst
-          ? backgroundOne
-          : backgroundTwo;
-
-
-      /*
-        Load the next image into the
-        hidden layer first.
-      */
-
-      nextLayer.style.backgroundImage =
-        `url("${next.image}")`;
-
-
-      /*
-        Only reveal the new image after
-        it has been assigned.
-      */
-
-      requestAnimationFrame(() => {
-
-        nextLayer.classList.add("active");
-
-        currentLayer.classList.remove("active");
-
-      });
-
-
-      /*
-        Update the location at the same
-        time as the new photograph.
-      */
-
-      photoLocation.style.opacity = "0";
-
-
-      setTimeout(() => {
-
-        photoLocation.textContent =
-          next.location;
-
-        photoLocation.style.opacity = "1";
-
-      }, 500);
-
-
-      showingFirst = !showingFirst;
-
-      currentBackground =
-        (currentBackground + 1) %
-        backgrounds.length;
-
-    }
+    });
 
 
     /*
       Start with the first photograph.
     */
 
-    backgroundOne.style.backgroundImage =
+    background.style.backgroundImage =
       `url("${backgrounds[0].image}")`;
+
+    locationText.textContent =
+      backgrounds[0].location;
 
 
     /*
-      Change automatically every 6 seconds.
-      No clicking, typing, or other action
-      is required.
+      Change automatically every 4 seconds.
     */
 
-    setInterval(changeBackground, 6000);
+    function changeBackground() {
+
+      const nextBackground =
+        (currentBackground + 1) % backgrounds.length;
+
+
+      /*
+        Put the next image underneath
+        the current one.
+      */
+
+      backgroundNext.style.backgroundImage =
+        `url("${backgrounds[nextBackground].image}")`;
+
+
+      /*
+        Fade the new image in.
+      */
+
+      backgroundNext.style.opacity = "1";
+
+
+      /*
+        Change the location at the same time.
+      */
+
+      locationText.style.opacity = "0";
+
+
+      setTimeout(function() {
+
+        locationText.textContent =
+          backgrounds[nextBackground].location;
+
+        locationText.style.opacity = "1";
+
+      }, 400);
+
+
+      /*
+        Once the fade is complete,
+        make the new image the permanent
+        background and reset the layer.
+      */
+
+      setTimeout(function() {
+
+        background.style.backgroundImage =
+          `url("${backgrounds[nextBackground].image}")`;
+
+        backgroundNext.style.opacity = "0";
+
+      }, 1200);
+
+
+      currentBackground =
+        nextBackground;
+
+    }
+
+
+    /*
+      FOUR SECONDS.
+      The background does NOT depend
+      on clicking, typing, or any other action.
+    */
+
+    setInterval(changeBackground, 4000);
 
 
     /* =========================
@@ -984,6 +943,11 @@
 
     wrapper.addEventListener("click", function(event) {
 
+      /*
+        Don't flip when clicking
+        authentication buttons.
+      */
+
       if (
         event.target.closest(".auth-button")
       ) {
@@ -995,9 +959,7 @@
     });
 
 
-    /* =========================
-       KEYBOARD ACCESSIBILITY
-    ========================= */
+    /* Keyboard accessibility */
 
     wrapper.addEventListener("keydown", function(event) {
 
@@ -1023,9 +985,21 @@
 
       event.stopPropagation();
 
-      document
-        .getElementById("loginScreen")
+      document.getElementById("mainPage")
+        .style.display = "none";
+
+      document.getElementById("authScreen")
         .classList.add("active");
+
+      document.getElementById("authTitle")
+        .textContent = "Welcome back.";
+
+      document.getElementById("authDescription")
+        .textContent =
+        "Continue your journey and discover where your next chapter could take you.";
+
+      document.querySelector(".auth-submit")
+        .textContent = "Log in";
 
     }
 
@@ -1038,52 +1012,51 @@
 
       event.stopPropagation();
 
-      document
-        .getElementById("signupScreen")
+      document.getElementById("mainPage")
+        .style.display = "none";
+
+      document.getElementById("authScreen")
         .classList.add("active");
 
-    }
+      document.getElementById("authTitle")
+        .textContent = "Start your journey.";
 
+      document.getElementById("authDescription")
+        .textContent =
+        "Create your Postcards account and start exploring universities around the world.";
 
-    /* =========================
-       CLOSE AUTH SCREEN
-    ========================= */
-
-    function closeAuth() {
-
-      document
-        .getElementById("loginScreen")
-        .classList.remove("active");
-
-      document
-        .getElementById("signupScreen")
-        .classList.remove("active");
+      document.querySelector(".auth-submit")
+        .textContent = "Sign up";
 
     }
 
 
     /* =========================
-       LOGIN FORM
+       BACK TO POSTCARD
     ========================= */
 
-    function loginSubmit(event) {
+    function closeAuth(event) {
+
+      event.stopPropagation();
+
+      document.getElementById("authScreen")
+        .classList.remove("active");
+
+      document.getElementById("mainPage")
+        .style.display = "flex";
+
+    }
+
+
+    /* =========================
+       AUTH FORM
+    ========================= */
+
+    function handleAuth(event) {
 
       event.preventDefault();
 
-      alert("Login connected — your account system can be added next.");
-
-    }
-
-
-    /* =========================
-       SIGN UP FORM
-    ========================= */
-
-    function signupSubmit(event) {
-
-      event.preventDefault();
-
-      alert("Sign up connected — your account system can be added next.");
+      alert("Authentication will be connected next.");
 
     }
 
