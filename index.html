@@ -7,6 +7,7 @@
   <title>Postcards — Where will you go next?</title>
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -427,7 +428,9 @@
       gap: 12px;
     }
 
-    .auth-form input {
+    .auth-form input,
+    .profile-form input,
+    .profile-form select {
       width: 100%;
 
       padding: 15px;
@@ -443,11 +446,14 @@
       outline: none;
     }
 
-    .auth-form input:focus {
+    .auth-form input:focus,
+    .profile-form input:focus,
+    .profile-form select:focus {
       border-color: #222;
     }
 
-    .auth-submit {
+    .auth-submit,
+    .profile-submit {
       width: 100%;
 
       margin-top: 5px;
@@ -495,6 +501,196 @@
 
     .back-button:hover {
       opacity: 1;
+    }
+
+    .message {
+      margin-top: 12px;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+      text-align: center;
+
+      color: #8b3333;
+    }
+
+    /* =========================
+       PROFILE SCREEN
+    ========================= */
+
+    .profile-screen {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 30;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 25px;
+
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .profile-screen.active {
+      display: flex;
+    }
+
+    .profile-card {
+      width: min(600px, 94vw);
+
+      max-height: 92vh;
+
+      overflow-y: auto;
+
+      padding: 40px;
+
+      background: rgba(248, 245, 238, 0.97);
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .profile-card h2 {
+      margin-top: 20px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(40px, 7vw, 62px);
+
+      font-weight: 400;
+
+      line-height: 0.95;
+
+      letter-spacing: -0.04em;
+    }
+
+    .profile-card p {
+      margin-top: 15px;
+
+      max-width: 500px;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
+      color: #555;
+    }
+
+    .profile-form {
+      margin-top: 28px;
+
+      display: grid;
+
+      gap: 13px;
+    }
+
+    /* =========================
+       APP SCREEN
+    ========================= */
+
+    .app-screen {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 40;
+
+      display: none;
+
+      padding: 40px;
+
+      overflow-y: auto;
+
+      background: rgba(248, 245, 238, 0.97);
+    }
+
+    .app-screen.active {
+      display: block;
+    }
+
+    .app-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 50px;
+    }
+
+    .logout-button {
+      border: 1px solid #222;
+
+      background: transparent;
+
+      padding: 10px 16px;
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.14em;
+
+      text-transform: uppercase;
+
+      cursor: pointer;
+    }
+
+    .app-content {
+      max-width: 1000px;
+
+      margin: 0 auto;
+    }
+
+    .app-content h1 {
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(50px, 8vw, 90px);
+
+      font-weight: 400;
+
+      line-height: 0.9;
+
+      letter-spacing: -0.05em;
+    }
+
+    .app-content p {
+      margin-top: 25px;
+
+      max-width: 600px;
+
+      font-size: 15px;
+
+      line-height: 1.7;
+
+      color: #555;
+    }
+
+    .welcome-box {
+      margin-top: 50px;
+
+      padding: 30px;
+
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .welcome-box h3 {
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 32px;
+
+      font-weight: 400;
+    }
+
+    .welcome-box p {
+      margin-top: 10px;
+
+      font-size: 13px;
     }
 
     /* =========================
@@ -548,6 +744,15 @@
       .auth-card {
         padding: 28px;
       }
+
+      .profile-card {
+        padding: 28px;
+      }
+
+      .app-screen {
+        padding: 25px;
+      }
+
     }
 
     @media (max-height: 650px) {
@@ -561,33 +766,26 @@
       .back-right {
         padding: 25px;
       }
+
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- =========================
-       BACKGROUNDS
-  ========================= -->
+  <!-- BACKGROUNDS -->
 
   <div class="background" id="background"></div>
 
   <div class="background-next" id="backgroundNext"></div>
-
-
-  <!-- =========================
-       PHOTO LOCATION
-  ========================= -->
 
   <div class="location" id="location">
     Paris, France
   </div>
 
 
-  <!-- =========================
-       MAIN PAGE
-  ========================= -->
+  <!-- MAIN PAGE -->
 
   <main class="page" id="mainPage">
 
@@ -601,16 +799,13 @@
 
       <div class="postcard" id="postcard">
 
-        <!-- =====================
-             FRONT OF POSTCARD
-        ====================== -->
+        <!-- FRONT -->
 
         <section class="postcard-front">
 
           <div class="brand">
             POSTCARDS
           </div>
-
 
           <div class="front-center">
 
@@ -620,7 +815,6 @@
             </h1>
 
           </div>
-
 
           <div class="front-bottom">
 
@@ -637,9 +831,7 @@
         </section>
 
 
-        <!-- =====================
-             BACK OF POSTCARD
-        ====================== -->
+        <!-- BACK -->
 
         <section class="postcard-back">
 
@@ -657,7 +849,6 @@
               </h2>
 
             </div>
-
 
             <p>
               Discover universities around the world,
@@ -699,9 +890,7 @@
   </main>
 
 
-  <!-- =========================
-       LOGIN / SIGN UP SCREEN
-  ========================= -->
+  <!-- AUTH SCREEN -->
 
   <div class="auth-screen" id="authScreen">
 
@@ -719,23 +908,26 @@
         Continue your journey and discover where your next chapter could take you.
       </p>
 
-
-      <form class="auth-form" onsubmit="handleAuth(event)">
+      <form class="auth-form" id="authForm">
 
         <input
+          id="emailInput"
           type="email"
           placeholder="Email"
           required
         >
 
         <input
+          id="passwordInput"
           type="password"
           placeholder="Password"
           required
+          minlength="6"
         >
 
         <button
           class="auth-submit"
+          id="authSubmit"
           type="submit"
         >
           Log in
@@ -743,6 +935,7 @@
 
       </form>
 
+      <div class="message" id="authMessage"></div>
 
       <button
         class="back-button"
@@ -756,11 +949,127 @@
   </div>
 
 
+  <!-- PROFILE QUESTIONNAIRE -->
+
+  <div class="profile-screen" id="profileScreen">
+
+    <div class="profile-card">
+
+      <div class="brand">
+        POSTCARDS
+      </div>
+
+      <h2>
+        Tell us about<br>
+        yourself.
+      </h2>
+
+      <p>
+        This helps us personalize your university research journey.
+      </p>
+
+      <form class="profile-form" id="profileForm">
+
+        <input
+          id="schoolInput"
+          type="text"
+          placeholder="What school do you attend?"
+          required
+        >
+
+        <input
+          id="countryInput"
+          type="text"
+          placeholder="What country are you from?"
+          required
+        >
+
+        <input
+          id="studyCountryInput"
+          type="text"
+          placeholder="Where would you like to study?"
+          required
+        >
+
+        <input
+          id="interestInput"
+          type="text"
+          placeholder="What are you interested in?"
+          required
+        >
+
+        <input
+          id="studyInput"
+          type="text"
+          placeholder="What do you want to study?"
+          required
+        >
+
+        <button
+          class="profile-submit"
+          type="submit"
+        >
+          Start exploring
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- APP SCREEN -->
+
+  <div class="app-screen" id="appScreen">
+
+    <div class="app-header">
+
+      <div class="brand">
+        POSTCARDS
+      </div>
+
+      <button
+        class="logout-button"
+        onclick="logout()"
+      >
+        Log out
+      </button>
+
+    </div>
+
+    <div class="app-content">
+
+      <h1 id="appGreeting">
+        Welcome.
+      </h1>
+
+      <p>
+        Your university journey starts here. Explore universities,
+        compare possibilities, learn about applications, and discover
+        where your next chapter could take you.
+      </p>
+
+      <div class="welcome-box">
+
+        <h3>
+          Your Postcards profile
+        </h3>
+
+        <p id="profileSummary">
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <script>
 
     /* =========================
-       CHANGING BACKGROUNDS
-       4 SECOND INTERVAL
+       BACKGROUNDS
     ========================= */
 
     const backgrounds = [
@@ -819,15 +1128,8 @@
     const locationText =
       document.getElementById("location");
 
-
     let currentBackground = 0;
 
-
-    /*
-      Preload every image first.
-      This prevents the white flash while
-      the next photograph loads.
-    */
 
     backgrounds.forEach(function(place) {
 
@@ -838,10 +1140,6 @@
     });
 
 
-    /*
-      Start with the first photograph.
-    */
-
     background.style.backgroundImage =
       `url("${backgrounds[0].image}")`;
 
@@ -849,35 +1147,15 @@
       backgrounds[0].location;
 
 
-    /*
-      Change automatically every 4 seconds.
-    */
-
     function changeBackground() {
 
       const nextBackground =
         (currentBackground + 1) % backgrounds.length;
 
-
-      /*
-        Put the next image underneath
-        the current one.
-      */
-
       backgroundNext.style.backgroundImage =
         `url("${backgrounds[nextBackground].image}")`;
 
-
-      /*
-        Fade the new image in.
-      */
-
       backgroundNext.style.opacity = "1";
-
-
-      /*
-        Change the location at the same time.
-      */
 
       locationText.style.opacity = "0";
 
@@ -891,12 +1169,6 @@
 
       }, 400);
 
-
-      /*
-        Once the fade is complete,
-        make the new image the permanent
-        background and reset the layer.
-      */
 
       setTimeout(function() {
 
@@ -913,12 +1185,6 @@
 
     }
 
-
-    /*
-      FOUR SECONDS.
-      The background does NOT depend
-      on clicking, typing, or any other action.
-    */
 
     setInterval(changeBackground, 4000);
 
@@ -943,11 +1209,6 @@
 
     wrapper.addEventListener("click", function(event) {
 
-      /*
-        Don't flip when clicking
-        authentication buttons.
-      */
-
       if (
         event.target.closest(".auth-button")
       ) {
@@ -958,8 +1219,6 @@
 
     });
 
-
-    /* Keyboard accessibility */
 
     wrapper.addEventListener("keydown", function(event) {
 
@@ -978,12 +1237,17 @@
 
 
     /* =========================
-       LOGIN
+       AUTH MODE
     ========================= */
+
+    let authMode = "login";
+
 
     function goToLogin(event) {
 
       event.stopPropagation();
+
+      authMode = "login";
 
       document.getElementById("mainPage")
         .style.display = "none";
@@ -998,19 +1262,20 @@
         .textContent =
         "Continue your journey and discover where your next chapter could take you.";
 
-      document.querySelector(".auth-submit")
+      document.getElementById("authSubmit")
         .textContent = "Log in";
+
+      document.getElementById("authMessage")
+        .textContent = "";
 
     }
 
 
-    /* =========================
-       SIGN UP
-    ========================= */
-
     function goToSignup(event) {
 
       event.stopPropagation();
+
+      authMode = "signup";
 
       document.getElementById("mainPage")
         .style.display = "none";
@@ -1025,14 +1290,17 @@
         .textContent =
         "Create your Postcards account and start exploring universities around the world.";
 
-      document.querySelector(".auth-submit")
+      document.getElementById("authSubmit")
         .textContent = "Sign up";
+
+      document.getElementById("authMessage")
+        .textContent = "";
 
     }
 
 
     /* =========================
-       BACK TO POSTCARD
+       CLOSE AUTH
     ========================= */
 
     function closeAuth(event) {
@@ -1045,20 +1313,348 @@
       document.getElementById("mainPage")
         .style.display = "flex";
 
+      document.getElementById("authForm")
+        .reset();
+
+      document.getElementById("authMessage")
+        .textContent = "";
+
     }
 
 
     /* =========================
-       AUTH FORM
+       AUTHENTICATION
     ========================= */
+
+    document
+      .getElementById("authForm")
+      .addEventListener("submit", handleAuth);
+
 
     function handleAuth(event) {
 
       event.preventDefault();
 
-      alert("Authentication will be connected next.");
+
+      const email =
+        document
+          .getElementById("emailInput")
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      const password =
+        document
+          .getElementById("passwordInput")
+          .value;
+
+
+      const message =
+        document.getElementById("authMessage");
+
+
+      /* =========================
+         SIGN UP
+      ========================= */
+
+      if (authMode === "signup") {
+
+        const existingUser =
+          localStorage.getItem(
+            "postcardsUser"
+          );
+
+
+        if (existingUser) {
+
+          const user =
+            JSON.parse(existingUser);
+
+
+          if (user.email === email) {
+
+            message.textContent =
+              "An account with this email already exists. Try logging in.";
+
+            return;
+
+          }
+
+        }
+
+
+        const newUser = {
+
+          email: email,
+
+          password: password,
+
+          profile: null
+
+        };
+
+
+        localStorage.setItem(
+          "postcardsUser",
+          JSON.stringify(newUser)
+        );
+
+
+        localStorage.setItem(
+          "postcardsLoggedIn",
+          "true"
+        );
+
+
+        document
+          .getElementById("authScreen")
+          .classList.remove("active");
+
+
+        document
+          .getElementById("profileScreen")
+          .classList.add("active");
+
+
+        document
+          .getElementById("authForm")
+          .reset();
+
+
+        return;
+
+      }
+
+
+      /* =========================
+         LOGIN
+      ========================= */
+
+      const savedUser =
+        localStorage.getItem(
+          "postcardsUser"
+        );
+
+
+      if (!savedUser) {
+
+        message.textContent =
+          "No account exists yet. Please sign up first.";
+
+        return;
+
+      }
+
+
+      const user =
+        JSON.parse(savedUser);
+
+
+      if (
+        user.email !== email ||
+        user.password !== password
+      ) {
+
+        message.textContent =
+          "Incorrect email or password. Please try again.";
+
+        return;
+
+      }
+
+
+      localStorage.setItem(
+        "postcardsLoggedIn",
+        "true"
+      );
+
+
+      document
+        .getElementById("authScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("authForm")
+        .reset();
+
+
+      openApp(user);
 
     }
+
+
+    /* =========================
+       PROFILE QUESTIONNAIRE
+    ========================= */
+
+    document
+      .getElementById("profileForm")
+      .addEventListener(
+        "submit",
+        handleProfile
+      );
+
+
+    function handleProfile(event) {
+
+      event.preventDefault();
+
+
+      const savedUser =
+        localStorage.getItem(
+          "postcardsUser"
+        );
+
+
+      if (!savedUser) {
+        return;
+      }
+
+
+      const user =
+        JSON.parse(savedUser);
+
+
+      user.profile = {
+
+        school:
+          document
+            .getElementById("schoolInput")
+            .value
+            .trim(),
+
+        country:
+          document
+            .getElementById("countryInput")
+            .value
+            .trim(),
+
+        studyCountry:
+          document
+            .getElementById("studyCountryInput")
+            .value
+            .trim(),
+
+        interests:
+          document
+            .getElementById("interestInput")
+            .value
+            .trim(),
+
+        intendedStudy:
+          document
+            .getElementById("studyInput")
+            .value
+            .trim()
+
+      };
+
+
+      localStorage.setItem(
+        "postcardsUser",
+        JSON.stringify(user)
+      );
+
+
+      document
+        .getElementById("profileScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("profileForm")
+        .reset();
+
+
+      openApp(user);
+
+    }
+
+
+    /* =========================
+       OPEN APP
+    ========================= */
+
+    function openApp(user) {
+
+      document
+        .getElementById("mainPage")
+        .style.display = "none";
+
+
+      document
+        .getElementById("authScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("profileScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("appScreen")
+        .classList.add("active");
+
+
+      const firstName =
+        user.email
+          .split("@")[0]
+          .split(/[._-]/)[0];
+
+
+      document
+        .getElementById("appGreeting")
+        .textContent =
+          `Welcome, ${firstName}.`;
+
+
+      if (user.profile) {
+
+        document
+          .getElementById("profileSummary")
+          .textContent =
+            `You're from ${user.profile.country}, currently studying at ${user.profile.school}, and you're interested in studying ${user.profile.intendedStudy} in ${user.profile.studyCountry}.`;
+
+      } else {
+
+        document
+          .getElementById("profileSummary")
+          .textContent =
+            "Your profile is ready. Start exploring universities around the world.";
+
+      }
+
+    }
+
+
+    /* =========================
+       LOG OUT
+    ========================= */
+
+    function logout() {
+
+      localStorage.removeItem(
+        "postcardsLoggedIn"
+      );
+
+
+      document
+        .getElementById("appScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("mainPage")
+        .style.display = "flex";
+
+
+      postcard.classList.remove("flipped");
+
+    }
+
 
   </script>
 
