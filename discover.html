@@ -1,4000 +1,2838 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Postcards — Discover</title>
 
 <style>
-
-/* =====================================================
-   RESET
-===================================================== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+  scroll-behavior:smooth;
 }
 
-body {
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #272522;
-    background: #e8e4dc;
-    overflow-x: hidden;
+body{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background:#f4efe5;
+  color:#202020;
+  min-height:100vh;
 }
 
-
-/* =====================================================
-   CHANGING BACKGROUND
-===================================================== */
-
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: -10;
-
-    background:
-        linear-gradient(
-            120deg,
-            #dcd8cf,
-            #eeeae2,
-            #d5ddd9
-        );
-
-    background-size: 300% 300%;
-
-    animation:
-        backgroundMove 18s ease infinite;
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(
+      rgba(244,239,229,.91),
+      rgba(244,239,229,.97)
+    ),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=85")
+    center/cover no-repeat;
 }
 
-.background::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(255,255,255,.55),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            rgba(120,120,110,.12),
-            transparent 35%
-        );
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:rgba(255,255,255,.08);
 }
 
-@keyframes backgroundMove {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-
+button,
+input{
+  font:inherit;
 }
 
+button{
+  cursor:pointer;
+}
 
-/* =====================================================
+/* =========================
    HEADER
-===================================================== */
+========================= */
 
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
+.app-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  min-height:78px;
+  padding:0 42px;
 
-    height: 72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background:rgba(244,239,229,.91);
+  backdrop-filter:blur(14px);
 
-    padding: 0 42px;
-
-    background: rgba(245,243,238,.82);
-
-    backdrop-filter: blur(18px);
-
-    border-bottom:
-        1px solid
-        rgba(39,37,34,.12);
+  border-bottom:1px solid rgba(0,0,0,.12);
 }
 
-.logo {
-    font-size: 13px;
-    font-weight: 600;
-
-    letter-spacing: 5px;
-
-    color: #272522;
+.brand{
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  white-space:nowrap;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+  flex:1;
 }
 
-.profile {
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.nav button{
+  border:0;
+  background:transparent;
+  color:#666;
 
-    color: #77736c;
+  padding:9px 0;
+
+  font-size:10px;
+  font-weight:700;
+
+  text-transform:uppercase;
+  letter-spacing:.14em;
+
+  border-bottom:1px solid transparent;
 }
 
+.nav button:hover,
+.nav button.active{
+  color:#202020;
+  border-bottom-color:#202020;
+}
 
-/* =====================================================
+.logout{
+  border:1px solid #222;
+  background:transparent;
+
+  padding:10px 16px;
+
+  color:#222;
+
+  font-size:10px;
+  font-weight:700;
+
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+
+.logout:hover{
+  background:#222;
+  color:#f4efe5;
+}
+
+/* =========================
    MAIN
-===================================================== */
+========================= */
 
-.main {
-    width: min(1380px, 92vw);
-
-    margin: 0 auto;
-
-    padding:
-        65px 0 100px;
+main{
+  width:min(1180px,calc(100% - 48px));
+  margin:0 auto;
+  padding:76px 0 110px;
 }
 
-
-/* =====================================================
-   INTRO
-===================================================== */
-
-.intro {
-    display: grid;
-
-    grid-template-columns:
-        1.3fr
-        .7fr;
-
-    gap: 70px;
-
-    align-items: end;
-
-    margin-bottom: 55px;
+.page-section{
+  display:none;
 }
 
-.eyebrow {
-    font-size: 9px;
-
-    letter-spacing: 4px;
-
-    text-transform: uppercase;
-
-    color: #77736c;
-
-    margin-bottom: 17px;
+.page-section.active{
+  display:block;
 }
 
-.intro h1 {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+/* =========================
+   GENERAL TEXT
+========================= */
 
-    font-size:
-        clamp(
-            52px,
-            7vw,
-            92px
-        );
-
-    font-weight: normal;
-
-    line-height: .92;
-
-    letter-spacing: -3px;
-
-    color: #272522;
+.eyebrow{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  opacity:.58;
 }
 
-.intro-text {
-    max-width: 390px;
+/* =========================
+   HERO
+========================= */
 
-    font-size: 12px;
-
-    line-height: 1.8;
-
-    color: #68645e;
+.hero{
+  position:relative;
+  max-width:920px;
+  padding:0 0 70px;
 }
 
+.hero h1{
+  margin-top:18px;
 
-/* =====================================================
-   DIVIDER
-===================================================== */
+  font-family:Georgia,"Times New Roman",serif;
 
-.section-line {
-    width: 100%;
+  font-size:clamp(62px,9vw,112px);
 
-    height: 1px;
+  font-weight:400;
 
-    background:
-        rgba(39,37,34,.15);
+  line-height:.87;
 
-    margin-bottom: 25px;
+  letter-spacing:-.06em;
 }
 
+.hero::after{
+  content:"";
 
-/* =====================================================
-   SEARCH AREA
-===================================================== */
+  position:absolute;
 
-.search-area {
-    display: grid;
+  right:-40px;
+  top:5px;
 
-    grid-template-columns:
-        1fr
-        auto
-        auto;
+  width:190px;
+  height:190px;
 
-    gap: 9px;
+  background:
+    linear-gradient(
+      rgba(0,0,0,.08),
+      rgba(0,0,0,.2)
+    ),
+    url("https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=700&q=85")
+    center/cover;
 
-    margin-bottom: 14px;
+  opacity:.72;
+
+  z-index:-1;
+
+  transform:rotate(2deg);
+
+  box-shadow:
+    0 15px 30px rgba(0,0,0,.12);
 }
 
-.search-box {
-    position: relative;
+.hero p{
+  max-width:630px;
+
+  margin-top:30px;
+
+  color:#555;
+
+  font-size:15px;
+
+  line-height:1.7;
 }
 
-.search-box input {
-    width: 100%;
+/* =========================
+   SEARCH
+========================= */
 
-    height: 54px;
+.search{
+  max-width:760px;
 
-    padding:
-        0 18px;
+  margin-top:34px;
 
-    border:
-        1px solid
-        rgba(39,37,34,.2);
+  display:flex;
+  align-items:center;
 
-    outline: none;
+  gap:13px;
 
-    background:
-        rgba(250,249,245,.72);
+  padding:17px 20px;
 
-    font-size: 12px;
+  border:1px solid rgba(0,0,0,.25);
 
-    color: #272522;
-
-    transition:
-        border .2s ease,
-        background .2s ease;
+  background:rgba(255,255,255,.3);
 }
 
-.search-box input:focus {
-    border-color:
-        #272522;
-
-    background:
-        rgba(255,255,255,.9);
+.search-icon{
+  font-size:22px;
+  line-height:1;
 }
 
-.search-box input::placeholder {
-    color: #96918a;
+.search input{
+  width:100%;
+
+  border:0;
+  outline:0;
+
+  background:transparent;
+
+  color:#222;
+
+  font-size:13px;
 }
 
-.control-button {
-    height: 54px;
-
-    padding:
-        0 21px;
-
-    border:
-        1px solid
-        rgba(39,37,34,.2);
-
-    background:
-        rgba(250,249,245,.72);
-
-    color: #4f4b45;
-
-    font-size: 9px;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-
-    cursor: pointer;
-
-    transition:
-        .2s ease;
+.search input::placeholder{
+  color:#777;
 }
 
-.control-button:hover,
-.control-button.active {
-    background: #272522;
-    color: white;
+/* =========================
+   SECTION TITLES
+========================= */
+
+.section-title{
+  margin:0 0 24px;
+
+  padding-bottom:13px;
+
+  border-bottom:1px solid rgba(0,0,0,.15);
+
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+
+  gap:20px;
 }
 
-
-/* =====================================================
-   FILTERS
-===================================================== */
-
-.filters {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 7px;
-
-    margin-bottom: 48px;
+.section-title-left{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
 }
 
-.filter {
-    border:
-        1px solid
-        rgba(39,37,34,.18);
-
-    background:
-        rgba(250,249,245,.45);
-
-    padding:
-        9px 13px;
-
-    font-size: 8px;
-
-    letter-spacing: 1.5px;
-
-    text-transform: uppercase;
-
-    color: #6e6962;
-
-    cursor: pointer;
-
-    transition:
-        .2s ease;
+.section-number{
+  font-size:10px;
+  opacity:.45;
 }
 
-.filter:hover,
-.filter.active {
-    background: #272522;
+.section-title h2{
+  font-family:Georgia,"Times New Roman",serif;
 
-    border-color: #272522;
+  font-weight:400;
 
-    color: white;
+  font-size:34px;
+
+  letter-spacing:-.025em;
 }
 
+.section-note{
+  font-size:10px;
 
-/* =====================================================
-   RESULTS HEADER
-===================================================== */
+  text-transform:uppercase;
 
-.results-header {
-    display: flex;
+  letter-spacing:.12em;
 
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 17px;
+  opacity:.5;
 }
 
-.results-title {
-    font-size: 9px;
+/* =========================
+   PROFILE BANNER
+========================= */
 
-    letter-spacing: 3px;
+.profile-banner{
+  margin-bottom:70px;
 
-    text-transform: uppercase;
+  padding:28px 30px;
 
-    color: #5e5952;
+  border:1px solid rgba(0,0,0,.15);
+
+  background:rgba(255,255,255,.18);
 }
 
-.result-count {
-    font-size: 9px;
+.profile-banner h3{
+  margin-top:9px;
 
-    letter-spacing: 1px;
+  font-family:Georgia,"Times New Roman",serif;
 
-    color: #8b867e;
+  font-size:25px;
+
+  font-weight:400;
 }
 
+.profile-banner p{
+  margin-top:8px;
 
-/* =====================================================
-   UNIVERSITY GRID
-===================================================== */
+  color:#555;
 
-.grid {
-    display: grid;
+  font-size:13px;
 
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 17px;
+  line-height:1.6;
 }
 
+/* =========================
+   COUNTRY CARDS
+========================= */
 
-/* =====================================================
-   UNIVERSITY CARD
-===================================================== */
+.country-grid{
+  display:grid;
 
-.university-card {
-    position: relative;
+  grid-template-columns:repeat(3,1fr);
 
-    background:
-        rgba(248,247,243,.86);
+  gap:12px;
 
-    border:
-        1px solid
-        rgba(39,37,34,.13);
-
-    overflow: hidden;
-
-    cursor: pointer;
-
-    transition:
-        transform .35s ease,
-        box-shadow .35s ease,
-        background .35s ease;
+  margin-bottom:88px;
 }
 
-.university-card:hover {
-    transform:
-        translateY(-7px);
+.country{
+  position:relative;
 
-    background:
-        rgba(255,255,255,.96);
+  min-height:210px;
 
-    box-shadow:
-        0 25px 50px
-        rgba(35,32,28,.15);
+  padding:22px;
+
+  border:1px solid rgba(0,0,0,.15);
+
+  background-image:
+    linear-gradient(
+      rgba(0,0,0,.10),
+      rgba(0,0,0,.52)
+    ),
+    var(--country-image);
+
+  background-size:cover;
+
+  background-position:center;
+
+  color:#fff;
+
+  text-align:left;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  overflow:hidden;
+
+  transition:.3s ease;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
 }
 
+.country:hover{
+  transform:translateY(-6px);
 
-/* =====================================================
-   IMAGE
-===================================================== */
-
-.card-image {
-    height: 190px;
-
-    position: relative;
-
-    background-size: cover;
-
-    background-position: center;
-
-    overflow: hidden;
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.16);
 }
 
-.card-image::after {
-    content: "";
+.country-code{
+  position:relative;
+  z-index:1;
 
-    position: absolute;
+  font-size:10px;
 
-    inset: 0;
+  font-weight:700;
 
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.02),
-            rgba(0,0,0,.45)
-        );
+  letter-spacing:.18em;
+
+  text-shadow:
+    0 1px 8px rgba(0,0,0,.35);
 }
 
-.card-country {
-    position: absolute;
+.country-name{
+  position:relative;
+  z-index:1;
 
-    left: 17px;
+  font-family:Georgia,"Times New Roman",serif;
 
-    bottom: 15px;
+  font-size:31px;
 
-    z-index: 2;
+  line-height:1;
 
-    font-size: 8px;
+  font-weight:400;
 
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-
-    color: white;
+  text-shadow:
+    0 2px 12px rgba(0,0,0,.35);
 }
 
+/* =========================
+   FIELDS
+========================= */
 
-/* =====================================================
-   SAVE
-===================================================== */
+.field-grid{
+  display:grid;
 
-.save-button {
-    position: absolute;
+  grid-template-columns:repeat(3,1fr);
 
-    top: 13px;
-    right: 13px;
+  gap:10px;
 
-    z-index: 10;
-
-    width: 34px;
-    height: 34px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background:
-        rgba(250,249,245,.92);
-
-    color: #393631;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-    transition:
-        transform .2s ease,
-        background .2s ease;
+  margin-bottom:88px;
 }
 
-.save-button:hover {
-    transform: scale(1.08);
+.field{
+  min-height:88px;
+
+  padding:20px;
+
+  border:1px solid rgba(0,0,0,.15);
+
+  background:rgba(244,239,229,.4);
+
+  text-align:left;
+
+  font-family:Georgia,"Times New Roman",serif;
+
+  font-size:20px;
+
+  transition:.25s ease;
 }
 
-.save-button.saved {
-    background: #272522;
-    color: white;
+.field:hover{
+  background:#222;
+
+  color:#f4efe5;
 }
 
+/* =========================
+   UNIVERSITY CARDS
+========================= */
 
-/* =====================================================
-   MATCH
-===================================================== */
+.university-grid{
+  display:grid;
 
-.match {
-    position: absolute;
+  grid-template-columns:repeat(3,1fr);
 
-    top: 174px;
-    left: 16px;
-
-    z-index: 5;
-
-    padding:
-        6px 9px;
-
-    background:
-        #f7f5ef;
-
-    font-size: 8px;
-
-    letter-spacing: 1px;
-
-    color: #4f4b45;
+  gap:17px;
 }
 
+.card{
+  min-height:385px;
 
-/* =====================================================
-   CARD CONTENT
-===================================================== */
+  display:flex;
 
-.card-content {
-    padding:
-        21px 19px 20px;
+  flex-direction:column;
+
+  border:1px solid rgba(0,0,0,.15);
+
+  background:rgba(244,239,229,.84);
+
+  transition:.25s ease;
+
+  overflow:hidden;
 }
 
-.card-kicker {
-    font-size: 8px;
+.card:hover{
+  transform:translateY(-5px);
 
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-
-    color: #89847c;
-
-    margin-bottom: 8px;
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.12);
 }
 
-.card-title {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+.card-image{
+  height:145px;
 
-    font-size: 25px;
+  padding:17px;
 
-    font-weight: normal;
+  display:flex;
 
-    line-height: 1.05;
+  align-items:flex-start;
 
-    color: #292723;
+  background-size:cover;
 
-    margin-bottom: 7px;
+  background-position:center;
+
+  color:#fff;
 }
 
-.card-location {
-    font-size: 10px;
+.card-index{
+  font-size:10px;
 
-    color: #77726a;
+  font-weight:700;
 
-    margin-bottom: 17px;
+  letter-spacing:.15em;
+
+  text-shadow:
+    0 1px 8px rgba(0,0,0,.4);
 }
 
+.card-top{
+  min-height:92px;
 
-/* =====================================================
-   TAGS
-===================================================== */
+  padding:19px 20px;
 
-.tags {
-    display: flex;
+  display:flex;
 
-    flex-wrap: wrap;
+  align-items:flex-end;
 
-    gap: 5px;
-
-    margin-bottom: 17px;
+  border-bottom:1px solid rgba(0,0,0,.12);
 }
 
-.tag {
-    padding:
-        5px 7px;
+.card h3{
+  font-family:Georgia,"Times New Roman",serif;
 
-    background:
-        rgba(39,37,34,.06);
+  font-size:27px;
 
-    font-size: 7px;
+  font-weight:400;
 
-    letter-spacing: .7px;
+  line-height:.98;
 
-    color: #68635d;
+  letter-spacing:-.025em;
 }
 
+.card-bottom{
+  flex:1;
 
-/* =====================================================
-   CARD INFO
-===================================================== */
+  padding:18px 20px 20px;
 
-.card-info {
-    display: grid;
+  display:flex;
 
-    grid-template-columns:
-        1fr
-        1fr;
-
-    gap: 10px;
-
-    padding-top: 13px;
-
-    border-top:
-        1px solid
-        rgba(39,37,34,.13);
+  flex-direction:column;
 }
 
-.info-item {
-    font-size: 8px;
+.location{
+  font-size:10px;
 
-    line-height: 1.5;
+  font-weight:700;
 
-    color: #817b73;
+  text-transform:uppercase;
+
+  letter-spacing:.12em;
 }
 
-.info-item strong {
-    display: block;
+.programs{
+  margin-top:10px;
 
-    font-size: 7px;
+  color:#666;
 
-    letter-spacing: 1px;
+  font-size:12px;
 
-    color: #4d4943;
-
-    margin-bottom: 2px;
+  line-height:1.55;
 }
 
+.card-actions{
+  margin-top:auto;
 
-/* =====================================================
-   EMPTY
-===================================================== */
+  padding-top:18px;
 
-.empty {
-    grid-column: 1 / -1;
+  display:flex;
 
-    padding:
-        100px 20px;
-
-    text-align: center;
-
-    background:
-        rgba(250,249,245,.65);
-
-    border:
-        1px dashed
-        rgba(39,37,34,.25);
+  gap:8px;
 }
 
-.empty h2 {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+.card-actions button{
+  flex:1;
 
-    font-size: 38px;
+  padding:11px 8px;
 
-    font-weight: normal;
+  border:1px solid #222;
 
-    margin-bottom: 12px;
+  background:transparent;
+
+  color:#222;
+
+  font-size:9px;
+
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  letter-spacing:.1em;
 }
 
-.empty p {
-    max-width: 430px;
+.card-actions button:hover,
+.card-actions .saved{
+  background:#222;
 
-    margin:
-        0 auto 22px;
-
-    font-size: 11px;
-
-    line-height: 1.7;
-
-    color: #77726a;
+  color:#f4efe5;
 }
 
+/* =========================
+   OTHER PAGES
+========================= */
 
-/* =====================================================
-   MODAL
-===================================================== */
+.page-heading{
+  max-width:820px;
 
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 100;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 25px;
-
-    background:
-        rgba(28,26,23,.62);
-
-    backdrop-filter:
-        blur(12px);
+  padding-bottom:65px;
 }
 
-.modal.active {
-    display: flex;
+.page-heading h1{
+  margin-top:18px;
+
+  font-family:Georgia,"Times New Roman",serif;
+
+  font-size:clamp(58px,8vw,100px);
+
+  line-height:.88;
+
+  font-weight:400;
+
+  letter-spacing:-.055em;
 }
 
-.modal-card {
-    position: relative;
+.page-heading p{
+  max-width:590px;
 
-    width:
-        min(
-            820px,
-            95vw
-        );
+  margin-top:25px;
 
-    max-height:
-        90vh;
+  color:#555;
 
-    overflow-y: auto;
+  font-size:14px;
 
-    padding:
-        40px;
-
-    background:
-        #f5f2eb;
-
-    border:
-        1px solid
-        rgba(255,255,255,.5);
-
-    box-shadow:
-        0 35px 80px
-        rgba(0,0,0,.35);
+  line-height:1.7;
 }
 
-.close {
-    position: absolute;
+.filter-label{
+  margin-bottom:22px;
 
-    top: 17px;
-    right: 20px;
+  font-size:10px;
 
-    border: none;
+  text-transform:uppercase;
 
-    background: none;
+  letter-spacing:.14em;
 
-    font-size: 25px;
-
-    color: #514c45;
-
-    cursor: pointer;
+  opacity:.55;
 }
 
-.modal-eyebrow {
-    font-size: 8px;
+/* =========================
+   EMPTY STATE
+========================= */
 
-    letter-spacing: 3px;
+.empty{
+  padding:65px 25px;
 
-    text-transform: uppercase;
+  border:1px solid rgba(0,0,0,.15);
 
-    color: #8a847c;
-
-    margin-bottom: 11px;
+  text-align:center;
 }
 
-.modal-title {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+.empty h3{
+  font-family:Georgia,"Times New Roman",serif;
 
-    font-size:
-        clamp(
-            38px,
-            6vw,
-            65px
-        );
+  font-size:31px;
 
-    font-weight: normal;
-
-    line-height: .95;
-
-    letter-spacing: -2px;
-
-    margin-bottom: 9px;
+  font-weight:400;
 }
 
-.modal-location {
-    font-size: 11px;
+.empty p{
+  margin-top:10px;
 
-    color: #77726a;
+  color:#666;
 
-    margin-bottom: 27px;
+  font-size:12px;
 }
 
-.modal-description {
-    max-width: 680px;
+/* =========================
+   PROFILE
+========================= */
 
-    font-size: 12px;
+.profile-card{
+  max-width:760px;
 
-    line-height: 1.8;
-
-    color: #5f5a53;
-
-    margin-bottom: 27px;
+  border-top:1px solid rgba(0,0,0,.15);
 }
 
-.modal-grid {
-    display: grid;
+.profile-row{
+  padding:22px 0;
 
-    grid-template-columns:
-        repeat(2, 1fr);
+  display:flex;
 
-    gap: 9px;
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:30px;
+
+  border-bottom:1px solid rgba(0,0,0,.12);
 }
 
-.modal-info {
-    padding: 16px;
+.profile-row span{
+  font-size:10px;
 
-    border:
-        1px solid
-        rgba(39,37,34,.15);
+  text-transform:uppercase;
 
-    background:
-        rgba(255,255,255,.35);
+  letter-spacing:.14em;
+
+  opacity:.5;
 }
 
-.modal-info span {
-    display: block;
+.profile-row strong{
+  font-family:Georgia,"Times New Roman",serif;
 
-    font-size: 7px;
+  font-size:20px;
 
-    letter-spacing: 2px;
+  font-weight:400;
 
-    text-transform: uppercase;
-
-    color: #8b857d;
-
-    margin-bottom: 6px;
+  text-align:right;
 }
 
-.modal-info strong {
-    font-size: 10px;
+/* =========================
+   UNIVERSITY MODAL
+========================= */
 
-    line-height: 1.5;
+.modal{
+  position:fixed;
 
-    color: #403c36;
+  inset:0;
+
+  z-index:200;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:25px;
+
+  background:rgba(20,20,20,.38);
+
+  backdrop-filter:blur(5px);
 }
 
+.modal.active{
+  display:flex;
+}
 
-/* =====================================================
+.modal-card{
+  width:min(680px,94vw);
+
+  max-height:90vh;
+
+  overflow:auto;
+
+  padding:38px;
+
+  background:#f4efe5;
+
+  border:1px solid rgba(0,0,0,.15);
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.25);
+}
+
+.modal-top{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+}
+
+.close{
+  width:35px;
+  height:35px;
+
+  border:1px solid #222;
+
+  background:transparent;
+
+  font-size:18px;
+}
+
+.modal-card h2{
+  margin-top:28px;
+
+  font-family:Georgia,"Times New Roman",serif;
+
+  font-size:50px;
+
+  font-weight:400;
+
+  line-height:.95;
+
+  letter-spacing:-.04em;
+}
+
+.modal-location{
+  margin-top:15px;
+
+  font-size:10px;
+
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  letter-spacing:.13em;
+}
+
+.modal-text{
+  margin-top:25px;
+
+  color:#555;
+
+  font-size:14px;
+
+  line-height:1.7;
+}
+
+.modal-list{
+  margin-top:25px;
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:10px;
+}
+
+.modal-list div{
+  padding:15px;
+
+  border:1px solid rgba(0,0,0,.13);
+
+  font-size:11px;
+}
+
+/* =========================
    RESPONSIVE
-===================================================== */
+========================= */
 
-@media (max-width: 1050px) {
+@media(max-width:850px){
 
-    .grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
+  .app-header{
+    padding:18px 20px;
 
-    .intro {
-        grid-template-columns:
-            1fr;
-    }
+    flex-wrap:wrap;
+  }
 
-    .intro-text {
-        justify-self: start;
-    }
+  .nav{
+    order:3;
 
+    flex-basis:100%;
+
+    justify-content:space-between;
+
+    gap:12px;
+  }
+
+  main{
+    width:min(100% - 34px,700px);
+
+    padding-top:48px;
+  }
+
+  .country-grid,
+  .field-grid,
+  .university-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
 }
 
+@media(max-width:520px){
 
-@media (max-width: 680px) {
+  .brand{
+    font-size:11px;
+  }
 
-    .header {
-        padding:
-            0 20px;
-    }
+  .logout{
+    padding:9px 11px;
+  }
 
-    .main {
-        width: 90vw;
+  .nav button{
+    font-size:8px;
+  }
 
-        padding-top: 45px;
-    }
+  .hero h1,
+  .page-heading h1{
+    font-size:57px;
+  }
 
-    .intro h1 {
-        font-size: 54px;
+  .hero::after{
+    width:105px;
+    height:105px;
 
-        letter-spacing: -2px;
-    }
+    right:0;
+    top:10px;
 
-    .search-area {
-        grid-template-columns:
-            1fr;
-    }
+    opacity:.55;
+  }
 
-    .grid {
-        grid-template-columns:
-            1fr;
-    }
+  .hero p{
+    font-size:13px;
+  }
 
-    .modal-card {
-        padding:
-            30px 21px;
-    }
+  .profile-row{
+    align-items:flex-start;
 
-    .modal-grid {
-        grid-template-columns:
-            1fr;
-    }
+    flex-direction:column;
 
+    gap:7px;
+  }
+
+  .profile-row strong{
+    text-align:left;
+  }
+
+  .modal-card{
+    padding:27px;
+  }
+
+  .modal-card h2{
+    font-size:41px;
+  }
+
+  .modal-list{
+    grid-template-columns:1fr;
+  }
 }
-
-
-/* =====================================================
-   SUBTLE SCROLLBAR
-===================================================== */
-
-::-webkit-scrollbar {
-    width: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background: #e8e5de;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #aaa59d;
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-<div class="background"></div>
+<header class="app-header">
 
+  <div class="brand">
+    POSTCARDS
+  </div>
 
-<header class="header">
+  <nav class="nav">
 
-    <div class="logo">
-        POSTCARDS
-    </div>
+    <button
+      class="active"
+      data-section="discover"
+    >
+      Discover
+    </button>
 
-    <div class="header-right">
+    <button
+      data-section="universities"
+    >
+      Universities
+    </button>
 
-        <div
-            class="profile"
-            id="profileText"
-        >
-            YOUR DISCOVERY
-        </div>
+    <button
+      data-section="saved"
+    >
+      Saved
+    </button>
 
-    </div>
+    <button
+      data-section="profile"
+    >
+      Profile
+    </button>
+
+  </nav>
+
+  <button
+    class="logout"
+    id="logoutButton"
+  >
+    Log out
+  </button>
 
 </header>
 
 
-<main class="main">
+<main>
 
+<!-- =========================
+     DISCOVER
+========================= -->
 
-    <!-- INTRO -->
+<section
+  class="page-section active"
+  id="discover"
+>
 
-    <section class="intro">
+  <div class="hero">
 
-        <div>
+    <div class="eyebrow">
+      YOUR UNIVERSITY JOURNEY
+    </div>
 
-            <div class="eyebrow">
-                Discover
-            </div>
+    <h1>
+      Where could<br>
+      you go next?
+    </h1>
 
-            <h1>
-                Where could<br>
-                you go?
-            </h1>
+    <p>
+      Explore universities around the world,
+      discover programs that match your interests,
+      and start building the next chapter of your story.
+    </p>
 
-        </div>
-
-
-        <p class="intro-text">
-
-            Explore universities, cities and
-            possibilities around the world.
-            Find places that match the person
-            you're becoming — and save the ones
-            worth coming back to.
-
-        </p>
-
-    </section>
-
-
-    <div class="section-line"></div>
-
-
-    <!-- SEARCH -->
-
-    <section class="search-area">
-
-        <div class="search-box">
-
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search a university, country, city, field or interest..."
-            >
-
-        </div>
-
-
-        <button
-            class="control-button"
-            id="recommendedButton"
-        >
-            FOR ME
-        </button>
-
-
-        <button
-            class="control-button"
-            id="resetButton"
-        >
-            RESET
-        </button>
-
-    </section>
-
-
-    <!-- FILTERS -->
-
-    <section
-        class="filters"
-        id="filters"
+    <label
+      class="search"
+      aria-label="Search universities"
     >
 
-        <button
-            class="filter active"
-            data-filter="all"
-        >
-            ALL
-        </button>
+      <span class="search-icon">
+        ⌕
+      </span>
 
-        <button
-            class="filter"
-            data-filter="Business & Economics"
-        >
-            BUSINESS
-        </button>
+      <input
+        id="searchInput"
+        type="search"
+        autocomplete="off"
+        placeholder="Search universities, countries or programs..."
+      >
 
-        <button
-            class="filter"
-            data-filter="Engineering & Technology"
-        >
-            ENGINEERING
-        </button>
+    </label>
 
-        <button
-            class="filter"
-            data-filter="Arts & Design"
-        >
-            ARTS & DESIGN
-        </button>
-
-        <button
-            class="filter"
-            data-filter="Communication & Media"
-        >
-            MEDIA
-        </button>
-
-        <button
-            class="filter"
-            data-filter="Science"
-        >
-            SCIENCE
-        </button>
-
-        <button
-            class="filter"
-            data-filter="Social Sciences"
-        >
-            SOCIAL SCIENCES
-        </button>
-
-        <button
-            class="filter"
-            data-filter="warm"
-        >
-            WARM
-        </button>
-
-        <button
-            class="filter"
-            data-filter="cold"
-        >
-            COLD
-        </button>
-
-        <button
-            class="filter"
-            data-filter="city"
-        >
-            BIG CITY
-        </button>
-
-    </section>
+  </div>
 
 
-    <!-- RESULTS -->
+  <!-- PROFILE -->
 
-    <section>
+  <div class="profile-banner">
 
-        <div class="results-header">
+    <div class="eyebrow">
+      PERSONALIZED FOR YOU
+    </div>
 
-            <div class="results-title">
-                DISCOVER UNIVERSITIES
-            </div>
+    <h3 id="profileGreeting">
+      Your Postcards profile
+    </h3>
 
-            <div
-                class="result-count"
-                id="resultCount"
-            >
-                0 results
-            </div>
+    <p id="profileSummary">
+      Explore the world and find universities that fit your goals.
+    </p>
 
-        </div>
+  </div>
 
 
-        <div
-            class="grid"
-            id="universityGrid"
-        ></div>
+  <!-- COUNTRIES -->
 
-    </section>
+  <div class="section-title">
+
+    <div class="section-title-left">
+
+      <span class="section-number">
+        01
+      </span>
+
+      <h2>
+        Explore the world
+      </h2>
+
+    </div>
+
+    <span class="section-note">
+      Choose a destination
+    </span>
+
+  </div>
+
+
+  <div class="country-grid">
+
+    <button
+      class="country"
+      data-country="United States"
+      style="--country-image:url('https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1200&q=85')"
+    >
+
+      <span class="country-code">
+        USA
+      </span>
+
+      <span class="country-name">
+        United States
+      </span>
+
+    </button>
+
+
+    <button
+      class="country"
+      data-country="Canada"
+      style="--country-image:url('https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=1200&q=85')"
+    >
+
+      <span class="country-code">
+        CAN
+      </span>
+
+      <span class="country-name">
+        Canada
+      </span>
+
+    </button>
+
+
+    <button
+      class="country"
+      data-country="United Kingdom"
+      style="--country-image:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1200&q=85')"
+    >
+
+      <span class="country-code">
+        UK
+      </span>
+
+      <span class="country-name">
+        United Kingdom
+      </span>
+
+    </button>
+
+
+    <button
+      class="country"
+      data-country="Spain"
+      style="--country-image:url('https://images.unsplash.com/photo-1509840841025-9088ba78a826?auto=format&fit=crop&w=1200&q=85')"
+    >
+
+      <span class="country-code">
+        ESP
+      </span>
+
+      <span class="country-name">
+        Spain
+      </span>
+
+    </button>
+
+
+    <button
+      class="country"
+      data-country="Italy"
+      style="--country-image:url('https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1200&q=85')"
+    >
+
+      <span class="country-code">
+        ITA
+      </span>
+
+      <span class="country-name">
+        Italy
+      </span>
+
+    </button>
+
+
+    <button
+      class="country"
+      data-country="Mexico"
+      style="--country-image:url('https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=85')"
+    >
+
+      <span class="country-code">
+        MEX
+      </span>
+
+      <span class="country-name">
+        Mexico
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- FIELDS -->
+
+  <div class="section-title">
+
+    <div class="section-title-left">
+
+      <span class="section-number">
+        02
+      </span>
+
+      <h2>
+        Find your field
+      </h2>
+
+    </div>
+
+    <span class="section-note">
+      Choose an interest
+    </span>
+
+  </div>
+
+
+  <div class="field-grid">
+
+    <button
+      class="field"
+      data-field="Business"
+    >
+      Business &amp; Marketing
+    </button>
+
+    <button
+      class="field"
+      data-field="Engineering"
+    >
+      Engineering
+    </button>
+
+    <button
+      class="field"
+      data-field="Computer Science"
+    >
+      Computer Science
+    </button>
+
+    <button
+      class="field"
+      data-field="Medicine"
+    >
+      Medicine
+    </button>
+
+    <button
+      class="field"
+      data-field="Arts"
+    >
+      Arts &amp; Humanities
+    </button>
+
+    <button
+      class="field"
+      data-field="Social Sciences"
+    >
+      Social Sciences
+    </button>
+
+  </div>
+
+
+  <!-- RECOMMENDED -->
+
+  <div class="section-title">
+
+    <div class="section-title-left">
+
+      <span class="section-number">
+        03
+      </span>
+
+      <h2>
+        Picked for you
+      </h2>
+
+    </div>
+
+    <span class="section-note">
+      Based on your profile
+    </span>
+
+  </div>
+
+
+  <div
+    class="university-grid"
+    id="recommendedGrid"
+  ></div>
+
+</section>
+
+
+<!-- =========================
+     UNIVERSITIES
+========================= -->
+
+<section
+  class="page-section"
+  id="universities"
+>
+
+  <div class="page-heading">
+
+    <div class="eyebrow">
+      EXPLORE
+    </div>
+
+    <h1>
+      Universities.
+    </h1>
+
+    <p>
+      Search and explore universities from different
+      countries and discover the programs they offer.
+    </p>
+
+  </div>
+
+  <div
+    class="filter-label"
+    id="filterLabel"
+  >
+    All universities
+  </div>
+
+  <div
+    class="university-grid"
+    id="allGrid"
+  ></div>
+
+</section>
+
+
+<!-- =========================
+     SAVED
+========================= -->
+
+<section
+  class="page-section"
+  id="saved"
+>
+
+  <div class="page-heading">
+
+    <div class="eyebrow">
+      YOUR COLLECTION
+    </div>
+
+    <h1>
+      Saved.
+    </h1>
+
+    <p>
+      Keep the universities that catch your eye
+      in one place.
+    </p>
+
+  </div>
+
+  <div
+    class="university-grid"
+    id="savedGrid"
+  ></div>
+
+</section>
+
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<section
+  class="page-section"
+  id="profile"
+>
+
+  <div class="page-heading">
+
+    <div class="eyebrow">
+      YOUR JOURNEY
+    </div>
+
+    <h1>
+      My profile.
+    </h1>
+
+    <p>
+      Your answers help Postcards personalize the
+      universities and destinations shown to you.
+    </p>
+
+  </div>
+
+  <div
+    class="profile-card"
+    id="profileCard"
+  ></div>
+
+</section>
 
 </main>
 
 
-<!-- MODAL -->
+<!-- =========================
+     UNIVERSITY MODAL
+========================= -->
 
 <div
-    class="modal"
-    id="modal"
+  class="modal"
+  id="universityModal"
 >
 
-    <div class="modal-card">
+  <div class="modal-card">
 
-        <button
-            class="close"
-            id="closeModal"
-        >
-            ×
-        </button>
+    <div class="modal-top">
 
+      <div class="eyebrow">
+        UNIVERSITY
+      </div>
 
-        <div
-            class="modal-eyebrow"
-            id="modalEyebrow"
-        ></div>
-
-
-        <h2
-            class="modal-title"
-            id="modalTitle"
-        ></h2>
-
-
-        <div
-            class="modal-location"
-            id="modalLocation"
-        ></div>
-
-
-        <p
-            class="modal-description"
-            id="modalDescription"
-        ></p>
-
-
-        <div
-            class="modal-grid"
-            id="modalGrid"
-        ></div>
+      <button
+        class="close"
+        id="closeModal"
+        aria-label="Close"
+      >
+        ×
+      </button>
 
     </div>
+
+
+    <h2 id="modalName"></h2>
+
+    <div
+      class="modal-location"
+      id="modalLocation"
+    ></div>
+
+    <p
+      class="modal-text"
+      id="modalText"
+    ></p>
+
+    <div
+      class="modal-list"
+      id="modalPrograms"
+    ></div>
+
+  </div>
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   UNIVERSITY DATABASE
-===================================================== */
+/* =========================
+   UNIVERSITY DATA
+========================= */
 
 const universities = [
 
-{
-name: "University of Buenos Aires",
-country: "Argentina",
-city: "Buenos Aires",
-
-fields: [
-"Business & Economics",
-"Social Sciences",
-"Science",
-"Law",
-"Medicine"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
+  {
+    id:"toronto",
 
-type: "Public",
+    image:
+      "https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1200&q=85",
 
-international: "Strong",
+    name:"University of Toronto",
 
-scholarships: "Available",
+    city:"Toronto",
 
-cost: "Lower-cost public option",
+    country:"Canada",
 
-keywords: [
-"uba",
-"argentina",
-"buenos aires",
-"economics",
-"business",
-"science",
-"law"
-],
+    programs:
+      "Computer Science · Business · Engineering · Arts",
 
-image:
-"https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=1200&q=85",
+    fields:[
+      "Computer Science",
+      "Business",
+      "Engineering",
+      "Arts"
+    ],
 
-description:
-"One of Latin America's best-known universities, located in the heart of Buenos Aires with a broad academic offering."
-},
+    description:
+      "A large research university in Toronto with a broad range of undergraduate programs and a strong international community."
+  },
 
 
-{
-name: "Universidad de Palermo",
-country: "Argentina",
-city: "Buenos Aires",
+  {
+    id:"ubc",
 
-fields: [
-"Business & Economics",
-"Communication & Media",
-"Arts & Design",
-"Law"
-],
-
-climate: "warm",
+    image:
+      "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85",
 
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
+    name:"University of British Columbia",
 
-type: "Private",
+    city:"Vancouver",
 
-international: "Strong",
+    country:"Canada",
 
-scholarships: "Available",
+    programs:
+      "Computer Science · Business · Engineering · Sciences",
 
-cost: "Private",
+    fields:[
+      "Computer Science",
+      "Business",
+      "Engineering"
+    ],
 
-keywords: [
-"palermo",
-"argentina",
-"buenos aires",
-"business",
-"marketing",
-"media",
-"design"
-],
+    description:
+      "A major Canadian university in Vancouver known for its wide academic selection and international student community."
+  },
 
-image:
-"https://images.unsplash.com/photo-1612294037637-2c3c0f5e8f9e?auto=format&fit=crop&w=1200&q=85",
 
-description:
-"A private university in Buenos Aires with programs spanning business, design, communication and social sciences."
-},
+  {
+    id:"nyu",
 
+    image:
+      "https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=1200&q=85",
 
-{
-name: "Tecnológico de Monterrey",
-country: "Mexico",
-city: "Monterrey",
+    name:"New York University",
 
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Communication & Media",
-"Social Sciences"
-],
+    city:"New York City",
 
-climate: "warm",
+    country:"United States",
 
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
+    programs:
+      "Computer Science · Business · Arts · Social Sciences",
 
-type: "Private",
+    fields:[
+      "Computer Science",
+      "Business",
+      "Arts",
+      "Social Sciences"
+    ],
 
-international: "Strong",
+    description:
+      "An urban university centered in New York City with a particularly international outlook and many interdisciplinary options."
+  },
 
-scholarships: "Available",
 
-cost: "Private",
+  {
+    id:"ucla",
 
-keywords: [
-"tec",
-"monterrey",
-"mexico",
-"business",
-"engineering",
-"technology",
-"marketing"
-],
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85",
 
-image:
-"https://images.unsplash.com/photo-1518659526054-190340b32735?auto=format&fit=crop&w=1200&q=85",
+    name:"University of California, Los Angeles",
 
-description:
-"A major Mexican private university known for technology, entrepreneurship, business and innovation."
-},
+    city:"Los Angeles",
 
+    country:"United States",
 
-{
-name: "Universidad de los Andes",
-country: "Colombia",
-city: "Bogotá",
+    programs:
+      "Engineering · Computer Science · Business · Arts",
 
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Social Sciences",
-"Arts & Design"
-],
+    fields:[
+      "Engineering",
+      "Computer Science",
+      "Business",
+      "Arts"
+    ],
 
-climate: "cold",
+    description:
+      "A major public research university in Los Angeles offering a wide range of undergraduate study options."
+  },
 
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
 
-type: "Private",
+  {
+    id:"usc",
 
-international: "Strong",
+    image:
+      "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=85",
 
-scholarships: "Available",
+    name:"University of Southern California",
 
-cost: "Private",
+    city:"Los Angeles",
 
-keywords: [
-"andes",
-"colombia",
-"bogota",
-"business",
-"engineering",
-"economics"
-],
+    country:"United States",
 
-image:
-"https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=85",
+    programs:
+      "Computer Science · Engineering · Business · Arts",
 
-description:
-"A leading Colombian university in Bogotá with a strong interdisciplinary and international profile."
-},
+    fields:[
+      "Computer Science",
+      "Engineering",
+      "Business",
+      "Arts"
+    ],
 
+    description:
+      "A private research university in Los Angeles with programs across technology, business, engineering and the arts."
+  },
 
-{
-name: "University of Toronto",
-country: "Canada",
-city: "Toronto",
 
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Science",
-"Medicine & Health",
-"Social Sciences"
-],
+  {
+    id:"ucl",
 
-climate: "cold",
+    image:
+      "https://images.unsplash.com/photo-1526129318478-62ed807ebdf9?auto=format&fit=crop&w=1200&q=85",
 
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
+    name:"University College London",
 
-type: "Public",
+    city:"London",
 
-international: "Very strong",
+    country:"United Kingdom",
 
-scholarships: "Available",
+    programs:
+      "Computer Science · Engineering · Business · Arts",
 
-cost: "Higher international tuition",
+    fields:[
+      "Computer Science",
+      "Engineering",
+      "Business",
+      "Arts"
+    ],
 
-keywords: [
-"toronto",
-"canada",
-"business",
-"engineering",
-"science",
-"medicine"
-],
+    description:
+      "A London-based research university with a broad academic offering and a strongly international student body."
+  },
 
-image:
-"https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1200&q=85",
 
-description:
-"A globally recognized Canadian research university offering a huge range of programs in a major international city."
-},
+  {
+    id:"kcl",
 
+    image:
+      "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1200&q=85",
 
-{
-name: "University of British Columbia",
-country: "Canada",
-city: "Vancouver",
+    name:"King's College London",
 
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Science",
-"Arts & Design",
-"Social Sciences"
-],
+    city:"London",
 
-climate: "cold",
+    country:"United Kingdom",
 
-environment: [
-"Big city",
-"Coastal",
-"Nature",
-"Urban"
-],
+    programs:
+      "Medicine · Business · Arts · Social Sciences",
 
-type: "Public",
+    fields:[
+      "Medicine",
+      "Business",
+      "Arts",
+      "Social Sciences"
+    ],
 
-international: "Very strong",
+    description:
+      "A historic London university with programs spanning health, humanities, social sciences and business."
+  },
 
-scholarships: "Available",
 
-cost: "Higher international tuition",
+  {
+    id:"ie",
 
-keywords: [
-"ubc",
-"vancouver",
-"canada",
-"business",
-"engineering",
-"nature",
-"coastal"
-],
+    image:
+      "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1200&q=85",
 
-image:
-"https://images.unsplash.com/photo-1548793977-f4e08d2e7b9e?auto=format&fit=crop&w=1200&q=85",
+    name:"IE University",
 
-description:
-"A research-intensive university in Vancouver combining a major urban setting with mountains, ocean and outdoor life."
-},
+    city:"Madrid",
 
+    country:"Spain",
 
-{
-name: "McGill University",
-country: "Canada",
-city: "Montreal",
+    programs:
+      "Business · Computer Science · Social Sciences · Design",
 
-fields: [
-"Business & Economics",
-"Medicine & Health",
-"Science",
-"Social Sciences",
-"Arts & Design"
-],
+    fields:[
+      "Business",
+      "Computer Science",
+      "Social Sciences",
+      "Arts"
+    ],
 
-climate: "cold",
+    description:
+      "An internationally oriented university in Spain with a strong focus on business, technology and interdisciplinary study."
+  },
 
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
 
-type: "Public",
+  {
+    id:"bocconi",
 
-international: "Very strong",
+    image:
+      "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=85",
 
-scholarships: "Available",
+    name:"Bocconi University",
 
-cost: "Higher international tuition",
+    city:"Milan",
 
-keywords: [
-"mcgill",
-"montreal",
-"canada",
-"business",
-"medicine",
-"science"
-],
+    country:"Italy",
 
-image:
-"https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=1200&q=85",
+    programs:
+      "Business · Economics · Finance · Management",
 
-description:
-"An internationally oriented university in Montreal with a strong reputation across many disciplines."
-},
+    fields:[
+      "Business"
+    ],
 
+    description:
+      "A Milan-based university particularly focused on economics, management, finance and related disciplines."
+  },
 
-{
-name: "University of Waterloo",
-country: "Canada",
-city: "Waterloo",
 
-fields: [
-"Engineering & Technology",
-"Business & Economics",
-"Science"
-],
+  {
+    id:"tec",
 
-climate: "cold",
+    image:
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=85",
 
-environment: [
-"Small city",
-"Urban",
-"Fast-paced"
-],
+    name:"Tecnológico de Monterrey",
 
-type: "Public",
+    city:"Monterrey",
 
-international: "Strong",
+    country:"Mexico",
 
-scholarships: "Available",
+    programs:
+      "Computer Science · Engineering · Business · Design",
 
-cost: "Higher international tuition",
+    fields:[
+      "Computer Science",
+      "Engineering",
+      "Business",
+      "Arts"
+    ],
 
-keywords: [
-"waterloo",
-"canada",
-"engineering",
-"technology",
-"computer science",
-"business",
-"co-op"
-],
+    description:
+      "A major private university in Mexico with programs across technology, engineering, business and many other fields."
+  },
 
-image:
-"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85",
 
-description:
-"A Canadian university especially well known for technology, engineering, science and work-integrated learning."
-},
+  {
+    id:"anahuac",
 
+    image:
+      "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1200&q=85",
 
-{
-name: "New York University",
-country: "United States",
-city: "New York",
+    name:"Universidad Anáhuac México",
 
-fields: [
-"Business & Economics",
-"Arts & Design",
-"Communication & Media",
-"Social Sciences",
-"Engineering & Technology"
-],
+    city:"Mexico City",
 
-climate: "cold",
+    country:"Mexico",
 
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
+    programs:
+      "Business · Engineering · Computer Science · Arts",
 
-type: "Private",
+    fields:[
+      "Business",
+      "Engineering",
+      "Computer Science",
+      "Arts"
+    ],
 
-international: "Very strong",
+    description:
+      "A private Mexican university offering a broad range of undergraduate programs."
+  },
 
-scholarships: "Available",
 
-cost: "Very high",
+  {
+    id:"melbourne",
 
-keywords: [
-"nyu",
-"new york",
-"usa",
-"united states",
-"business",
-"marketing",
-"media",
-"film",
-"arts"
-],
+    image:
+      "https://images.unsplash.com/photo-1524820197278-540916411e20?auto=format&fit=crop&w=1200&q=85",
 
-image:
-"https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1200&q=85",
+    name:"University of Melbourne",
 
-description:
-"A highly international university embedded directly in New York City, with especially broad options in business, media and the arts."
-},
+    city:"Melbourne",
 
+    country:"Australia",
 
-{
-name: "Boston University",
-country: "United States",
-city: "Boston",
+    programs:
+      "Computer Science · Business · Engineering · Medicine",
 
-fields: [
-"Business & Economics",
-"Communication & Media",
-"Medicine & Health",
-"Engineering & Technology",
-"Social Sciences"
-],
+    fields:[
+      "Computer Science",
+      "Business",
+      "Engineering",
+      "Medicine"
+    ],
 
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban"
-],
-
-type: "Private",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Very high",
-
-keywords: [
-"bu",
-"boston",
-"usa",
-"business",
-"media",
-"medicine",
-"engineering"
-],
-
-image:
-"https://images.unsplash.com/photo-1501975558162-0be7b8ca95ea?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A large private research university in Boston with extensive academic and professional opportunities."
-},
-
-
-{
-name: "University of California, Los Angeles",
-country: "United States",
-city: "Los Angeles",
-
-fields: [
-"Arts & Design",
-"Business & Economics",
-"Engineering & Technology",
-"Communication & Media",
-"Science",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"ucla",
-"los angeles",
-"usa",
-"california",
-"business",
-"film",
-"media",
-"engineering"
-],
-
-image:
-"https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A major public research university in Los Angeles with strong connections to entertainment, technology and entrepreneurship."
-},
-
-
-{
-name: "University of Miami",
-country: "United States",
-city: "Miami",
-
-fields: [
-"Business & Economics",
-"Communication & Media",
-"Medicine & Health",
-"Arts & Design"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Coastal",
-"Urban",
-"Fast-paced"
-],
-
-type: "Private",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Very high",
-
-keywords: [
-"miami",
-"usa",
-"business",
-"media",
-"marketing",
-"coastal",
-"warm"
-],
-
-image:
-"https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A private university in South Florida offering a warm coastal setting and programs across business, media and health."
-},
-
-
-{
-name: "University of Oxford",
-country: "United Kingdom",
-city: "Oxford",
-
-fields: [
-"Business & Economics",
-"Social Sciences",
-"Science",
-"Medicine & Health",
-"Arts & Design"
-],
-
-climate: "cold",
-
-environment: [
-"Small city",
-"Historic",
-"Quiet"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"oxford",
-"uk",
-"united kingdom",
-"england",
-"economics",
-"science",
-"history"
-],
-
-image:
-"https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"One of the world's most historic universities, known for intensive academic study and a highly international community."
-},
-
-
-{
-name: "University College London",
-country: "United Kingdom",
-city: "London",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Arts & Design",
-"Social Sciences",
-"Science"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"ucl",
-"london",
-"uk",
-"united kingdom",
-"engineering",
-"business",
-"architecture"
-],
-
-image:
-"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A highly international London university with extensive options across technology, business, design and social sciences."
-},
-
-
-{
-name: "King's College London",
-country: "United Kingdom",
-city: "London",
-
-fields: [
-"Medicine & Health",
-"Social Sciences",
-"Business & Economics",
-"Arts & Design"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"kcl",
-"kings",
-"london",
-"medicine",
-"business",
-"social sciences"
-],
-
-image:
-"https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A major London university particularly strong in health, social sciences and internationally focused programs."
-},
-
-
-{
-name: "University of Manchester",
-country: "United Kingdom",
-city: "Manchester",
-
-fields: [
-"Engineering & Technology",
-"Business & Economics",
-"Science",
-"Social Sciences"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"manchester",
-"uk",
-"engineering",
-"business",
-"science"
-],
-
-image:
-"https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A large research university in Manchester with broad international opportunities and strong STEM offerings."
-},
-
-
-{
-name: "IE University",
-country: "Spain",
-city: "Madrid",
-
-fields: [
-"Business & Economics",
-"Communication & Media",
-"Law",
-"Arts & Design",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Private",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"ie",
-"madrid",
-"spain",
-"business",
-"entrepreneurship",
-"marketing",
-"media"
-],
-
-image:
-"https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"An international private university with a strong focus on business, entrepreneurship, innovation and global careers."
-},
-
-
-{
-name: "Universitat de Barcelona",
-country: "Spain",
-city: "Barcelona",
-
-fields: [
-"Business & Economics",
-"Science",
-"Medicine & Health",
-"Social Sciences",
-"Arts & Design"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Coastal",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"barcelona",
-"spain",
-"economics",
-"business",
-"science",
-"medicine"
-],
-
-image:
-"https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A major public university in Barcelona with broad academic offerings and a strong international profile."
-},
-
-
-{
-name: "ESADE",
-country: "Spain",
-city: "Barcelona",
-
-fields: [
-"Business & Economics",
-"Law",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Coastal",
-"Urban"
-],
-
-type: "Private",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"esade",
-"barcelona",
-"spain",
-"business",
-"economics",
-"law"
-],
-
-image:
-"https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"An internationally oriented institution in Barcelona particularly known for business, management and law."
-},
-
-
-{
-name: "Bocconi University",
-country: "Italy",
-city: "Milan",
-
-fields: [
-"Business & Economics",
-"Social Sciences",
-"Law"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Private",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"bocconi",
-"milan",
-"italy",
-"business",
-"economics",
-"finance",
-"management"
-],
-
-image:
-"https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"An internationally focused Milan university specializing in economics, management, finance and related social sciences."
-},
-
-
-{
-name: "Politecnico di Milano",
-country: "Italy",
-city: "Milan",
-
-fields: [
-"Engineering & Technology",
-"Arts & Design",
-"Architecture",
-"Science"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"politecnico",
-"milan",
-"italy",
-"engineering",
-"architecture",
-"design"
-],
-
-image:
-"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A leading Italian institution for engineering, architecture and design in Milan."
-},
-
-
-{
-name: "University of Amsterdam",
-country: "Netherlands",
-city: "Amsterdam",
-
-fields: [
-"Business & Economics",
-"Social Sciences",
-"Science",
-"Communication & Media"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"amsterdam",
-"netherlands",
-"economics",
-"business",
-"media",
-"science"
-],
-
-image:
-"https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A highly international Dutch university in Amsterdam with extensive English-taught study opportunities."
-},
-
-
-{
-name: "Delft University of Technology",
-country: "Netherlands",
-city: "Delft",
-
-fields: [
-"Engineering & Technology",
-"Science",
-"Architecture"
-],
-
-climate: "cold",
-
-environment: [
-"Small city",
-"Urban",
-"Quiet"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"delft",
-"tu delft",
-"netherlands",
-"engineering",
-"technology",
-"architecture"
-],
-
-image:
-"https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A technology-focused Dutch university known for engineering, architecture and scientific innovation."
-},
-
-
-{
-name: "Technical University of Munich",
-country: "Germany",
-city: "Munich",
-
-fields: [
-"Engineering & Technology",
-"Science",
-"Business & Economics"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Nature"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Lower public tuition structure",
-
-keywords: [
-"tum",
-"munich",
-"germany",
-"engineering",
-"technology",
-"science",
-"business"
-],
-
-image:
-"https://images.unsplash.com/photo-1595867818082-083862f3d630?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A major German technical university with strong engineering, science, technology and entrepreneurship connections."
-},
-
-
-{
-name: "ETH Zurich",
-country: "Switzerland",
-city: "Zurich",
-
-fields: [
-"Engineering & Technology",
-"Science",
-"Architecture"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Nature",
-"Urban"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"eth",
-"zurich",
-"switzerland",
-"engineering",
-"science",
-"technology"
-],
-
-image:
-"https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A globally recognized Swiss institution specializing in science, engineering, technology and architecture."
-},
-
-
-{
-name: "University of Copenhagen",
-country: "Denmark",
-city: "Copenhagen",
-
-fields: [
-"Science",
-"Medicine & Health",
-"Social Sciences",
-"Business & Economics"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Coastal",
-"Urban",
-"Quiet"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"copenhagen",
-"denmark",
-"science",
-"medicine",
-"business"
-],
-
-image:
-"https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A major Nordic research university in a coastal European capital."
-},
-
-
-{
-name: "University of Lisbon",
-country: "Portugal",
-city: "Lisbon",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Arts & Design",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Coastal",
-"Urban"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"lisbon",
-"portugal",
-"business",
-"engineering",
-"design"
-],
-
-image:
-"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A large Portuguese university in a sunny coastal capital with broad academic options."
-},
-
-
-{
-name: "University of Tokyo",
-country: "Japan",
-city: "Tokyo",
-
-fields: [
-"Science",
-"Engineering & Technology",
-"Business & Economics",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"tokyo",
-"japan",
-"utokyo",
-"economics",
-"engineering",
-"science",
-"technology"
-],
-
-image:
-"https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"Japan's leading national university, located in one of the world's largest and most dynamic cities."
-},
-
-
-{
-name: "Waseda University",
-country: "Japan",
-city: "Tokyo",
-
-fields: [
-"Business & Economics",
-"Social Sciences",
-"Communication & Media",
-"Engineering & Technology"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Private",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Moderate to high",
-
-keywords: [
-"waseda",
-"tokyo",
-"japan",
-"business",
-"economics",
-"media"
-],
-
-image:
-"https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A highly international private university in Tokyo with broad programs and a large international student community."
-},
-
-
-{
-name: "Keio University",
-country: "Japan",
-city: "Tokyo",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Social Sciences",
-"Communication & Media"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Private",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate to high",
-
-keywords: [
-"keio",
-"tokyo",
-"japan",
-"business",
-"economics",
-"technology"
-],
-
-image:
-"https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"One of Japan's best-known private universities with strong connections to business and technology."
-},
-
-
-{
-name: "Seoul National University",
-country: "South Korea",
-city: "Seoul",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Science",
-"Social Sciences"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"snu",
-"seoul",
-"korea",
-"south korea",
-"business",
-"engineering",
-"economics"
-],
-
-image:
-"https://images.unsplash.com/photo-1538485399081-7c8979d1d5f1?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A leading South Korean national university located in Seoul with strong academic and research programs."
-},
-
-
-{
-name: "Yonsei University",
-country: "South Korea",
-city: "Seoul",
-
-fields: [
-"Business & Economics",
-"Communication & Media",
-"Social Sciences",
-"Engineering & Technology"
-],
-
-climate: "cold",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Private",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "Moderate to high",
-
-keywords: [
-"yonsei",
-"seoul",
-"korea",
-"business",
-"media",
-"economics"
-],
-
-image:
-"https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A globally oriented private university in Seoul with strong business, media and social science programs."
-},
-
-
-{
-name: "National University of Singapore",
-country: "Singapore",
-city: "Singapore",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Science",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"nus",
-"singapore",
-"business",
-"engineering",
-"technology",
-"economics"
-],
-
-image:
-"https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A leading Asian university in a global business and technology hub."
-},
-
-
-{
-name: "University of Melbourne",
-country: "Australia",
-city: "Melbourne",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Arts & Design",
-"Science",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Coastal"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"melbourne",
-"australia",
-"business",
-"engineering",
-"design",
-"science"
-],
-
-image:
-"https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A major Australian university in a multicultural city known for arts, business, technology and research."
-},
-
-
-{
-name: "University of Sydney",
-country: "Australia",
-city: "Sydney",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Medicine & Health",
-"Arts & Design"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Coastal",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Very strong",
-
-scholarships: "Available",
-
-cost: "High",
-
-keywords: [
-"sydney",
-"australia",
-"business",
-"engineering",
-"medicine",
-"coastal"
-],
-
-image:
-"https://images.unsplash.com/photo-1506973035872-a4f3e8d8d7b3?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A highly international Australian university in a major coastal city."
-},
-
-
-{
-name: "University of São Paulo",
-country: "Brazil",
-city: "São Paulo",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Science",
-"Medicine & Health",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Fast-paced"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Lower-cost public option",
-
-keywords: [
-"sao paulo",
-"brazil",
-"usp",
-"business",
-"engineering",
-"science"
-],
-
-image:
-"https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"One of Brazil's major public research universities in one of Latin America's largest cities."
-},
-
-
-{
-name: "Pontificia Universidad Católica de Chile",
-country: "Chile",
-city: "Santiago",
-
-fields: [
-"Business & Economics",
-"Engineering & Technology",
-"Arts & Design",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Urban",
-"Nature"
-],
-
-type: "Private",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Private",
-
-keywords: [
-"puc chile",
-"santiago",
-"chile",
-"business",
-"engineering",
-"economics"
-],
-
-image:
-"https://images.unsplash.com/photo-1534190239940-9ba8944ea261?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A leading Chilean university in Santiago with strong programs in business, engineering and social sciences."
-},
-
-
-{
-name: "University of Cape Town",
-country: "South Africa",
-city: "Cape Town",
-
-fields: [
-"Business & Economics",
-"Science",
-"Engineering & Technology",
-"Social Sciences"
-],
-
-climate: "warm",
-
-environment: [
-"Big city",
-"Coastal",
-"Nature"
-],
-
-type: "Public",
-
-international: "Strong",
-
-scholarships: "Available",
-
-cost: "Moderate",
-
-keywords: [
-"cape town",
-"south africa",
-"uct",
-"business",
-"science",
-"engineering"
-],
-
-image:
-"https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1200&q=85",
-
-description:
-"A leading African university in a spectacular coastal city with strong research and international links."
-}
+    description:
+      "A major Australian research university with broad undergraduate and graduate study opportunities."
+  }
 
 ];
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+/* =========================
+   USER
+========================= */
 
-const grid =
-document.getElementById("universityGrid");
+let user = null;
 
-const searchInput =
-document.getElementById("searchInput");
-
-const resultCount =
-document.getElementById("resultCount");
-
-const resetButton =
-document.getElementById("resetButton");
-
-const recommendedButton =
-document.getElementById("recommendedButton");
-
-const filters =
-document.querySelectorAll(".filter");
-
-const modal =
-document.getElementById("modal");
-
-const closeModal =
-document.getElementById("closeModal");
+let saved =
+  JSON.parse(
+    localStorage.getItem("postcardsSaved") || "[]"
+  );
 
 
-/* =====================================================
-   ONBOARDING
-===================================================== */
+function loadUser(){
 
-let onboarding = {};
+  try{
 
-const savedAnswers =
-localStorage.getItem(
-    "postcardsAnswers"
-);
+    const raw =
+      localStorage.getItem("postcardsUser");
 
-if (savedAnswers) {
-
-    try {
-
-        onboarding =
-            JSON.parse(savedAnswers);
-
-    } catch {
-
-        onboarding = {};
-
+    if(raw){
+      user = JSON.parse(raw);
     }
+
+  }catch(e){
+
+    user = null;
+
+  }
 
 }
 
 
-/* =====================================================
-   SAVED UNIVERSITIES
-===================================================== */
+function getProfile(){
 
-let savedUniversities =
-JSON.parse(
-    localStorage.getItem(
-        "postcardsSavedUniversities"
-    ) || "[]"
-);
+  if(!user){
+    return null;
+  }
 
-
-/* =====================================================
-   STATE
-===================================================== */
-
-let activeFilter = "all";
-
-let recommendedMode = false;
-
-
-/* =====================================================
-   NORMALIZE
-===================================================== */
-
-function normalize(value) {
-
-    return String(value || "")
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        );
+  return user.profile || user;
 
 }
 
 
-/* =====================================================
-   MATCH SCORE
-===================================================== */
+function normalize(value){
 
-function getMatchScore(university) {
+  return String(value || "")
+    .toLowerCase()
+    .trim();
 
-    let score = 0;
-
-    let possible = 0;
+}
 
 
-    /* FIELD */
+function userName(){
 
-    if (
-        onboarding.study &&
-        onboarding.study.length
-    ) {
+  return (
+    user?.username ||
+    user?.name ||
+    user?.email?.split("@")[0] ||
+    "there"
+  );
 
-        possible += 3;
-
-        const studies =
-            onboarding.study.map(normalize);
-
-        if (
-            university.fields.some(
-                field =>
-                studies.includes(
-                    normalize(field)
-                )
-            )
-        ) {
-
-            score += 3;
-
-        }
-
-    }
+}
 
 
-    /* COUNTRY */
+function profileValue(keys){
 
-    if (
-        onboarding.countries &&
-        onboarding.countries.length
-    ) {
+  const profile = getProfile();
 
-        possible += 3;
+  if(!profile){
+    return "";
+  }
 
-        const countries =
-            onboarding.countries.map(
-                normalize
-            );
+  for(const key of keys){
 
-        if (
-            countries.includes(
-                normalize(
-                    university.country
-                )
-            )
-        ) {
+    if(
+      profile[key] !== undefined &&
+      profile[key] !== null &&
+      String(profile[key]).trim()
+    ){
 
-            score += 3;
-
-        }
+      return String(profile[key]).trim();
 
     }
 
+  }
 
-    /* ENVIRONMENT */
+  return "";
 
-    if (
-        onboarding.environment &&
-        onboarding.environment.length
-    ) {
-
-        possible += 2;
-
-        const preferred =
-            onboarding.environment.map(
-                normalize
-            );
-
-        if (
-            university.environment.some(
-                item =>
-                preferred.includes(
-                    normalize(item)
-                )
-            )
-        ) {
-
-            score += 2;
-
-        }
-
-    }
+}
 
 
-    /* PRIORITIES */
+/* =========================
+   PROFILE SUMMARY
+========================= */
 
-    if (
-        onboarding.priorities &&
-        onboarding.priorities.length
-    ) {
+function profileSummary(){
 
-        const priorities =
-            onboarding.priorities.map(
-                normalize
-            );
+  const country =
+    profileValue([
+      "country",
+      "homeCountry",
+      "fromCountry"
+    ]);
 
-        possible += 2;
+  const school =
+    profileValue([
+      "school",
+      "schoolName"
+    ]);
 
-        if (
-            priorities.includes(
-                "scholarships"
-            ) &&
-            university.scholarships
-        ) {
+  const studyCountry =
+    profileValue([
+      "studyCountry",
+      "desiredCountry",
+      "countryToStudy"
+    ]);
 
-            score += 1;
+  const interests =
+    profileValue([
+      "interests",
+      "interest"
+    ]);
 
-        }
-
-        if (
-            priorities.includes(
-                "location"
-            )
-        ) {
-
-            score += 1;
-
-        }
-
-    }
-
-
-    if (!possible) {
-
-        return 70;
-
-    }
+  const intended =
+    profileValue([
+      "intendedStudy",
+      "study",
+      "major",
+      "field"
+    ]);
 
 
-    return Math.round(
-        (
-            score /
-            possible
-        ) * 100
+  const parts = [];
+
+
+  if(country){
+    parts.push(
+      `You're from ${country}`
+    );
+  }
+
+
+  if(school){
+    parts.push(
+      `currently studying at ${school}`
+    );
+  }
+
+
+  if(interests){
+    parts.push(
+      `and you're interested in ${interests}`
+    );
+  }
+
+
+  if(
+    intended &&
+    normalize(intended) !== normalize(interests)
+  ){
+
+    parts.push(
+      `with an interest in ${intended}`
     );
 
-}
+  }
 
 
-/* =====================================================
-   SEARCH
-===================================================== */
+  if(studyCountry){
 
-function matchesSearch(
-    university,
-    query
-) {
-
-    if (!query.trim()) {
-        return true;
-    }
-
-    const searchable = [
-
-        university.name,
-        university.country,
-        university.city,
-        university.type,
-        university.climate,
-        university.international,
-        university.scholarships,
-        university.cost,
-
-        ...university.fields,
-        ...university.environment,
-        ...university.keywords
-
-    ]
-    .map(normalize)
-    .join(" ");
-
-
-    const words =
-        normalize(query)
-        .split(/\s+/)
-        .filter(Boolean);
-
-
-    return words.every(
-        word =>
-        searchable.includes(word)
+    parts.push(
+      `and you're considering studying in ${studyCountry}`
     );
 
-}
+  }
 
 
-/* =====================================================
-   FILTER
-===================================================== */
+  if(parts.length === 0){
 
-function matchesFilter(
-    university
-) {
-
-    if (
-        activeFilter === "all"
-    ) {
-
-        return true;
-
-    }
-
-
-    if (
-        activeFilter === "warm"
-    ) {
-
-        return university.climate === "warm";
-
-    }
-
-
-    if (
-        activeFilter === "cold"
-    ) {
-
-        return university.climate === "cold";
-
-    }
-
-
-    if (
-        activeFilter === "city"
-    ) {
-
-        return university.environment.includes(
-            "Big city"
-        );
-
-    }
-
-
-    return university.fields.includes(
-        activeFilter
+    return (
+      "Explore universities around the world " +
+      "and start building your next chapter."
     );
 
-}
+  }
 
 
-/* =====================================================
-   RESULTS
-===================================================== */
-
-function getResults() {
-
-    let results =
-        universities.filter(
-            university =>
-            matchesSearch(
-                university,
-                searchInput.value
-            ) &&
-            matchesFilter(
-                university
-            )
-        );
-
-
-    if (recommendedMode) {
-
-        results.sort(
-            (a,b) =>
-            getMatchScore(b) -
-            getMatchScore(a)
-        );
-
-    }
-
-
-    return results;
+  return parts.join(", ") + ".";
 
 }
 
 
-/* =====================================================
+/* =========================
+   RECOMMENDATIONS
+========================= */
+
+function relevanceScore(university){
+
+  const studyCountry =
+    normalize(
+      profileValue([
+        "studyCountry",
+        "desiredCountry",
+        "countryToStudy"
+      ])
+    );
+
+  const interests =
+    normalize(
+      profileValue([
+        "interests",
+        "interest"
+      ])
+    );
+
+  const intended =
+    normalize(
+      profileValue([
+        "intendedStudy",
+        "study",
+        "major",
+        "field"
+      ])
+    );
+
+
+  let score = 0;
+
+
+  if(
+    studyCountry &&
+    normalize(university.country)
+      .includes(studyCountry)
+  ){
+
+    score += 8;
+
+  }
+
+
+  const text =
+    normalize(
+      university.programs +
+      " " +
+      university.fields.join(" ")
+    );
+
+
+  if(interests){
+
+    interests
+      .split(/[,/&]+/)
+      .forEach(word=>{
+
+        word = word.trim();
+
+        if(
+          word &&
+          text.includes(word)
+        ){
+
+          score += 2;
+
+        }
+
+      });
+
+  }
+
+
+  if(intended){
+
+    university.fields.forEach(field=>{
+
+      if(
+        intended.includes(
+          normalize(field)
+        ) ||
+        normalize(field).includes(
+          intended
+        )
+      ){
+
+        score += 5;
+
+      }
+
+    });
+
+  }
+
+
+  return score;
+
+}
+
+
+function recommendedUniversities(){
+
+  return [...universities]
+    .sort(
+      (a,b)=>
+        relevanceScore(b) -
+        relevanceScore(a)
+    )
+    .slice(0,6);
+
+}
+
+
+/* =========================
+   UNIVERSITY CARD
+========================= */
+
+function cardHTML(u,index){
+
+  const isSaved =
+    saved.includes(u.id);
+
+
+  return `
+
+    <article class="card">
+
+      <div
+        class="card-image"
+        style="
+          background-image:
+          linear-gradient(
+            rgba(0,0,0,.08),
+            rgba(0,0,0,.32)
+          ),
+          url('${u.image}')
+        "
+      >
+
+        <div class="card-index">
+          ${String(index+1).padStart(2,"0")}
+        </div>
+
+      </div>
+
+
+      <div class="card-top">
+
+        <h3>
+          ${u.name}
+        </h3>
+
+      </div>
+
+
+      <div class="card-bottom">
+
+        <div class="location">
+          ${u.city}, ${u.country}
+        </div>
+
+        <div class="programs">
+          ${u.programs}
+        </div>
+
+
+        <div class="card-actions">
+
+          <button
+            onclick="openUniversity('${u.id}')"
+          >
+            Explore
+          </button>
+
+
+          <button
+            class="${isSaved ? "saved" : ""}"
+            onclick="toggleSaved('${u.id}')"
+          >
+            ${isSaved ? "Saved" : "Save"}
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =========================
    RENDER
-===================================================== */
+========================= */
 
-function render() {
+function render(containerId,list){
 
-    const results =
-        getResults();
+  const container =
+    document.getElementById(containerId);
 
-
-    grid.innerHTML = "";
-
-
-    resultCount.textContent =
-        `${results.length} ${
-            results.length === 1
-            ? "result"
-            : "results"
-        }`;
+  if(!container){
+    return;
+  }
 
 
-    if (!results.length) {
+  if(!list.length){
 
-        grid.innerHTML = `
+    container.innerHTML = `
 
-            <div class="empty">
+      <div class="empty">
 
-                <h2>
-                    Nothing here yet.
-                </h2>
+        <h3>
+          No universities found.
+        </h3>
 
-                <p>
-                    Try another country,
-                    city, university or field.
-                    Your next postcard might
-                    be somewhere unexpected.
-                </p>
+        <p>
+          Try another search, destination,
+          or field of study.
+        </p>
 
-                <button
-                    class="control-button"
-                    onclick="resetEverything()"
-                >
-                    SHOW ALL
-                </button>
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    list
+      .map(
+        (u,i)=>
+          cardHTML(u,i)
+      )
+      .join("");
+
+}
+
+
+function renderRecommended(){
+
+  render(
+    "recommendedGrid",
+    recommendedUniversities()
+  );
+
+}
+
+
+function renderAll(
+  list=universities
+){
+
+  render(
+    "allGrid",
+    list
+  );
+
+}
+
+
+function renderSaved(){
+
+  const list =
+    universities.filter(
+      u=>saved.includes(u.id)
+    );
+
+  render(
+    "savedGrid",
+    list
+  );
+
+}
+
+
+/* =========================
+   PROFILE PAGE
+========================= */
+
+function renderProfile(){
+
+  const container =
+    document.getElementById(
+      "profileCard"
+    );
+
+  const profile =
+    getProfile();
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(!profile){
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <h3>
+          Your profile is waiting.
+        </h3>
+
+        <p>
+          Return to the sign-up flow
+          to complete your information.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const rows = [
+
+    [
+      "School",
+      profileValue([
+        "school",
+        "schoolName"
+      ])
+    ],
+
+    [
+      "From",
+      profileValue([
+        "country",
+        "homeCountry",
+        "fromCountry"
+      ])
+    ],
+
+    [
+      "Study destination",
+      profileValue([
+        "studyCountry",
+        "desiredCountry",
+        "countryToStudy"
+      ])
+    ],
+
+    [
+      "Interests",
+      profileValue([
+        "interests",
+        "interest"
+      ])
+    ],
+
+    [
+      "Intended study",
+      profileValue([
+        "intendedStudy",
+        "study",
+        "major",
+        "field"
+      ])
+    ]
+
+  ].filter(
+    row=>row[1]
+  );
+
+
+  container.innerHTML =
+    rows.length
+
+      ? rows.map(
+          row=>`
+
+            <div class="profile-row">
+
+              <span>
+                ${row[0]}
+              </span>
+
+              <strong>
+                ${row[1]}
+              </strong>
 
             </div>
 
-        `;
+          `
+        ).join("")
 
-        return;
+      : `
 
-    }
+        <div class="empty">
 
+          <h3>
+            Your profile is incomplete.
+          </h3>
 
-    results.forEach(
-        university => {
+          <p>
+            Complete your questionnaire
+            to personalize your discovery
+            experience.
+          </p>
 
-            const card =
-                document.createElement(
-                    "article"
-                );
+        </div>
 
-            card.className =
-                "university-card";
-
-
-            const score =
-                getMatchScore(
-                    university
-                );
-
-
-            const isSaved =
-                savedUniversities.includes(
-                    university.name
-                );
-
-
-            card.innerHTML = `
-
-                <button
-                    class="save-button ${
-                        isSaved
-                        ? "saved"
-                        : ""
-                    }"
-                    aria-label="Save university"
-                >
-                    ${
-                        isSaved
-                        ? "♥"
-                        : "♡"
-                    }
-                </button>
-
-
-                <div
-                    class="card-image"
-                    style="
-                        background-image:
-                        url('${university.image}')
-                    "
-                >
-
-                    <div class="card-country">
-                        ${university.country}
-                    </div>
-
-                </div>
-
-
-                ${
-                    recommendedMode
-                    ? `
-                        <div class="match">
-                            ${score}% MATCH
-                        </div>
-                    `
-                    : ""
-                }
-
-
-                <div class="card-content">
-
-                    <div class="card-kicker">
-                        ${university.type}
-                    </div>
-
-                    <h2 class="card-title">
-                        ${university.name}
-                    </h2>
-
-                    <div class="card-location">
-                        ${university.city},
-                        ${university.country}
-                    </div>
-
-
-                    <div class="tags">
-
-                        ${university.fields
-                            .slice(0,3)
-                            .map(
-                                field => `
-                                    <span class="tag">
-                                        ${field
-                                            .replace(
-                                                " & Economics",
-                                                ""
-                                            )
-                                            .replace(
-                                                " & Technology",
-                                                ""
-                                            )}
-                                    </span>
-                                `
-                            )
-                            .join("")
-                        }
-
-                    </div>
-
-
-                    <div class="card-info">
-
-                        <div class="info-item">
-
-                            <strong>
-                                CLIMATE
-                            </strong>
-
-                            ${university.climate}
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <strong>
-                                INTERNATIONAL
-                            </strong>
-
-                            ${university.international}
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <strong>
-                                SCHOLARSHIPS
-                            </strong>
-
-                            ${university.scholarships}
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <strong>
-                                COST
-                            </strong>
-
-                            ${university.cost}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            /* SAVE */
-
-            const saveButton =
-                card.querySelector(
-                    ".save-button"
-                );
-
-
-            saveButton.addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
-
-                    toggleSave(
-                        university.name
-                    );
-
-                }
-            );
-
-
-            /* OPEN */
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    openUniversity(
-                        university
-                    );
-
-                }
-            );
-
-
-            grid.appendChild(card);
-
-        }
-    );
+      `;
 
 }
 
 
-/* =====================================================
-   SAVE
-===================================================== */
+/* =========================
+   NAVIGATION
+========================= */
 
-function toggleSave(
-    universityName
-) {
+function showSection(id){
 
-    if (
-        savedUniversities.includes(
-            universityName
-        )
-    ) {
+  document
+    .querySelectorAll(".page-section")
+    .forEach(section=>{
 
-        savedUniversities =
-            savedUniversities.filter(
-                name =>
-                name !== universityName
-            );
+      section.classList.toggle(
+        "active",
+        section.id === id
+      );
 
-    } else {
-
-        savedUniversities.push(
-            universityName
-        );
-
-    }
+    });
 
 
-    localStorage.setItem(
-        "postcardsSavedUniversities",
-        JSON.stringify(
-            savedUniversities
-        )
-    );
+  document
+    .querySelectorAll(".nav button")
+    .forEach(button=>{
+
+      button.classList.toggle(
+        "active",
+        button.dataset.section === id
+      );
+
+    });
 
 
-    render();
-
-}
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-function openUniversity(
-    university
-) {
-
-    document.getElementById(
-        "modalEyebrow"
-    ).textContent =
-        university.type;
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        university.name;
+  if(id === "saved"){
+    renderSaved();
+  }
 
 
-    document.getElementById(
-        "modalLocation"
-    ).textContent =
-        `${university.city}, ${university.country}`;
-
-
-    document.getElementById(
-        "modalDescription"
-    ).textContent =
-        university.description;
-
-
-    const information = [
-
-        [
-            "FIELDS",
-            university.fields.join(", ")
-        ],
-
-        [
-            "CLIMATE",
-            university.climate
-        ],
-
-        [
-            "ENVIRONMENT",
-            university.environment.join(", ")
-        ],
-
-        [
-            "INTERNATIONAL",
-            university.international
-        ],
-
-        [
-            "SCHOLARSHIPS",
-            university.scholarships
-        ],
-
-        [
-            "COST",
-            university.cost
-        ],
-
-        [
-            "YOUR MATCH",
-            `${getMatchScore(university)}%`
-        ],
-
-        [
-            "TYPE",
-            university.type
-        ]
-
-    ];
-
-
-    document.getElementById(
-        "modalGrid"
-    ).innerHTML =
-
-        information
-        .map(
-            item => `
-
-                <div class="modal-info">
-
-                    <span>
-                        ${item[0]}
-                    </span>
-
-                    <strong>
-                        ${item[1]}
-                    </strong>
-
-                </div>
-
-            `
-        )
-        .join("");
-
-
-    modal.classList.add(
-        "active"
-    );
+  if(id === "profile"){
+    renderProfile();
+  }
 
 }
 
 
-closeModal.addEventListener(
-    "click",
-    () => {
-
-        modal.classList.remove(
-            "active"
-        );
-
-    }
-);
-
-
-modal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target === modal
-        ) {
-
-            modal.classList.remove(
-                "active"
-            );
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   FILTERS
-===================================================== */
-
-filters.forEach(
-    filter => {
-
-        filter.addEventListener(
-            "click",
-            () => {
-
-                filters.forEach(
-                    item =>
-                    item.classList.remove(
-                        "active"
-                    )
-                );
-
-
-                filter.classList.add(
-                    "active"
-                );
-
-
-                activeFilter =
-                    filter.dataset.filter;
-
-
-                render();
-
-            }
-        );
-
-    }
-);
-
-
-/* =====================================================
+/* =========================
    SEARCH
-===================================================== */
+========================= */
 
-searchInput.addEventListener(
+function searchUniversities(){
+
+  const query =
+    normalize(
+      document.getElementById(
+        "searchInput"
+      ).value
+    );
+
+
+  if(!query){
+
+    renderRecommended();
+
+    return;
+
+  }
+
+
+  const results =
+    universities.filter(u=>{
+
+      return normalize(
+
+        u.name +
+        " " +
+        u.city +
+        " " +
+        u.country +
+        " " +
+        u.programs +
+        " " +
+        u.fields.join(" ")
+
+      ).includes(query);
+
+    });
+
+
+  render(
+    "recommendedGrid",
+    results
+  );
+
+}
+
+
+/* =========================
+   COUNTRY FILTER
+========================= */
+
+function filterCountry(country){
+
+  document.getElementById(
+    "filterLabel"
+  ).textContent = country;
+
+
+  renderAll(
+    universities.filter(
+      u=>u.country === country
+    )
+  );
+
+
+  showSection(
+    "universities"
+  );
+
+}
+
+
+/* =========================
+   FIELD FILTER
+========================= */
+
+function filterField(field){
+
+  document.getElementById(
+    "filterLabel"
+  ).textContent = field;
+
+
+  renderAll(
+    universities.filter(
+      u=>u.fields.includes(field)
+    )
+  );
+
+
+  showSection(
+    "universities"
+  );
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+function toggleSaved(id){
+
+  if(saved.includes(id)){
+
+    saved =
+      saved.filter(
+        item=>item !== id
+      );
+
+  }else{
+
+    saved.push(id);
+
+  }
+
+
+  localStorage.setItem(
+    "postcardsSaved",
+    JSON.stringify(saved)
+  );
+
+
+  renderRecommended();
+
+  renderAll();
+
+  renderSaved();
+
+}
+
+
+/* =========================
+   UNIVERSITY MODAL
+========================= */
+
+function openUniversity(id){
+
+  const u =
+    universities.find(
+      item=>item.id === id
+    );
+
+
+  if(!u){
+    return;
+  }
+
+
+  document.getElementById(
+    "modalName"
+  ).textContent = u.name;
+
+
+  document.getElementById(
+    "modalLocation"
+  ).textContent =
+    `${u.city}, ${u.country}`;
+
+
+  document.getElementById(
+    "modalText"
+  ).textContent =
+    u.description;
+
+
+  document.getElementById(
+    "modalPrograms"
+  ).innerHTML =
+
+    u.programs
+      .split(" · ")
+      .map(
+        program=>
+          `<div>${program}</div>`
+      )
+      .join("");
+
+
+  document
+    .getElementById(
+      "universityModal"
+    )
+    .classList.add("active");
+
+}
+
+
+function closeModal(){
+
+  document
+    .getElementById(
+      "universityModal"
+    )
+    .classList.remove(
+      "active"
+    );
+
+}
+
+
+/* =========================
+   LOG OUT
+========================= */
+
+function logout(){
+
+  localStorage.removeItem(
+    "postcardsLoggedIn"
+  );
+
+  localStorage.removeItem(
+    "postcardsCurrentUser"
+  );
+
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+document
+  .querySelectorAll(".nav button")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        showSection(
+          button.dataset.section
+        );
+
+      }
+    );
+
+  });
+
+
+document
+  .querySelectorAll(".country")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        filterCountry(
+          button.dataset.country
+        );
+
+      }
+    );
+
+  });
+
+
+document
+  .querySelectorAll(".field")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        filterField(
+          button.dataset.field
+        );
+
+      }
+    );
+
+  });
+
+
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
     "input",
-    render
-);
+    searchUniversities
+  );
 
 
-/* =====================================================
-   FOR ME
-===================================================== */
-
-recommendedButton.addEventListener(
+document
+  .getElementById(
+    "closeModal"
+  )
+  .addEventListener(
     "click",
-    () => {
-
-        recommendedMode =
-            !recommendedMode;
+    closeModal
+  );
 
 
-        recommendedButton.classList.toggle(
-            "active",
-            recommendedMode
-        );
+document
+  .getElementById(
+    "universityModal"
+  )
+  .addEventListener(
+    "click",
+    event=>{
 
+      if(
+        event.target.id ===
+        "universityModal"
+      ){
 
-        recommendedButton.textContent =
-            recommendedMode
-            ? "FOR YOU"
-            : "FOR ME";
+        closeModal();
 
-
-        render();
+      }
 
     }
-);
+  );
 
 
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetEverything() {
-
-    searchInput.value = "";
-
-    activeFilter = "all";
-
-    recommendedMode = false;
-
-
-    filters.forEach(
-        filter =>
-        filter.classList.remove(
-            "active"
-        )
-    );
-
-
-    document
-        .querySelector(
-            '[data-filter="all"]'
-        )
-        .classList.add(
-            "active"
-        );
-
-
-    recommendedButton.classList.remove(
-        "active"
-    );
-
-
-    recommendedButton.textContent =
-        "FOR ME";
-
-
-    render();
-
-}
-
-
-resetButton.addEventListener(
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
     "click",
-    resetEverything
+    logout
 );
 
 
-/* =====================================================
-   PROFILE
-===================================================== */
+/* =========================
+   START
+========================= */
 
-if (
-    onboarding.city
-) {
-
-    profileText.textContent =
-        `${onboarding.city} • DISCOVER`;
-
-}
+loadUser();
 
 
-/* =====================================================
-   ESCAPE KEY
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            modal.classList.remove(
-                "active"
-            );
-
-        }
-
-    }
-);
+document.getElementById(
+  "profileGreeting"
+).textContent =
+  `Welcome, ${userName()}.`;
 
 
-/* =====================================================
-   INITIAL
-===================================================== */
+document.getElementById(
+  "profileSummary"
+).textContent =
+  profileSummary();
 
-render();
+
+renderRecommended();
+
+renderAll();
+
+renderSaved();
+
+renderProfile();
 
 </script>
 
