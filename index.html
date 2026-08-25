@@ -1,1359 +1,1469 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Postcards — Where will you go next?</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --cream: #f8f3ed;
-    --paper: #fffdf9;
-    --pink: #e8b8b8;
-    --rose: #b96f73;
-    --dark: #332d2d;
-    --muted: #817777;
-    --line: #eadfda;
-    --soft-pink: #f4dddd;
-}
-
-/* =========================
-   BODY
-========================= */
-
-body {
-    min-height: 100vh;
-
-    font-family: "DM Sans", sans-serif;
-
-    color: var(--dark);
-
-    background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(232,184,184,0.45),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 85%,
-            rgba(218,194,184,0.35),
-            transparent 30%
-        ),
-        var(--cream);
-
-    overflow: hidden;
-}
-
-/* subtle paper texture */
-
-body::before {
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.22;
-
-    background-image:
-        radial-gradient(
-            rgba(90,70,65,0.12) 0.6px,
-            transparent 0.6px
-        );
-
-    background-size: 7px 7px;
-}
-
-/* =========================
-   PAGE
-========================= */
-
-.page {
-    width: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 30px;
-}
-
-/* =========================
-   DECORATIVE POSTCARD STAMPS
-========================= */
-
-.decoration {
-    position: fixed;
-
-    font-size: 11px;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-
-    color: rgba(185,111,115,0.55);
-
-    pointer-events: none;
-}
-
-.decoration.top-left {
-    top: 35px;
-    left: 45px;
-
-    transform: rotate(-8deg);
-}
-
-.decoration.bottom-right {
-    right: 45px;
-    bottom: 35px;
-
-    transform: rotate(7deg);
-}
-
-/* =========================
-   MAIN CARD
-========================= */
-
-.postcard-wrapper {
-
-    width: min(1050px, 94vw);
-
-    height: min(680px, 84vh);
-
-    perspective: 1800px;
-
-    position: relative;
-}
-
-.postcard {
-
-    width: 100%;
-    height: 100%;
-
-    position: relative;
-
-    transform-style: preserve-3d;
-
-    transition:
-        transform 0.85s cubic-bezier(.65,.05,.36,1);
-
-    cursor: pointer;
-}
-
-.postcard.flipped {
-    transform: rotateY(180deg);
-}
-
-/* =========================
-   CARD SIDES
-========================= */
-
-.postcard-side {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    backface-visibility: hidden;
-
-    overflow: hidden;
-
-    border-radius: 24px;
-
-    background: var(--paper);
-
-    border: 1px solid rgba(185,111,115,0.15);
-
-    box-shadow:
-        0 30px 80px rgba(86,61,58,0.15);
-
-}
-
-/* =========================
-   FRONT
-========================= */
-
-.front {
-
-    display: grid;
-
-    grid-template-columns: 1.08fr 0.92fr;
-
-}
-
-/* =========================
-   FRONT PHOTO
-========================= */
-
-.front-image {
-
-    position: relative;
-
-    overflow: hidden;
-
-    margin: 14px;
-
-    border-radius: 18px;
-
-}
-
-.front-image img {
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-
-    transition: transform 0.8s ease;
-
-}
-
-.postcard:hover .front-image img {
-
-    transform: scale(1.035);
-
-}
-
-/* photo overlay */
-
-.front-image::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,0,0,0.02),
-            rgba(50,25,25,0.28)
-        );
-
-    pointer-events: none;
-
-}
-
-/* photo label */
-
-.photo-label {
-
-    position: absolute;
-
-    left: 25px;
-    bottom: 25px;
-
-    z-index: 2;
-
-    padding: 8px 13px;
-
-    border-radius: 30px;
-
-    background: rgba(255,253,249,0.88);
-
-    backdrop-filter: blur(8px);
-
-    font-size: 10px;
-
-    letter-spacing: 1.5px;
-
-    text-transform: uppercase;
-
-    color: var(--rose);
-
-}
-
-/* =========================
-   FRONT CONTENT
-========================= */
-
-.front-content {
-
-    padding: 58px 60px 55px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-}
-
-/* brand */
-
-.brand {
-
-    font-family: "Playfair Display", serif;
-
-    font-size: 28px;
-
-    font-weight: 600;
-
-    letter-spacing: -0.5px;
-
-    color: var(--dark);
-
-}
-
-.brand span {
-
-    color: var(--rose);
-
-}
-
-/* small heading */
-
-.eyebrow {
-
-    margin-top: 58px;
-
-    margin-bottom: 17px;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 2.5px;
-
-    text-transform: uppercase;
-
-    color: var(--rose);
-
-}
-
-/* main heading */
-
-.front-content h1 {
-
-    font-family: "Playfair Display", serif;
-
-    font-size: clamp(48px, 5.3vw, 74px);
-
-    font-weight: 500;
-
-    line-height: 0.98;
-
-    letter-spacing: -2.8px;
-
-    color: var(--dark);
-
-}
-
-.front-content h1 em {
-
-    color: var(--rose);
-
-    font-weight: 500;
-
-}
-
-/* description */
-
-.front-description {
-
-    max-width: 390px;
-
-    margin-top: 26px;
-
-    color: var(--muted);
-
-    font-size: 14px;
-
-    line-height: 1.75;
-
-}
-
-/* bottom area */
-
-.front-bottom {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-top: 48px;
-
-    gap: 20px;
-
-}
-
-/* flip button */
-
-.flip-button {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 13px 18px;
-
-    border: none;
-
-    border-radius: 30px;
-
-    background: var(--dark);
-
-    color: white;
-
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    letter-spacing: 0.7px;
-
-    cursor: pointer;
-
-    transition: 0.25s ease;
-
-}
-
-.flip-button:hover {
-
-    background: var(--rose);
-
-    transform: translateY(-2px);
-
-}
-
-/* postcard number */
-
-.card-number {
-
-    font-size: 10px;
-
-    color: #b5a9a4;
-
-    letter-spacing: 1.5px;
-
-}
-
-/* =========================
-   BACK
-========================= */
-
-.back {
-
-    transform: rotateY(180deg);
-
-    display: grid;
-
-    grid-template-columns: 0.85fr 1.15fr;
-
-}
-
-/* =========================
-   BACK DECORATIVE SIDE
-========================= */
-
-.back-info {
-
-    padding: 55px;
-
-    background: var(--soft-pink);
-
-    position: relative;
-
-    overflow: hidden;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: space-between;
-
-}
-
-/* decorative circle */
-
-.back-info::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 300px;
-    height: 300px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,0.28);
-
-    right: -120px;
-    bottom: -100px;
-
-}
-
-.back-info .brand {
-
-    position: relative;
-
-    z-index: 2;
-
-}
-
-.back-info-content {
-
-    position: relative;
-
-    z-index: 2;
-
-}
-
-.back-info h2 {
-
-    font-family: "Playfair Display", serif;
-
-    font-size: 46px;
-
-    font-weight: 500;
-
-    line-height: 1.02;
-
-    letter-spacing: -1.5px;
-
-    margin-bottom: 22px;
-
-}
-
-.back-info p {
-
-    max-width: 300px;
-
-    color: #796868;
-
-    font-size: 13px;
-
-    line-height: 1.8;
-
-}
-
-.postmark {
-
-    position: relative;
-
-    z-index: 2;
-
-    width: 72px;
-    height: 72px;
-
-    border: 1px dashed rgba(121,104,104,0.55);
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 9px;
-
-    text-align: center;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-
-    color: #856f6f;
-
-}
-
-/* =========================
-   AUTH
-========================= */
-
-.auth {
-
-    padding: 55px 65px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    background: var(--paper);
-
-}
-
-.auth h2 {
-
-    font-family: "Playfair Display", serif;
-
-    font-size: 38px;
-
-    font-weight: 500;
-
-    letter-spacing: -1px;
-
-    margin-bottom: 8px;
-
-}
-
-.auth-subtitle {
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    line-height: 1.6;
-
-    margin-bottom: 27px;
-
-}
-
-/* tabs */
-
-.tabs {
-
-    display: flex;
-
-    gap: 8px;
-
-    padding: 4px;
-
-    margin-bottom: 25px;
-
-    background: #f5efeb;
-
-    border-radius: 12px;
-
-}
-
-.tab {
-
-    flex: 1;
-
-    padding: 11px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background: transparent;
-
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 12px;
-
-    font-weight: 600;
-
-    color: #a29793;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-
-}
-
-.tab.active {
-
-    background: white;
-
-    color: var(--dark);
-
-    box-shadow:
-        0 3px 10px rgba(80,60,55,0.08);
-
-}
-
-/* =========================
-   FORM
-========================= */
-
-.form-group {
-
-    margin-bottom: 15px;
-
-}
-
-.form-group label {
-
-    display: block;
-
-    margin-bottom: 7px;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1.5px;
-
-    color: #837672;
-
-}
-
-.form-group input {
-
-    width: 100%;
-
-    padding: 13px 14px;
-
-    border-radius: 10px;
-
-    border: 1px solid var(--line);
-
-    background: #fffdfb;
-
-    color: var(--dark);
-
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 13px;
-
-    outline: none;
-
-    transition: 0.2s ease;
-
-}
-
-.form-group input:focus {
-
-    border-color: var(--pink);
-
-    box-shadow:
-        0 0 0 3px rgba(232,184,184,0.15);
-
-}
-
-/* submit */
-
-.submit-button {
-
-    width: 100%;
-
-    padding: 14px;
-
-    margin-top: 7px;
-
-    border: none;
-
-    border-radius: 11px;
-
-    background: var(--dark);
-
-    color: white;
-
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: 0.25s ease;
-
-}
-
-.submit-button:hover {
-
-    background: var(--rose);
-
-    transform: translateY(-1px);
-
-}
-
-/* back */
-
-.back-button {
-
-    margin-top: 17px;
-
-    border: none;
-
-    background: transparent;
-
-    color: #a29793;
-
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 11px;
-
-    cursor: pointer;
-
-}
-
-.back-button:hover {
-
-    color: var(--rose);
-
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 800px) {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Postcards — Where will you go next?</title>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
 
     body {
-        overflow-y: auto;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #e8e1d5;
+      color: #202020;
     }
+
+    /* =========================
+       BACKGROUND
+    ========================= */
+
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      transform: scale(1.02);
+    }
+
+    .background-next {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      opacity: 0;
+
+      transition: opacity 1.2s ease-in-out;
+
+      transform: scale(1.02);
+    }
+
+    .background::after,
+    .background-next::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          rgba(0, 0, 0, 0.08),
+          rgba(0, 0, 0, 0.16)
+        );
+    }
+
+    /* =========================
+       LOCATION
+    ========================= */
+
+    .location {
+      position: fixed;
+
+      top: 24px;
+      left: 30px;
+
+      z-index: 10;
+
+      color: white;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: 0.18em;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        0 1px 8px rgba(0, 0, 0, 0.35);
+
+      transition: opacity 0.5s ease;
+    }
+
+    /* =========================
+       MAIN PAGE
+    ========================= */
 
     .page {
-        padding: 18px;
+      width: 100%;
+      height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 30px;
     }
+
+    /* =========================
+       POSTCARD
+    ========================= */
 
     .postcard-wrapper {
-        width: 100%;
-        height: 720px;
+      width: min(760px, 90vw);
+      height: min(500px, 65vh);
+
+      perspective: 1600px;
+
+      cursor: pointer;
     }
 
-    .front {
-        grid-template-columns: 1fr;
+    .postcard {
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      transform-style: preserve-3d;
+
+      transition:
+        transform 1.1s cubic-bezier(.2,.7,.2,1);
+
+      border-radius: 4px;
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.22);
+
+      background: #f4efe5;
     }
 
-    .front-image {
-        height: 43%;
+    .postcard.flipped {
+      transform: rotateY(180deg);
     }
 
-    .front-content {
-        height: 57%;
-        padding: 28px 30px;
+    /* =========================
+       BOTH SIDES
+    ========================= */
+
+    .postcard-front,
+    .postcard-back {
+      position: absolute;
+
+      width: 100%;
+      height: 100%;
+
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+
+      border-radius: 4px;
+
+      overflow: hidden;
+    }
+
+    /* =========================
+       FRONT
+    ========================= */
+
+    .postcard-front {
+      display: flex;
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      padding: 42px;
+
+      background:
+        rgba(248, 245, 238, 0.94);
+
+      border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .brand {
-        font-size: 24px;
+      font-size: 13px;
+      font-weight: 700;
+
+      letter-spacing: 0.28em;
+
+      text-transform: uppercase;
     }
 
-    .eyebrow {
-        margin-top: 18px;
-        margin-bottom: 10px;
+    .front-center {
+      max-width: 600px;
     }
 
-    .front-content h1 {
-        font-size: 43px;
-        letter-spacing: -1.8px;
-    }
+    .front-center h1 {
+      font-family: Georgia, "Times New Roman", serif;
 
-    .front-description {
-        margin-top: 15px;
-        font-size: 12px;
+      font-size: clamp(45px, 7vw, 82px);
+
+      line-height: 0.94;
+
+      font-weight: 400;
+
+      letter-spacing: -0.045em;
+
+      text-transform: uppercase;
     }
 
     .front-bottom {
-        margin-top: 22px;
+      display: flex;
+
+      justify-content: space-between;
+      align-items: flex-end;
     }
 
-    .back {
+    .edition {
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.18em;
+
+      opacity: 0.65;
+    }
+
+    .flip-hint {
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.16em;
+
+      opacity: 0.7;
+    }
+
+    /* =========================
+       BACK
+    ========================= */
+
+    .postcard-back {
+      transform: rotateY(180deg);
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      background: #f4efe5;
+    }
+
+    .back-left {
+      padding: 45px;
+
+      display: flex;
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .back-left h2 {
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(38px, 5vw, 62px);
+
+      font-weight: 400;
+
+      line-height: 0.95;
+
+      letter-spacing: -0.04em;
+    }
+
+    .back-left p {
+      max-width: 320px;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+      color: #555;
+    }
+
+    .back-right {
+      padding: 45px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      gap: 16px;
+    }
+
+    .auth-button {
+      width: 100%;
+
+      padding: 16px 20px;
+
+      border: 1px solid #222;
+
+      background: transparent;
+
+      color: #222;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.16em;
+
+      cursor: pointer;
+
+      transition: all 0.25s ease;
+    }
+
+    .auth-button:hover {
+      background: #222;
+
+      color: #f4efe5;
+    }
+
+    .auth-button.primary {
+      background: #222;
+
+      color: #f4efe5;
+    }
+
+    .auth-button.primary:hover {
+      background: transparent;
+
+      color: #222;
+    }
+
+    .back-small {
+      margin-top: 15px;
+
+      font-size: 10px;
+
+      text-align: center;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.12em;
+
+      opacity: 0.55;
+    }
+
+    /* =========================
+       AUTH SCREEN
+    ========================= */
+
+    .auth-screen {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 20;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+
+      background: transparent;
+    }
+
+    .auth-screen.active {
+      display: flex;
+    }
+
+    .auth-card {
+      width: min(430px, 90vw);
+
+      padding: 42px;
+
+      background: rgba(248, 245, 238, 0.96);
+
+      border: 1px solid rgba(0, 0, 0, 0.08);
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .auth-card h2 {
+      margin-top: 25px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 48px;
+
+      font-weight: 400;
+
+      line-height: 0.95;
+
+      letter-spacing: -0.04em;
+    }
+
+    .auth-card p {
+      margin-top: 18px;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
+      color: #555;
+    }
+
+    .auth-form {
+      margin-top: 28px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 12px;
+    }
+
+    .auth-form input,
+    .profile-form input,
+    .profile-form select {
+      width: 100%;
+
+      padding: 15px;
+
+      border: 1px solid rgba(0, 0, 0, 0.25);
+
+      background: transparent;
+
+      font-family: inherit;
+
+      font-size: 13px;
+
+      outline: none;
+    }
+
+    .auth-form input:focus,
+    .profile-form input:focus,
+    .profile-form select:focus {
+      border-color: #222;
+    }
+
+    .auth-submit,
+    .profile-submit {
+      width: 100%;
+
+      margin-top: 5px;
+
+      padding: 16px;
+
+      border: 1px solid #222;
+
+      background: #222;
+
+      color: #f4efe5;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.16em;
+
+      cursor: pointer;
+    }
+
+    .back-button {
+      margin-top: 20px;
+
+      width: 100%;
+
+      padding: 12px;
+
+      border: none;
+
+      background: transparent;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.14em;
+
+      cursor: pointer;
+
+      opacity: 0.6;
+    }
+
+    .back-button:hover {
+      opacity: 1;
+    }
+
+    .message {
+      margin-top: 12px;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+      text-align: center;
+
+      color: #8b3333;
+    }
+
+    /* =========================
+       PROFILE SCREEN
+    ========================= */
+
+    .profile-screen {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 30;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 25px;
+
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .profile-screen.active {
+      display: flex;
+    }
+
+    .profile-card {
+      width: min(600px, 94vw);
+
+      max-height: 92vh;
+
+      overflow-y: auto;
+
+      padding: 40px;
+
+      background: rgba(248, 245, 238, 0.97);
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .profile-card h2 {
+      margin-top: 20px;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: clamp(40px, 7vw, 62px);
+
+      font-weight: 400;
+
+      line-height: 0.95;
+
+      letter-spacing: -0.04em;
+    }
+
+    .profile-card p {
+      margin-top: 15px;
+
+      max-width: 500px;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
+      color: #555;
+    }
+
+    .profile-form {
+      margin-top: 28px;
+
+      display: grid;
+
+      gap: 13px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      .page {
+        padding: 18px;
+      }
+
+      .location {
+        top: 18px;
+        left: 20px;
+      }
+
+      .postcard-wrapper {
+        width: 94vw;
+        height: 62vh;
+      }
+
+      .postcard-front {
+        padding: 28px;
+      }
+
+      .front-center h1 {
+        font-size: clamp(42px, 12vw, 65px);
+      }
+
+      .postcard-back {
         grid-template-columns: 1fr;
+      }
+
+      .back-left {
+        padding: 28px;
+
+        border-right: none;
+
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+
+      .back-right {
+        padding: 28px;
+      }
+
+      .back-left h2 {
+        font-size: 40px;
+      }
+
+      .auth-card {
+        padding: 28px;
+      }
+
+      .profile-card {
+        padding: 28px;
+      }
+
     }
 
-    .back-info {
-        display: none;
+    @media (max-height: 650px) {
+
+      .postcard-wrapper {
+        height: 80vh;
+      }
+
+      .postcard-front,
+      .back-left,
+      .back-right {
+        padding: 25px;
+      }
+
     }
 
-    .auth {
-        padding: 38px 30px;
-    }
-
-    .auth h2 {
-        font-size: 32px;
-    }
-
-    .decoration {
-        display: none;
-    }
-
-}
-
-</style>
+  </style>
 </head>
 
 <body>
 
-<div class="decoration top-left">
-    POSTCARD / 001
-</div>
+  <!-- =========================
+       BACKGROUNDS
+  ========================== -->
 
-<div class="decoration bottom-right">
-    FIND YOUR NEXT CHAPTER
-</div>
+  <div class="background" id="background"></div>
 
-<div class="page">
+  <div class="background-next" id="backgroundNext"></div>
 
-    <div class="postcard-wrapper">
+  <div class="location" id="location">
+    Paris, France
+  </div>
 
-        <div class="postcard" id="postcard">
 
-            <!-- =========================
-                 FRONT
-            ========================== -->
+  <!-- =========================
+       MAIN PAGE
+  ========================== -->
 
-            <section class="postcard-side front">
+  <main class="page" id="mainPage">
 
-                <div class="front-image">
+    <div
+      class="postcard-wrapper"
+      id="postcardWrapper"
+      role="button"
+      tabindex="0"
+      aria-label="Open Postcards"
+    >
 
-                    <img
-                        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85"
-                        alt="Students exploring university life"
-                    >
+      <div class="postcard" id="postcard">
 
-                    <div class="photo-label">
-                        Your next destination
-                    </div>
+        <!-- =========================
+             FRONT OF POSTCARD
+        ========================== -->
 
-                </div>
+        <section class="postcard-front">
 
+          <div class="brand">
+            POSTCARDS
+          </div>
 
-                <div class="front-content">
+          <div class="front-center">
 
-                    <div class="brand">
-                        Postcards<span>.</span>
-                    </div>
+            <h1>
+              Where will<br>
+              you go next?
+            </h1>
 
-                    <div class="eyebrow">
-                        Your journey starts here
-                    </div>
+          </div>
 
-                    <h1>
-                        Where will<br>
-                        you <em>go next?</em>
-                    </h1>
+          <div class="front-bottom">
 
-                    <p class="front-description">
-                        Explore universities, discover new places,
-                        and find the destination that feels like
-                        yours.
-                    </p>
+            <div class="edition">
+              A guide to your next chapter
+            </div>
 
-                    <div class="front-bottom">
+            <div class="flip-hint">
+              Tap to explore →
+            </div>
 
-                        <button
-                            class="flip-button"
-                            onclick="flipCard(event)"
-                        >
-                            Start exploring
-                            <span>→</span>
-                        </button>
+          </div>
 
-                        <div class="card-number">
-                            PC / 001
-                        </div>
+        </section>
 
-                    </div>
 
-                </div>
+        <!-- =========================
+             BACK OF POSTCARD
+        ========================== -->
 
-            </section>
+        <section class="postcard-back">
 
+          <div class="back-left">
 
-            <!-- =========================
-                 BACK
-            ========================== -->
+            <div>
 
-            <section class="postcard-side back">
+              <div class="brand">
+                POSTCARDS
+              </div>
 
-                <div class="back-info">
+              <h2>
+                Let's<br>
+                find out.
+              </h2>
 
-                    <div class="brand">
-                        Postcards<span>.</span>
-                    </div>
+            </div>
 
-                    <div class="back-info-content">
+            <p>
+              Discover universities around the world,
+              explore your possibilities, and find the
+              place that could become your next chapter.
+            </p>
 
-                        <h2>
-                            Your future<br>
-                            is waiting.
-                        </h2>
+          </div>
 
-                        <p>
-                            Create your journey and start
-                            discovering universities around
-                            the world.
-                        </p>
 
-                    </div>
+          <div class="back-right">
 
-                    <div class="postmark">
-                        Explore<br>
-                        •<br>
-                        Discover
-                    </div>
+            <button
+              class="auth-button primary"
+              onclick="goToLogin(event)"
+            >
+              Log in
+            </button>
 
-                </div>
+            <button
+              class="auth-button"
+              onclick="goToSignup(event)"
+            >
+              Sign up
+            </button>
 
+            <div class="back-small">
+              Your journey starts here.
+            </div>
 
-                <div class="auth">
+          </div>
 
-                    <h2 id="authTitle">
-                        Welcome back
-                    </h2>
+        </section>
 
-                    <p class="auth-subtitle">
-                        Start planning where you'll go next.
-                    </p>
-
-
-                    <div class="tabs">
-
-                        <button
-                            class="tab active"
-                            id="loginTab"
-                            onclick="showLogin(event)"
-                        >
-                            Log in
-                        </button>
-
-                        <button
-                            class="tab"
-                            id="signupTab"
-                            onclick="showSignup(event)"
-                        >
-                            Create account
-                        </button>
-
-                    </div>
-
-
-                    <!-- LOGIN -->
-
-                    <form
-                        id="loginForm"
-                        onsubmit="login(event)"
-                    >
-
-                        <div class="form-group">
-
-                            <label>
-                                Email
-                            </label>
-
-                            <input
-                                type="email"
-                                id="loginEmail"
-                                placeholder="you@example.com"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                id="loginPassword"
-                                placeholder="Your password"
-                                required
-                            >
-
-                        </div>
-
-
-                        <button
-                            type="submit"
-                            class="submit-button"
-                        >
-                            Log in
-                        </button>
-
-                    </form>
-
-
-                    <!-- SIGN UP -->
-
-                    <form
-                        id="signupForm"
-                        style="display:none;"
-                        onsubmit="signup(event)"
-                    >
-
-                        <div class="form-group">
-
-                            <label>
-                                Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="signupName"
-                                placeholder="Your name"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Email
-                            </label>
-
-                            <input
-                                type="email"
-                                id="signupEmail"
-                                placeholder="you@example.com"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                id="signupPassword"
-                                placeholder="Create a password"
-                                required
-                            >
-
-                        </div>
-
-
-                        <button
-                            type="submit"
-                            class="submit-button"
-                        >
-                            Create account
-                        </button>
-
-                    </form>
-
-
-                    <button
-                        class="back-button"
-                        onclick="flipBack(event)"
-                    >
-                        ← Back to postcard
-                    </button>
-
-                </div>
-
-            </section>
-
-        </div>
+      </div>
 
     </div>
 
-</div>
+  </main>
 
 
-<script>
+  <!-- =========================
+       AUTH SCREEN
+  ========================== -->
 
-/* =========================
-   POSTCARD FLIP
-========================= */
+  <div class="auth-screen" id="authScreen">
 
-const postcard =
-    document.getElementById("postcard");
+    <div class="auth-card">
+
+      <div class="brand">
+        POSTCARDS
+      </div>
+
+      <h2 id="authTitle">
+        Welcome back.
+      </h2>
+
+      <p id="authDescription">
+        Continue your journey and discover where your next chapter could take you.
+      </p>
+
+      <form class="auth-form" id="authForm">
+
+        <input
+          id="emailInput"
+          type="email"
+          placeholder="Email"
+          required
+        >
+
+        <input
+          id="passwordInput"
+          type="password"
+          placeholder="Password"
+          required
+          minlength="6"
+        >
+
+        <button
+          class="auth-submit"
+          id="authSubmit"
+          type="submit"
+        >
+          Log in
+        </button>
+
+      </form>
+
+      <div class="message" id="authMessage"></div>
+
+      <button
+        class="back-button"
+        onclick="closeAuth(event)"
+      >
+        ← Back to postcard
+      </button>
+
+    </div>
+
+  </div>
 
 
-function flipCard(event) {
+  <!-- =========================
+       PROFILE QUESTIONNAIRE
+  ========================== -->
 
-    event.preventDefault();
+  <div class="profile-screen" id="profileScreen">
 
-    event.stopPropagation();
+    <div class="profile-card">
 
-    postcard.classList.add("flipped");
+      <div class="brand">
+        POSTCARDS
+      </div>
 
-}
+      <h2>
+        Tell us about<br>
+        yourself.
+      </h2>
+
+      <p>
+        This helps us personalize your university research journey.
+      </p>
+
+      <form class="profile-form" id="profileForm">
+
+        <input
+          id="schoolInput"
+          type="text"
+          placeholder="What school do you attend?"
+          required
+        >
+
+        <input
+          id="countryInput"
+          type="text"
+          placeholder="What country are you from?"
+          required
+        >
+
+        <input
+          id="studyCountryInput"
+          type="text"
+          placeholder="Where would you like to study?"
+          required
+        >
+
+        <input
+          id="interestInput"
+          type="text"
+          placeholder="What are you interested in?"
+          required
+        >
+
+        <input
+          id="studyInput"
+          type="text"
+          placeholder="What do you want to study?"
+          required
+        >
+
+        <button
+          class="profile-submit"
+          type="submit"
+        >
+          Start exploring
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
 
 
-/*
-   Clicking the postcard itself also flips it,
-   except when interacting with forms/buttons.
-*/
+  <script>
 
-postcard.addEventListener("click", function(event) {
+    /* =========================
+       BACKGROUNDS
+    ========================= */
 
-    if (
-        event.target.closest("input") ||
-        event.target.closest("button") ||
-        event.target.closest("form")
-    ) {
-        return;
+    const backgrounds = [
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Paris, France"
+      },
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Barcelona, Spain"
+      },
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Queenstown, New Zealand"
+      },
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Rome, Italy"
+      },
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "Kyoto, Japan"
+      },
+
+      {
+        image:
+          "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2000&q=90",
+        location:
+          "New York City, USA"
+      }
+
+    ];
+
+
+    const background =
+      document.getElementById("background");
+
+    const backgroundNext =
+      document.getElementById("backgroundNext");
+
+    const locationText =
+      document.getElementById("location");
+
+    let currentBackground = 0;
+
+
+    /* PRELOAD IMAGES */
+
+    backgrounds.forEach(function(place) {
+
+      const image = new Image();
+
+      image.src = place.image;
+
+    });
+
+
+    background.style.backgroundImage =
+      `url("${backgrounds[0].image}")`;
+
+    locationText.textContent =
+      backgrounds[0].location;
+
+
+    function changeBackground() {
+
+      const nextBackground =
+        (currentBackground + 1) % backgrounds.length;
+
+      backgroundNext.style.backgroundImage =
+        `url("${backgrounds[nextBackground].image}")`;
+
+      backgroundNext.style.opacity = "1";
+
+      locationText.style.opacity = "0";
+
+
+      setTimeout(function() {
+
+        locationText.textContent =
+          backgrounds[nextBackground].location;
+
+        locationText.style.opacity = "1";
+
+      }, 400);
+
+
+      setTimeout(function() {
+
+        background.style.backgroundImage =
+          `url("${backgrounds[nextBackground].image}")`;
+
+        backgroundNext.style.opacity = "0";
+
+      }, 1200);
+
+
+      currentBackground =
+        nextBackground;
+
     }
 
-    postcard.classList.toggle("flipped");
 
-});
+    setInterval(changeBackground, 4000);
 
 
-/* =========================
-   LOGIN TAB
-========================= */
+    /* =========================
+       POSTCARD FLIP
+    ========================= */
 
-function showLogin(event) {
+    const wrapper =
+      document.getElementById("postcardWrapper");
 
-    event.preventDefault();
+    const postcard =
+      document.getElementById("postcard");
 
-    event.stopPropagation();
 
-    document
-        .getElementById("loginForm")
-        .style.display = "block";
+    function flipPostcard() {
 
-    document
-        .getElementById("signupForm")
+      postcard.classList.toggle("flipped");
+
+    }
+
+
+    wrapper.addEventListener("click", function(event) {
+
+      if (
+        event.target.closest(".auth-button")
+      ) {
+        return;
+      }
+
+      flipPostcard();
+
+    });
+
+
+    wrapper.addEventListener("keydown", function(event) {
+
+      if (
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
+
+        event.preventDefault();
+
+        flipPostcard();
+
+      }
+
+    });
+
+
+    /* =========================
+       AUTH MODE
+    ========================= */
+
+    let authMode = "login";
+
+
+    function goToLogin(event) {
+
+      event.stopPropagation();
+
+      authMode = "login";
+
+      document
+        .getElementById("mainPage")
         .style.display = "none";
 
-    document
-        .getElementById("loginTab")
+      document
+        .getElementById("authScreen")
         .classList.add("active");
 
-    document
-        .getElementById("signupTab")
-        .classList.remove("active");
-
-    document
+      document
         .getElementById("authTitle")
-        .textContent = "Welcome back";
+        .textContent = "Welcome back.";
 
-}
+      document
+        .getElementById("authDescription")
+        .textContent =
+          "Continue your journey and discover where your next chapter could take you.";
+
+      document
+        .getElementById("authSubmit")
+        .textContent = "Log in";
+
+      document
+        .getElementById("authMessage")
+        .textContent = "";
+
+    }
 
 
-/* =========================
-   SIGN UP TAB
-========================= */
+    function goToSignup(event) {
 
-function showSignup(event) {
+      event.stopPropagation();
 
-    event.preventDefault();
+      authMode = "signup";
 
-    event.stopPropagation();
-
-    document
-        .getElementById("loginForm")
+      document
+        .getElementById("mainPage")
         .style.display = "none";
 
-    document
-        .getElementById("signupForm")
-        .style.display = "block";
-
-    document
-        .getElementById("signupTab")
+      document
+        .getElementById("authScreen")
         .classList.add("active");
 
-    document
-        .getElementById("loginTab")
+      document
+        .getElementById("authTitle")
+        .textContent = "Start your journey.";
+
+      document
+        .getElementById("authDescription")
+        .textContent =
+          "Create your Postcards account and start exploring universities around the world.";
+
+      document
+        .getElementById("authSubmit")
+        .textContent = "Sign up";
+
+      document
+        .getElementById("authMessage")
+        .textContent = "";
+
+    }
+
+
+    /* =========================
+       CLOSE AUTH
+    ========================= */
+
+    function closeAuth(event) {
+
+      event.stopPropagation();
+
+      document
+        .getElementById("authScreen")
         .classList.remove("active");
 
+      document
+        .getElementById("mainPage")
+        .style.display = "flex";
+
+      document
+        .getElementById("authForm")
+        .reset();
+
+      document
+        .getElementById("authMessage")
+        .textContent = "";
+
+    }
+
+
+    /* =========================
+       AUTHENTICATION
+    ========================= */
+
     document
-        .getElementById("authTitle")
-        .textContent = "Create your journey";
+      .getElementById("authForm")
+      .addEventListener(
+        "submit",
+        handleAuth
+      );
 
-}
+
+    function handleAuth(event) {
+
+      event.preventDefault();
 
 
-/* =========================
-   LOGIN
-========================= */
+      const email =
+        document
+          .getElementById("emailInput")
+          .value
+          .trim()
+          .toLowerCase();
 
-function login(event) {
 
-    event.preventDefault();
+      const password =
+        document
+          .getElementById("passwordInput")
+          .value;
 
-    event.stopPropagation();
 
-    const email =
-        document.getElementById("loginEmail").value;
+      const message =
+        document.getElementById("authMessage");
 
-    const password =
-        document.getElementById("loginPassword").value;
 
-    if (!email || !password) {
+      /* =========================
+         SIGN UP
+      ========================= */
+
+      if (authMode === "signup") {
+
+        const existingUser =
+          localStorage.getItem(
+            "postcardsUser"
+          );
+
+
+        if (existingUser) {
+
+          const user =
+            JSON.parse(existingUser);
+
+
+          if (user.email === email) {
+
+            message.textContent =
+              "An account with this email already exists. Try logging in.";
+
+            return;
+
+          }
+
+        }
+
+
+        const newUser = {
+
+          email: email,
+
+          password: password,
+
+          profile: null
+
+        };
+
+
+        localStorage.setItem(
+          "postcardsUser",
+          JSON.stringify(newUser)
+        );
+
+
+        localStorage.setItem(
+          "postcardsLoggedIn",
+          "true"
+        );
+
+
+        document
+          .getElementById("authScreen")
+          .classList.remove("active");
+
+
+        document
+          .getElementById("profileScreen")
+          .classList.add("active");
+
+
+        document
+          .getElementById("authForm")
+          .reset();
+
+
         return;
+
+      }
+
+
+      /* =========================
+         LOGIN
+      ========================= */
+
+      const savedUser =
+        localStorage.getItem(
+          "postcardsUser"
+        );
+
+
+      if (!savedUser) {
+
+        message.textContent =
+          "No account exists yet. Please sign up first.";
+
+        return;
+
+      }
+
+
+      const user =
+        JSON.parse(savedUser);
+
+
+      if (
+        user.email !== email ||
+        user.password !== password
+      ) {
+
+        message.textContent =
+          "Incorrect email or password. Please try again.";
+
+        return;
+
+      }
+
+
+      localStorage.setItem(
+        "postcardsLoggedIn",
+        "true"
+      );
+
+
+      document
+        .getElementById("authScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("authForm")
+        .reset();
+
+
+      /*
+        There is intentionally NO embedded
+        discovery/app screen here.
+
+        After login, send the user to the
+        separate discover.html page.
+      */
+
+      window.location.href = "discover.html";
+
     }
 
-    window.location.href = "account.html";
 
-}
+    /* =========================
+       PROFILE QUESTIONNAIRE
+    ========================= */
+
+    document
+      .getElementById("profileForm")
+      .addEventListener(
+        "submit",
+        handleProfile
+      );
 
 
-/* =========================
-   SIGN UP
-========================= */
+    function handleProfile(event) {
 
-function signup(event) {
+      event.preventDefault();
 
-    event.preventDefault();
 
-    event.stopPropagation();
+      const savedUser =
+        localStorage.getItem(
+          "postcardsUser"
+        );
 
-    const name =
-        document.getElementById("signupName").value;
 
-    const email =
-        document.getElementById("signupEmail").value;
-
-    const password =
-        document.getElementById("signupPassword").value;
-
-    if (!name || !email || !password) {
+      if (!savedUser) {
         return;
+      }
+
+
+      const user =
+        JSON.parse(savedUser);
+
+
+      user.profile = {
+
+        school:
+          document
+            .getElementById("schoolInput")
+            .value
+            .trim(),
+
+        country:
+          document
+            .getElementById("countryInput")
+            .value
+            .trim(),
+
+        studyCountry:
+          document
+            .getElementById("studyCountryInput")
+            .value
+            .trim(),
+
+        interests:
+          document
+            .getElementById("interestInput")
+            .value
+            .trim(),
+
+        intendedStudy:
+          document
+            .getElementById("studyInput")
+            .value
+            .trim()
+
+      };
+
+
+      localStorage.setItem(
+        "postcardsUser",
+        JSON.stringify(user)
+      );
+
+
+      document
+        .getElementById("profileScreen")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("profileForm")
+        .reset();
+
+
+      /*
+        After completing the questionnaire,
+        go to the separate discover page.
+      */
+
+      window.location.href = "discover.html";
+
     }
 
-    localStorage.setItem(
-        "postcardsName",
-        name
-    );
-
-    localStorage.setItem(
-        "postcardsEmail",
-        email
-    );
-
-    window.location.href =
-        "onboarding.html";
-
-}
-
-
-/* =========================
-   BACK TO FRONT
-========================= */
-
-function flipBack(event) {
-
-    event.preventDefault();
-
-    event.stopPropagation();
-
-    postcard.classList.remove("flipped");
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
