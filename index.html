@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -19,45 +19,69 @@
     padding: 0;
 }
 
+:root {
+    --cream: #f8f3ed;
+    --paper: #fffdf9;
+    --pink: #e8b8b8;
+    --rose: #b96f73;
+    --dark: #332d2d;
+    --muted: #817777;
+    --line: #eadfda;
+    --soft-pink: #f4dddd;
+}
+
+/* =========================
+   BODY
+========================= */
+
 body {
     min-height: 100vh;
+
     font-family: "DM Sans", sans-serif;
+
+    color: var(--dark);
+
     background:
-        linear-gradient(
-            rgba(255,255,255,0.35),
-            rgba(255,255,255,0.35)
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(232,184,184,0.45),
+            transparent 28%
         ),
-        url("https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=2200&q=85")
-        center / cover fixed;
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(218,194,184,0.35),
+            transparent 30%
+        ),
+        var(--cream);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #242321;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 /* subtle paper texture */
 
 body::before {
     content: "";
+
     position: fixed;
+
     inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.22;
 
     background-image:
         radial-gradient(
-            rgba(0,0,0,0.04) 1px,
-            transparent 1px
+            rgba(90,70,65,0.12) 0.6px,
+            transparent 0.6px
         );
 
-    background-size: 5px 5px;
-
-    pointer-events: none;
-    opacity: 0.35;
+    background-size: 7px 7px;
 }
 
-/* MAIN */
+/* =========================
+   PAGE
+========================= */
 
 .page {
     width: 100%;
@@ -70,18 +94,55 @@ body::before {
     padding: 30px;
 }
 
-/* POSTCARD WRAPPER */
+/* =========================
+   DECORATIVE POSTCARD STAMPS
+========================= */
 
-.postcard-wrapper {
-    width: min(92vw, 950px);
-    height: min(650px, 82vh);
+.decoration {
+    position: fixed;
 
-    perspective: 1800px;
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: rgba(185,111,115,0.55);
+
+    pointer-events: none;
 }
 
-/* POSTCARD */
+.decoration.top-left {
+    top: 35px;
+    left: 45px;
+
+    transform: rotate(-8deg);
+}
+
+.decoration.bottom-right {
+    right: 45px;
+    bottom: 35px;
+
+    transform: rotate(7deg);
+}
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.postcard-wrapper {
+
+    width: min(1050px, 94vw);
+
+    height: min(680px, 84vh);
+
+    perspective: 1800px;
+
+    position: relative;
+}
 
 .postcard {
+
     width: 100%;
     height: 100%;
 
@@ -90,7 +151,7 @@ body::before {
     transform-style: preserve-3d;
 
     transition:
-        transform 0.9s cubic-bezier(.65,.05,.36,1);
+        transform 0.85s cubic-bezier(.65,.05,.36,1);
 
     cursor: pointer;
 }
@@ -99,335 +160,675 @@ body::before {
     transform: rotateY(180deg);
 }
 
-/* BOTH SIDES */
+/* =========================
+   CARD SIDES
+========================= */
 
 .postcard-side {
+
     position: absolute;
+
+    inset: 0;
 
     width: 100%;
     height: 100%;
 
     backface-visibility: hidden;
 
-    background: #fffdf8;
+    overflow: hidden;
 
-    border: 10px solid #fffdf8;
+    border-radius: 24px;
+
+    background: var(--paper);
+
+    border: 1px solid rgba(185,111,115,0.15);
 
     box-shadow:
-        0 30px 70px rgba(0,0,0,0.22);
+        0 30px 80px rgba(86,61,58,0.15);
 
-    overflow: hidden;
 }
 
-/* FRONT */
+/* =========================
+   FRONT
+========================= */
 
 .front {
+
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.08fr 0.92fr;
+
 }
 
-/* FRONT IMAGE */
+/* =========================
+   FRONT PHOTO
+========================= */
 
 .front-image {
-    height: 100%;
+
     position: relative;
+
     overflow: hidden;
+
+    margin: 14px;
+
+    border-radius: 18px;
+
 }
 
 .front-image img {
+
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 
+    display: block;
+
     transition: transform 0.8s ease;
+
 }
 
 .postcard:hover .front-image img {
-    transform: scale(1.04);
+
+    transform: scale(1.035);
+
 }
 
-/* FRONT TEXT */
+/* photo overlay */
+
+.front-image::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,0.02),
+            rgba(50,25,25,0.28)
+        );
+
+    pointer-events: none;
+
+}
+
+/* photo label */
+
+.photo-label {
+
+    position: absolute;
+
+    left: 25px;
+    bottom: 25px;
+
+    z-index: 2;
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    background: rgba(255,253,249,0.88);
+
+    backdrop-filter: blur(8px);
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: var(--rose);
+
+}
+
+/* =========================
+   FRONT CONTENT
+========================= */
 
 .front-content {
-    padding: 55px;
+
+    padding: 58px 60px 55px;
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
 
-    background: #fffdf8;
 }
+
+/* brand */
 
 .brand {
+
     font-family: "Playfair Display", serif;
-    font-size: 27px;
 
-    margin-bottom: 60px;
+    font-size: 28px;
 
-    color: #222;
+    font-weight: 600;
+
+    letter-spacing: -0.5px;
+
+    color: var(--dark);
+
 }
 
-.front-content small {
-    text-transform: uppercase;
-    letter-spacing: 3px;
+.brand span {
+
+    color: var(--rose);
+
+}
+
+/* small heading */
+
+.eyebrow {
+
+    margin-top: 58px;
+
+    margin-bottom: 17px;
 
     font-size: 10px;
+
     font-weight: 700;
 
-    color: #b85c4b;
+    letter-spacing: 2.5px;
 
-    margin-bottom: 18px;
+    text-transform: uppercase;
+
+    color: var(--rose);
+
 }
 
+/* main heading */
+
 .front-content h1 {
+
     font-family: "Playfair Display", serif;
 
-    font-size: clamp(45px, 5vw, 70px);
+    font-size: clamp(48px, 5.3vw, 74px);
+
+    font-weight: 500;
 
     line-height: 0.98;
 
-    font-weight: 600;
+    letter-spacing: -2.8px;
 
-    letter-spacing: -2px;
+    color: var(--dark);
 
-    margin-bottom: 25px;
 }
 
-.front-content p {
-    color: #77736b;
+.front-content h1 em {
 
-    font-size: 15px;
+    color: var(--rose);
 
-    line-height: 1.7;
+    font-weight: 500;
 
-    max-width: 370px;
 }
 
-.flip-hint {
-    margin-top: 55px;
+/* description */
 
-    font-size: 11px;
+.front-description {
 
-    text-transform: uppercase;
+    max-width: 390px;
 
-    letter-spacing: 2px;
+    margin-top: 26px;
 
-    color: #99948b;
-}
-
-/* BACK */
-
-.back {
-    transform: rotateY(180deg);
-
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-}
-
-/* BACK LEFT */
-
-.back-info {
-    padding: 55px;
-
-    background: #f4eee4;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-}
-
-.back-info .brand {
-    margin-bottom: 30px;
-}
-
-.back-info h2 {
-    font-family: "Playfair Display", serif;
-
-    font-size: 45px;
-
-    line-height: 1.05;
-
-    margin-bottom: 20px;
-}
-
-.back-info p {
-    color: #77736b;
-
-    line-height: 1.7;
+    color: var(--muted);
 
     font-size: 14px;
+
+    line-height: 1.75;
+
 }
 
-/* FORM */
+/* bottom area */
 
-.auth {
-    padding: 45px;
+.front-bottom {
 
     display: flex;
 
-    flex-direction: column;
+    align-items: center;
 
-    justify-content: center;
+    justify-content: space-between;
+
+    margin-top: 48px;
+
+    gap: 20px;
+
 }
 
-.auth h2 {
-    font-family: "Playfair Display", serif;
+/* flip button */
 
-    font-size: 34px;
+.flip-button {
 
-    margin-bottom: 8px;
-}
+    display: inline-flex;
 
-.auth-subtitle {
-    color: #88847c;
+    align-items: center;
 
-    font-size: 13px;
+    gap: 10px;
 
-    margin-bottom: 28px;
-}
-
-.tabs {
-    display: flex;
-
-    border-bottom: 1px solid #ddd7cc;
-
-    margin-bottom: 25px;
-}
-
-.tab {
-    flex: 1;
-
-    padding: 12px;
+    padding: 13px 18px;
 
     border: none;
 
-    background: transparent;
+    border-radius: 30px;
 
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 13px;
-
-    cursor: pointer;
-
-    color: #999;
-}
-
-.tab.active {
-    color: #222;
-
-    border-bottom: 2px solid #b85c4b;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    margin-bottom: 7px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-
-    color: #77736b;
-}
-
-.form-group input {
-    width: 100%;
-
-    padding: 13px 14px;
-
-    border: 1px solid #ddd7cc;
-
-    background: #fffdf8;
-
-    font-family: "DM Sans", sans-serif;
-
-    outline: none;
-
-    font-size: 14px;
-}
-
-.form-group input:focus {
-    border-color: #b85c4b;
-}
-
-.submit-button {
-    width: 100%;
-
-    padding: 14px;
-
-    border: none;
-
-    background: #242321;
+    background: var(--dark);
 
     color: white;
 
     font-family: "DM Sans", sans-serif;
 
+    font-size: 11px;
+
     font-weight: 600;
+
+    letter-spacing: 0.7px;
 
     cursor: pointer;
 
-    margin-top: 8px;
+    transition: 0.25s ease;
 
-    transition: 0.2s;
+}
+
+.flip-button:hover {
+
+    background: var(--rose);
+
+    transform: translateY(-2px);
+
+}
+
+/* postcard number */
+
+.card-number {
+
+    font-size: 10px;
+
+    color: #b5a9a4;
+
+    letter-spacing: 1.5px;
+
+}
+
+/* =========================
+   BACK
+========================= */
+
+.back {
+
+    transform: rotateY(180deg);
+
+    display: grid;
+
+    grid-template-columns: 0.85fr 1.15fr;
+
+}
+
+/* =========================
+   BACK DECORATIVE SIDE
+========================= */
+
+.back-info {
+
+    padding: 55px;
+
+    background: var(--soft-pink);
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+}
+
+/* decorative circle */
+
+.back-info::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.28);
+
+    right: -120px;
+    bottom: -100px;
+
+}
+
+.back-info .brand {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+.back-info-content {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+.back-info h2 {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 46px;
+
+    font-weight: 500;
+
+    line-height: 1.02;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 22px;
+
+}
+
+.back-info p {
+
+    max-width: 300px;
+
+    color: #796868;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+}
+
+.postmark {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 72px;
+    height: 72px;
+
+    border: 1px dashed rgba(121,104,104,0.55);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    text-align: center;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    color: #856f6f;
+
+}
+
+/* =========================
+   AUTH
+========================= */
+
+.auth {
+
+    padding: 55px 65px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    background: var(--paper);
+
+}
+
+.auth h2 {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 38px;
+
+    font-weight: 500;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 8px;
+
+}
+
+.auth-subtitle {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-bottom: 27px;
+
+}
+
+/* tabs */
+
+.tabs {
+
+    display: flex;
+
+    gap: 8px;
+
+    padding: 4px;
+
+    margin-bottom: 25px;
+
+    background: #f5efeb;
+
+    border-radius: 12px;
+
+}
+
+.tab {
+
+    flex: 1;
+
+    padding: 11px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #a29793;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+.tab.active {
+
+    background: white;
+
+    color: var(--dark);
+
+    box-shadow:
+        0 3px 10px rgba(80,60,55,0.08);
+
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+
+    margin-bottom: 15px;
+
+}
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    color: #837672;
+
+}
+
+.form-group input {
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border-radius: 10px;
+
+    border: 1px solid var(--line);
+
+    background: #fffdfb;
+
+    color: var(--dark);
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+
+}
+
+.form-group input:focus {
+
+    border-color: var(--pink);
+
+    box-shadow:
+        0 0 0 3px rgba(232,184,184,0.15);
+
+}
+
+/* submit */
+
+.submit-button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 7px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: var(--dark);
+
+    color: white;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+
 }
 
 .submit-button:hover {
-    background: #b85c4b;
+
+    background: var(--rose);
+
+    transform: translateY(-1px);
+
 }
 
+/* back */
+
 .back-button {
+
+    margin-top: 17px;
+
     border: none;
 
     background: transparent;
 
-    color: #999;
+    color: #a29793;
 
     font-family: "DM Sans", sans-serif;
 
     font-size: 11px;
 
-    margin-top: 18px;
-
     cursor: pointer;
+
 }
 
 .back-button:hover {
-    color: #242321;
+
+    color: var(--rose);
+
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media (max-width: 750px) {
+@media (max-width: 800px) {
 
     body {
         overflow-y: auto;
     }
 
     .page {
-        padding: 20px;
+        padding: 18px;
     }
 
     .postcard-wrapper {
+        width: 100%;
         height: 720px;
     }
 
-    .front,
-    .back {
+    .front {
         grid-template-columns: 1fr;
     }
 
@@ -437,19 +838,34 @@ body::before {
 
     .front-content {
         height: 57%;
-        padding: 30px;
+        padding: 28px 30px;
     }
 
     .brand {
-        margin-bottom: 25px;
+        font-size: 24px;
+    }
+
+    .eyebrow {
+        margin-top: 18px;
+        margin-bottom: 10px;
     }
 
     .front-content h1 {
         font-size: 43px;
+        letter-spacing: -1.8px;
     }
 
-    .flip-hint {
-        margin-top: 25px;
+    .front-description {
+        margin-top: 15px;
+        font-size: 12px;
+    }
+
+    .front-bottom {
+        margin-top: 22px;
+    }
+
+    .back {
+        grid-template-columns: 1fr;
     }
 
     .back-info {
@@ -457,8 +873,17 @@ body::before {
     }
 
     .auth {
-        padding: 35px;
+        padding: 38px 30px;
     }
+
+    .auth h2 {
+        font-size: 32px;
+    }
+
+    .decoration {
+        display: none;
+    }
+
 }
 
 </style>
@@ -466,75 +891,117 @@ body::before {
 
 <body>
 
+<div class="decoration top-left">
+    POSTCARD / 001
+</div>
+
+<div class="decoration bottom-right">
+    FIND YOUR NEXT CHAPTER
+</div>
+
 <div class="page">
 
     <div class="postcard-wrapper">
 
         <div class="postcard" id="postcard">
 
-            <!-- FRONT OF POSTCARD -->
+            <!-- =========================
+                 FRONT
+            ========================== -->
 
             <section class="postcard-side front">
 
                 <div class="front-image">
 
                     <img
-                        src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
-                        alt="Travel destination"
+                        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85"
+                        alt="Students exploring university life"
                     >
 
+                    <div class="photo-label">
+                        Your next destination
+                    </div>
+
                 </div>
+
 
                 <div class="front-content">
 
                     <div class="brand">
-                        Postcards.
+                        Postcards<span>.</span>
                     </div>
 
-                    <small>
+                    <div class="eyebrow">
                         Your journey starts here
-                    </small>
+                    </div>
 
                     <h1>
                         Where will<br>
-                        you go next?
+                        you <em>go next?</em>
                     </h1>
 
-                    <p>
+                    <p class="front-description">
                         Explore universities, discover new places,
-                        and find the destination that feels like yours.
+                        and find the destination that feels like
+                        yours.
                     </p>
 
-                    <div class="flip-hint">
-                        Tap the postcard to begin →
+                    <div class="front-bottom">
+
+                        <button
+                            class="flip-button"
+                            onclick="flipCard(event)"
+                        >
+                            Start exploring
+                            <span>→</span>
+                        </button>
+
+                        <div class="card-number">
+                            PC / 001
+                        </div>
+
                     </div>
 
                 </div>
 
             </section>
 
-            <!-- BACK OF POSTCARD -->
+
+            <!-- =========================
+                 BACK
+            ========================== -->
 
             <section class="postcard-side back">
 
                 <div class="back-info">
 
                     <div class="brand">
-                        Postcards.
+                        Postcards<span>.</span>
                     </div>
 
-                    <h2>
-                        Your future<br>
-                        is waiting.
-                    </h2>
+                    <div class="back-info-content">
 
-                    <p>
-                        Create your account to start exploring
-                        universities around the world and build
-                        your own journey.
-                    </p>
+                        <h2>
+                            Your future<br>
+                            is waiting.
+                        </h2>
+
+                        <p>
+                            Create your journey and start
+                            discovering universities around
+                            the world.
+                        </p>
+
+                    </div>
+
+                    <div class="postmark">
+                        Explore<br>
+                        •<br>
+                        Discover
+                    </div>
 
                 </div>
+
 
                 <div class="auth">
 
@@ -545,6 +1012,7 @@ body::before {
                     <p class="auth-subtitle">
                         Start planning where you'll go next.
                     </p>
+
 
                     <div class="tabs">
 
@@ -565,6 +1033,7 @@ body::before {
                         </button>
 
                     </div>
+
 
                     <!-- LOGIN -->
 
@@ -588,6 +1057,7 @@ body::before {
 
                         </div>
 
+
                         <div class="form-group">
 
                             <label>
@@ -603,6 +1073,7 @@ body::before {
 
                         </div>
 
+
                         <button
                             type="submit"
                             class="submit-button"
@@ -611,6 +1082,7 @@ body::before {
                         </button>
 
                     </form>
+
 
                     <!-- SIGN UP -->
 
@@ -635,6 +1107,7 @@ body::before {
 
                         </div>
 
+
                         <div class="form-group">
 
                             <label>
@@ -649,6 +1122,7 @@ body::before {
                             >
 
                         </div>
+
 
                         <div class="form-group">
 
@@ -665,6 +1139,7 @@ body::before {
 
                         </div>
 
+
                         <button
                             type="submit"
                             class="submit-button"
@@ -673,6 +1148,7 @@ body::before {
                         </button>
 
                     </form>
+
 
                     <button
                         class="back-button"
@@ -691,12 +1167,32 @@ body::before {
 
 </div>
 
+
 <script>
 
-/* POSTCARD FLIP */
+/* =========================
+   POSTCARD FLIP
+========================= */
 
 const postcard =
     document.getElementById("postcard");
+
+
+function flipCard(event) {
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+    postcard.classList.add("flipped");
+
+}
+
+
+/*
+   Clicking the postcard itself also flips it,
+   except when interacting with forms/buttons.
+*/
 
 postcard.addEventListener("click", function(event) {
 
@@ -713,9 +1209,13 @@ postcard.addEventListener("click", function(event) {
 });
 
 
-/* LOGIN */
+/* =========================
+   LOGIN TAB
+========================= */
 
 function showLogin(event) {
+
+    event.preventDefault();
 
     event.stopPropagation();
 
@@ -742,9 +1242,13 @@ function showLogin(event) {
 }
 
 
-/* SIGN UP */
+/* =========================
+   SIGN UP TAB
+========================= */
 
 function showSignup(event) {
+
+    event.preventDefault();
 
     event.stopPropagation();
 
@@ -771,7 +1275,9 @@ function showSignup(event) {
 }
 
 
-/* LOGIN ACTION */
+/* =========================
+   LOGIN
+========================= */
 
 function login(event) {
 
@@ -794,7 +1300,9 @@ function login(event) {
 }
 
 
-/* SIGN UP ACTION */
+/* =========================
+   SIGN UP
+========================= */
 
 function signup(event) {
 
@@ -831,7 +1339,9 @@ function signup(event) {
 }
 
 
-/* BACK TO FRONT */
+/* =========================
+   BACK TO FRONT
+========================= */
 
 function flipBack(event) {
 
