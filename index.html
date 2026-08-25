@@ -464,7 +464,6 @@ body::before {
 </style>
 </head>
 
-
 <body>
 
 <div class="page">
@@ -473,10 +472,7 @@ body::before {
 
         <div class="postcard" id="postcard">
 
-
-            <!-- =========================
-                 FRONT OF POSTCARD
-            ========================== -->
+            <!-- FRONT OF POSTCARD -->
 
             <section class="postcard-side front">
 
@@ -488,7 +484,6 @@ body::before {
                     >
 
                 </div>
-
 
                 <div class="front-content">
 
@@ -518,13 +513,9 @@ body::before {
 
             </section>
 
-
-            <!-- =========================
-                 BACK OF POSTCARD
-            ========================== -->
+            <!-- BACK OF POSTCARD -->
 
             <section class="postcard-side back">
-
 
                 <div class="back-info">
 
@@ -545,7 +536,6 @@ body::before {
 
                 </div>
 
-
                 <div class="auth">
 
                     <h2 id="authTitle">
@@ -555,7 +545,6 @@ body::before {
                     <p class="auth-subtitle">
                         Start planning where you'll go next.
                     </p>
-
 
                     <div class="tabs">
 
@@ -576,7 +565,6 @@ body::before {
                         </button>
 
                     </div>
-
 
                     <!-- LOGIN -->
 
@@ -600,7 +588,6 @@ body::before {
 
                         </div>
 
-
                         <div class="form-group">
 
                             <label>
@@ -616,7 +603,6 @@ body::before {
 
                         </div>
 
-
                         <button
                             type="submit"
                             class="submit-button"
@@ -625,7 +611,6 @@ body::before {
                         </button>
 
                     </form>
-
 
                     <!-- SIGN UP -->
 
@@ -650,7 +635,6 @@ body::before {
 
                         </div>
 
-
                         <div class="form-group">
 
                             <label>
@@ -665,7 +649,6 @@ body::before {
                             >
 
                         </div>
-
 
                         <div class="form-group">
 
@@ -682,7 +665,6 @@ body::before {
 
                         </div>
 
-
                         <button
                             type="submit"
                             class="submit-button"
@@ -691,7 +673,6 @@ body::before {
                         </button>
 
                     </form>
-
 
                     <button
                         class="back-button"
@@ -710,23 +691,14 @@ body::before {
 
 </div>
 
-
 <script>
 
-/* =========================
-   POSTCARD FLIP
-========================= */
+/* POSTCARD FLIP */
 
 const postcard =
     document.getElementById("postcard");
 
-
 postcard.addEventListener("click", function(event) {
-
-    /*
-       Don't flip when the user is interacting
-       with the forms or buttons.
-    */
 
     if (
         event.target.closest("input") ||
@@ -741,9 +713,7 @@ postcard.addEventListener("click", function(event) {
 });
 
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 function showLogin(event) {
 
@@ -772,9 +742,7 @@ function showLogin(event) {
 }
 
 
-/* =========================
-   SIGN UP
-========================= */
+/* SIGN UP */
 
 function showSignup(event) {
 
@@ -803,9 +771,7 @@ function showSignup(event) {
 }
 
 
-/* =========================
-   LOGIN ACTION
-========================= */
+/* LOGIN ACTION */
 
 function login(event) {
 
@@ -819,25 +785,16 @@ function login(event) {
     const password =
         document.getElementById("loginPassword").value;
 
-
     if (!email || !password) {
         return;
     }
-
-
-    /*
-       For the prototype, send the user
-       to the account page.
-    */
 
     window.location.href = "account.html";
 
 }
 
 
-/* =========================
-   SIGN UP ACTION
-========================= */
+/* SIGN UP ACTION */
 
 function signup(event) {
 
@@ -854,15 +811,9 @@ function signup(event) {
     const password =
         document.getElementById("signupPassword").value;
 
-
     if (!name || !email || !password) {
         return;
     }
-
-
-    /*
-       Save basic prototype information locally.
-    */
 
     localStorage.setItem(
         "postcardsName",
@@ -874,20 +825,13 @@ function signup(event) {
         email
     );
 
-
-    /*
-       Continue to onboarding.
-    */
-
     window.location.href =
         "onboarding.html";
 
 }
 
 
-/* =========================
-   BACK TO FRONT
-========================= */
+/* BACK TO FRONT */
 
 function flipBack(event) {
 
