@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>University | Postcards</title>
+
+  <link rel="stylesheet" href="css/postcards.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="nav-shell">
+
+      <a href="discover.html" class="brand">
+        POSTCARDS
+      </a>
+
+      <nav class="main-nav">
+        <a href="discover.html">Discover</a>
+        <a href="saved.html">Saved</a>
+        <a href="compare.html">Compare</a>
+        <a href="planner.html">Planner</a>
+        <a href="learn.html">Learn</a>
+        <a href="mentor.html">Mentor</a>
+      </nav>
+
+      <a href="account.html" class="nav-profile">
+        P
+      </a>
+
+    </div>
+  </header>
+
+
+  <main class="page-shell">
+
+    <a href="discover.html" class="back-link">
+      ← Back to Discover
+    </a>
+
+
+    <!-- UNIVERSITY HERO -->
+
+    <section id="universityHero" class="university-hero">
+
+      <div class="university-hero-card">
+
+        <div class="postcard-stamp large">
+          <span id="universityInitials">P</span>
+        </div>
+
+        <div class="university-hero-content">
+
+          <p id="universityLocation" class="eyebrow">
+            Loading...
+          </p>
+
+          <h1 id="universityName">
+            Loading university...
+          </h1>
+
+          <p id="universityDescription"
+             class="hero-description">
+          </p>
+
+          <div class="hero-actions">
+
+            <button
+              id="saveUniversity"
+              class="primary-button">
+              ♡ Save
+            </button>
+
+            <button
+              id="compareUniversity"
+              class="secondary-button">
+              Compare
+            </button>
+
+            <a
+              id="officialWebsite"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="secondary-button">
+              Official website ↗
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUICK FACTS -->
+
+    <section class="section-block">
+
+      <div class="section-heading">
+        <p class="eyebrow">At a glance</p>
+        <h2>University snapshot</h2>
+      </div>
+
+      <div class="facts-grid">
+
+        <div class="fact-card">
+          <span>Tuition</span>
+          <strong id="tuitionValue">—</strong>
+        </div>
+
+        <div class="fact-card">
+          <span>Acceptance rate</span>
+          <strong id="acceptanceValue">—</strong>
+        </div>
+
+        <div class="fact-card">
+          <span>Language</span>
+          <strong id="languageValue">—</strong>
+        </div>
+
+        <div class="fact-card">
+          <span>Campus</span>
+          <strong id="campusValue">—</strong>
+        </div>
+
+        <div class="fact-card">
+          <span>Climate</span>
+          <strong id="climateValue">—</strong>
+        </div>
+
+        <div class="fact-card">
+          <span>Scholarships</span>
+          <strong id="scholarshipValue">—</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ACADEMICS -->
+
+    <section class="section-block">
+
+      <div class="section-heading">
+        <p class="eyebrow">Academics</p>
+        <h2>What can you study?</h2>
+      </div>
+
+      <div
+        id="majorsContainer"
+        class="tag-list">
+      </div>
+
+    </section>
+
+
+    <!-- ADMISSIONS -->
+
+    <section class="section-block">
+
+      <div class="section-heading">
+        <p class="eyebrow">Admissions</p>
+        <h2>What should you know?</h2>
+      </div>
+
+      <div class="information-grid">
+
+        <div class="information-card">
+          <h3>Requirements</h3>
+
+          <p id="requirementsValue">
+            —
+          </p>
+        </div>
+
+        <div class="information-card">
+          <h3>English requirements</h3>
+
+          <p id="englishValue">
+            —
+          </p>
+        </div>
+
+        <div class="information-card">
+          <h3>Important deadline</h3>
+
+          <p id="deadlineValue">
+            —
+          </p>
+        </div>
+
+        <div class="information-card">
+          <h3>Scholarships</h3>
+
+          <p id="scholarshipDetails">
+            —
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- STUDENT LIFE -->
+
+    <section class="section-block">
+
+      <div class="section-heading">
+        <p class="eyebrow">Student life</p>
+        <h2>Beyond the classroom</h2>
+      </div>
+
+      <div class="student-life-card">
+
+        <p id="studentLife">
+          —
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- WHY THIS UNIVERSITY -->
+
+    <section class="section-block">
+
+      <div class="section-heading">
+        <p class="eyebrow">Postcards perspective</p>
+        <h2>Why students might consider it</h2>
+      </div>
+
+      <div class="reasons-card">
+
+        <p id="universityReasons">
+          —
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- PLANNER -->
+
+    <section class="section-block planner-callout">
+
+      <div>
+        <p class="eyebrow">Planning your application?</p>
+
+        <h2>
+          Add this university to your research.
+        </h2>
+
+        <p>
+          Keep deadlines, essays, recommendations,
+          exams, and scholarship applications organized
+          in your Postcards planner.
+        </p>
+      </div>
+
+      <a href="planner.html" class="primary-button">
+        Open planner →
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <div class="toast"></div>
+
+
+  <script src="js/universities.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/university.js"></script>
+
+</body>
+</html>
