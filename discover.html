@@ -3,230 +3,196 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Discover · Postcards</title>
 
-  <link
-    rel="stylesheet"
-    href="css/postcards.css"
-  >
+  <link rel="stylesheet" href="css/postcards.css">
 </head>
 
 <body>
 
-  <!-- NAVIGATION -->
-
   <nav class="site-nav">
-
     <div class="nav-inner">
 
-      <a
-        href="index.html"
-        class="logo"
-      >
+      <a href="index.html" class="logo">
         Postcards
       </a>
 
       <div class="nav-links">
 
-        <a
-          href="discover.html"
-          class="nav-link active"
-        >
+        <a href="discover.html" class="nav-link active">
           Discover
         </a>
 
-        <a
-          href="saved.html"
-          class="nav-link"
-        >
+        <a href="saved.html" class="nav-link">
           Saved
         </a>
 
-        <a
-          href="compare.html"
-          class="nav-link"
-        >
+        <a href="compare.html" class="nav-link">
           Compare
         </a>
 
-        <a
-          href="tracker.html"
-          class="nav-link"
-        >
+        <a href="tracker.html" class="nav-link">
           Tracker
         </a>
 
-        <a
-          href="learn.html"
-          class="nav-link"
-        >
+        <a href="learn.html" class="nav-link">
           Learn
         </a>
 
       </div>
 
-      <a
-        href="account.html"
-        class="nav-profile"
-      >
+      <a href="account.html" class="nav-profile">
         P
       </a>
 
     </div>
-
   </nav>
 
-
-  <!-- MAIN CONTENT -->
 
   <main class="main-content">
 
     <div class="page-shell">
 
-
-      <!-- HEADER -->
-
       <header class="page-header">
 
         <div class="eyebrow">
-          Your university journey
+          UNIVERSITY RESEARCH
         </div>
 
         <h1 class="display">
-          Discover your next place.
+          Find your next place.
         </h1>
 
         <p>
-          Explore universities, compare your options,
-          and find the places that feel right for your
-          next chapter.
+          Explore universities, discover new possibilities,
+          and build a collection of places worth knowing.
         </p>
 
       </header>
 
 
-      <!-- SEARCH -->
+      <section class="search-section">
 
-      <div class="search-wrapper">
+        <div class="search-wrapper">
 
-        <span
-          class="search-icon"
-          aria-hidden="true"
-        >
-          ⌕
-        </span>
+          <span class="search-icon">
+            ⌕
+          </span>
 
-        <input
-          type="search"
-          id="universitySearch"
-          class="search-input"
-          placeholder="Search universities, cities, majors..."
-          autocomplete="off"
-        >
+          <input
+            type="search"
+            id="universitySearch"
+            class="search-input"
+            placeholder="Search universities, cities, states, majors..."
+            autocomplete="off"
+          >
 
-      </div>
+        </div>
 
-
-      <!-- FILTERS -->
-
-      <div class="filters">
-
-        <select
-          id="locationFilter"
-          class="filter-select"
-        >
-          <option value="">
-            Location
-          </option>
-        </select>
+      </section>
 
 
-        <select
-          id="majorFilter"
-          class="filter-select"
-        >
-          <option value="">
-            Major
-          </option>
-        </select>
+      <section class="filters-section">
+
+        <div class="filters">
+
+          <select
+            id="locationFilter"
+            class="filter-select"
+          >
+            <option value="">
+              Location
+            </option>
+          </select>
 
 
-        <select
-          id="tuitionFilter"
-          class="filter-select"
-        >
-          <option value="">
-            Tuition
-          </option>
-
-          <option value="under-40000">
-            Under $40k
-          </option>
-
-          <option value="40000-55000">
-            $40k–$55k
-          </option>
-
-          <option value="55000-65000">
-            $55k–$65k
-          </option>
-
-          <option value="over-65000">
-            Over $65k
-          </option>
-        </select>
+          <select
+            id="majorFilter"
+            class="filter-select"
+          >
+            <option value="">
+              Major
+            </option>
+          </select>
 
 
-        <select
-          id="typeFilter"
-          class="filter-select"
-        >
-          <option value="">
-            School type
-          </option>
+          <select
+            id="tuitionFilter"
+            class="filter-select"
+          >
+            <option value="">
+              Tuition
+            </option>
 
-          <option value="Private">
-            Private
-          </option>
+            <option value="under-40000">
+              Under $40k
+            </option>
 
-          <option value="Public">
-            Public
-          </option>
-        </select>
+            <option value="40000-55000">
+              $40k–$55k
+            </option>
 
+            <option value="55000-65000">
+              $55k–$65k
+            </option>
 
-        <select
-          id="internationalFilter"
-          class="filter-select"
-        >
-          <option value="">
-            International
-          </option>
+            <option value="over-65000">
+              Over $65k
+            </option>
 
-          <option value="yes">
-            Welcomes international students
-          </option>
-
-        </select>
+          </select>
 
 
-        <button
-          id="resetFilters"
-          class="filter-reset"
-        >
-          Clear all
-        </button>
+          <select
+            id="typeFilter"
+            class="filter-select"
+          >
 
-      </div>
+            <option value="">
+              Type
+            </option>
+
+            <option value="Private">
+              Private
+            </option>
+
+            <option value="Public">
+              Public
+            </option>
+
+          </select>
 
 
-      <!-- QUICK SEARCHES -->
+          <select
+            id="internationalFilter"
+            class="filter-select"
+          >
+
+            <option value="">
+              International
+            </option>
+
+            <option value="yes">
+              International students
+            </option>
+
+          </select>
+
+
+          <button
+            id="resetFilters"
+            class="filter-reset"
+            type="button"
+          >
+            Clear
+          </button>
+
+        </div>
+
+      </section>
+
 
       <section class="quick-section">
 
@@ -239,6 +205,7 @@
           <button
             class="quick-chip"
             data-query="New York"
+            type="button"
           >
             New York
           </button>
@@ -246,6 +213,7 @@
           <button
             class="quick-chip"
             data-query="Computer Science"
+            type="button"
           >
             Computer Science
           </button>
@@ -253,6 +221,7 @@
           <button
             class="quick-chip"
             data-query="Business"
+            type="button"
           >
             Business
           </button>
@@ -260,6 +229,7 @@
           <button
             class="quick-chip"
             data-query="Technology"
+            type="button"
           >
             Technology
           </button>
@@ -267,6 +237,7 @@
           <button
             class="quick-chip"
             data-query="Under $40k"
+            type="button"
           >
             Under $40k
           </button>
@@ -275,8 +246,6 @@
 
       </section>
 
-
-      <!-- RECOMMENDED -->
 
       <section
         class="discovery-section"
@@ -288,7 +257,7 @@
           <div>
 
             <div class="section-label">
-              For you
+              PERSONALIZED
             </div>
 
             <h2>
@@ -301,14 +270,12 @@
 
 
         <div
-          class="university-grid"
           id="recommendedGrid"
+          class="university-grid"
         ></div>
 
       </section>
 
-
-      <!-- ALL UNIVERSITIES -->
 
       <section class="discovery-section">
 
@@ -317,7 +284,7 @@
           <div>
 
             <div class="section-label">
-              Explore
+              EXPLORE
             </div>
 
             <h2>
@@ -327,8 +294,8 @@
           </div>
 
           <span
-            class="results-count"
             id="resultsCount"
+            class="results-count"
           >
             0 universities
           </span>
@@ -337,9 +304,34 @@
 
 
         <div
-          class="university-grid"
           id="universityGrid"
+          class="university-grid"
         ></div>
+
+      </section>
+
+
+      <section
+        id="emptyState"
+        class="empty-state"
+        style="display: none;"
+      >
+
+        <div class="empty-state-inner">
+
+          <div class="eyebrow">
+            NO MATCHES
+          </div>
+
+          <h2>
+            Nothing here yet.
+          </h2>
+
+          <p>
+            Try another search or remove one of your filters.
+          </p>
+
+        </div>
 
       </section>
 
@@ -348,12 +340,14 @@
   </main>
 
 
-  <!-- JAVASCRIPT -->
+  <div
+    class="toast"
+    aria-live="polite"
+  ></div>
+
 
   <script src="js/universities.js"></script>
-
   <script src="js/app.js"></script>
-
   <script src="js/discover.js"></script>
 
 </body>
