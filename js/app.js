@@ -1,50 +1,40 @@
-/* =========================================================
-   POSTCARDS — SHARED APP FUNCTIONS
-   ========================================================= */
-
 const POSTCARDS_KEYS = {
   saved: "postcards_saved",
   compare: "postcards_compare",
-  profile: "postcards_profile"
+  profile: "postcards_profile",
+  planner: "postcards_planner"
 };
 
+/* =========================
+   STORAGE HELPERS
+========================= */
 
-/* ---------- LOCAL STORAGE ---------- */
+function readStorage(key, fallback = []) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch (error) {
+    console.error("Postcards storage error:", error);
+    return fallback;
+  }
+}
+
+function writeStorage(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+
+/* =========================
+   SAVED UNIVERSITIES
+========================= */
 
 function getSavedIds() {
-  return JSON.parse(
-    localStorage.getItem(POSTCARDS_KEYS.saved) || "[]"
-  );
+  return readStorage(POSTCARDS_KEYS.saved, []);
 }
 
 function setSavedIds(ids) {
-  localStorage.setItem(
-    POSTCARDS_KEYS.saved,
-    JSON.stringify(ids)
-  );
+  writeStorage(POSTCARDS_KEYS.saved, ids);
 }
-
-function getCompareIds() {
-  return JSON.parse(
-    localStorage.getItem(POSTCARDS_KEYS.compare) || "[]"
-  );
-}
-
-function setCompareIds(ids) {
-  localStorage.setItem(
-    POSTCARDS_KEYS.compare,
-    JSON.stringify(ids)
-  );
-}
-
-function getProfile() {
-  return JSON.parse(
-    localStorage.getItem(POSTCARDS_KEYS.profile) || "{}"
-  );
-}
-
-
-/* ---------- SAVED UNIVERSITIES ---------- */
 
 function isSaved(universityId) {
   return getSavedIds().includes(universityId);
@@ -54,10 +44,7 @@ function toggleSaved(universityId) {
   const saved = getSavedIds();
 
   if (saved.includes(universityId)) {
-    setSavedIds(
-      saved.filter(id => id !== universityId)
-    );
-
+    setSavedIds(saved.filter(id => id !== universityId));
     showToast("Removed from saved");
     return false;
   }
@@ -70,7 +57,17 @@ function toggleSaved(universityId) {
 }
 
 
-/* ---------- COMPARE ---------- */
+/* =========================
+   COMPARE
+========================= */
+
+function getCompareIds() {
+  return readStorage(POSTCARDS_KEYS.compare, []);
+}
+
+function setCompareIds(ids) {
+  writeStorage(POSTCARDS_KEYS.compare, ids);
+}
 
 function isInCompare(universityId) {
   return getCompareIds().includes(universityId);
@@ -80,10 +77,7 @@ function toggleCompare(universityId) {
   const compare = getCompareIds();
 
   if (compare.includes(universityId)) {
-    setCompareIds(
-      compare.filter(id => id !== universityId)
-    );
-
+    setCompareIds(compare.filter(id => id !== universityId));
     showToast("Removed from comparison");
     return false;
   }
@@ -101,29 +95,116 @@ function toggleCompare(universityId) {
 }
 
 
-/* ---------- PROFILE ---------- */
-
-function saveProfile(profile) {
-  localStorage.setItem(
-    POSTCARDS_KEYS.profile,
-    JSON.stringify(profile)
-  );
-}
-
-
-/* ---------- UNIVERSITY HELPERS ---------- */
+/* =========================
+   UNIVERSITY DATA
+========================= */
 
 function getUniversityById(id) {
-  return universities.find(
-    university => university.id === id
+  if (!Array.isArray(universities)) {
+    return null;
+  }
+
+  return universities.find(university => university.id === id) || null;
+}
+
+function getUniversitiesByIds(ids) {
+  return ids
+    .map(id => getUniversityById(id))
+    .filter(Boolean);
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function getProfile() {
+  return readStorage(POSTCARDS_KEYS.profile, {});
+}
+
+function saveProfile(profile) {
+  writeStorage(POSTCARDS_KEYS.profile, profile);
+}
+
+
+/* =========================
+   PLANNER
+========================= */
+
+function getPlannerTasks() {
+  return readStorage(POSTCARDS_KEYS.planner, []);
+}
+
+function setPlannerTasks(tasks) {
+  writeStorage(POSTCARDS_KEYS.planner, tasks);
+}
+
+function addPlannerTask(task) {
+  const tasks = getPlannerTasks();
+
+  const newTask = {
+    id: Date.now().toString(),
+    title: task.title || "New task",
+    category: task.category || "General",
+    university: task.university || "",
+    date: task.date || "",
+    completed: false
+  };
+
+  tasks.push(newTask);
+  setPlannerTasks(tasks);
+
+  return newTask;
+}
+
+function updatePlannerTask(taskId, updates) {
+  const tasks = getPlannerTasks();
+
+  const updated = tasks.map(task => {
+    if (task.id !== taskId) return task;
+
+    return {
+      ...task,
+      ...updates
+    };
+  });
+
+  setPlannerTasks(updated);
+  return updated;
+}
+
+function deletePlannerTask(taskId) {
+  const tasks = getPlannerTasks();
+
+  setPlannerTasks(
+    tasks.filter(task => task.id !== taskId)
   );
 }
 
+
+/* =========================
+   FORMATTING
+========================= */
+
 function formatTuition(amount) {
+  if (typeof amount !== "number") {
+    return "Not available";
+  }
+
   return `$${amount.toLocaleString()}`;
 }
 
+function formatAcceptanceRate(rate) {
+  if (rate === null || rate === undefined || rate === "") {
+    return "Not available";
+  }
+
+  return `${rate}%`;
+}
+
 function getInitials(name) {
+  if (!name) return "P";
+
   return name
     .split(" ")
     .filter(Boolean)
@@ -134,7 +215,46 @@ function getInitials(name) {
 }
 
 
-/* ---------- TOAST ---------- */
+/* =========================
+   URL HELPERS
+========================= */
+
+function getUniversityFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id");
+}
+
+function openUniversity(universityId) {
+  window.location.href =
+    `university.html?id=${encodeURIComponent(universityId)}`;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function setupNavigation() {
+  const universityLinks =
+    document.querySelectorAll("[data-university-link]");
+
+  universityLinks.forEach(link => {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+
+      const id = link.dataset.universityLink;
+
+      if (id) {
+        openUniversity(id);
+      }
+    });
+  });
+}
+
+
+/* =========================
+   TOAST
+========================= */
 
 let toastTimeout;
 
@@ -158,7 +278,9 @@ function showToast(message) {
 }
 
 
-/* ---------- NAV PROFILE ---------- */
+/* =========================
+   NAV PROFILE
+========================= */
 
 function updateNavProfile() {
   const profileButton =
@@ -176,7 +298,35 @@ function updateNavProfile() {
   }
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  updateNavProfile
-);
+
+/* =========================
+   GLOBAL COUNTS
+========================= */
+
+function updateGlobalCounts() {
+  const savedCount = getSavedIds().length;
+  const compareCount = getCompareIds().length;
+
+  document
+    .querySelectorAll("[data-saved-count]")
+    .forEach(element => {
+      element.textContent = savedCount;
+    });
+
+  document
+    .querySelectorAll("[data-compare-count]")
+    .forEach(element => {
+      element.textContent = compareCount;
+    });
+}
+
+
+/* =========================
+   INITIALIZATION
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateNavProfile();
+  updateGlobalCounts();
+  setupNavigation();
+});
