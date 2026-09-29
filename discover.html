@@ -1,355 +1,2171 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postcards — Global University Discovery & Research Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <title>Discover · Postcards</title>
+    <style>
+        :root {
+            --ink: #1f2421;
+            --muted: #747a76;
+            --paper: #f8f7f3;
+            --card: #ffffff;
+            --line: #e6e5df;
+            --sage: #cbd6c9;
+            --sage-dark: #526052;
+            --sand: #e8dfd1;
+            --sand-dark: #b8a892;
+            --blue: #dce5e9;
+            --blue-dark: #4a6fa5;
+            --rose: #eadbd8;
+            --rose-dark: #9e6d68;
+            --shadow-sm: 0 2px 8px rgba(31, 36, 33, 0.04);
+            --shadow-md: 0 8px 24px rgba(31, 36, 33, 0.07);
+            --shadow-lg: 0 16px 36px rgba(31, 36, 33, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-  <link rel="stylesheet" href="css/postcards.css">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, .editorial-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .brand-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.12em;
+        }
+
+        header.site-header {
+            background-color: rgba(248, 247, 243, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--ink);
+        }
+
+        .logo-stamp {
+            width: 36px;
+            height: 36px;
+            background: var(--sand);
+            border: 2px dashed var(--sand-dark);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sage-dark);
+            font-size: 1.1rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-btn {
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+
+        .nav-btn:hover {
+            color: var(--ink);
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        .nav-btn.active {
+            color: var(--ink);
+            background-color: var(--card);
+            box-shadow: var(--shadow-sm);
+            font-weight: 600;
+        }
+
+        .badge {
+            background-color: var(--sage);
+            color: var(--sage-dark);
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        main.main-content {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem 1.5rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--ink);
+        }
+
+        .section-desc {
+            color: var(--muted);
+            font-size: 0.98rem;
+            max-width: 600px;
+            margin-top: 0.3rem;
+        }
+
+        .btn {
+            padding: 0.65rem 1.25rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-primary:hover {
+            background-color: #353c38;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--card);
+            border-color: var(--line);
+            color: var(--ink);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--paper);
+            border-color: #ccc;
+        }
+
+        .btn-sage {
+            background-color: var(--sage);
+            color: var(--sage-dark);
+        }
+
+        .btn-sage:hover {
+            background-color: #bad0b8;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .discover-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        .filter-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 5rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .filter-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .input-field, .select-field {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            background-color: var(--paper);
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--ink);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .input-field:focus, .select-field:focus {
+            border-color: var(--sage-dark);
+            background-color: var(--card);
+            box-shadow: 0 0 0 3px rgba(82, 96, 82, 0.1);
+        }
+
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .chip {
+            font-size: 0.78rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 500;
+        }
+
+        .chip.active, .chip:hover {
+            background: var(--sage);
+            color: var(--sage-dark);
+            border-color: var(--sage-dark);
+            font-weight: 600;
+        }
+
+        .university-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .postcard-item {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .postcard-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: #d0cecf;
+        }
+
+        .postcard-header-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        .postcard-header-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%);
+        }
+
+        .location-badge {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(4px);
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--ink);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .card-actions-top {
+            z-index: 1;
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .btn-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .btn-circle:hover, .btn-circle.active {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-circle.active-saved {
+            background: var(--rose-dark);
+            color: white;
+        }
+
+        .btn-circle.active-compare {
+            background: var(--blue-dark);
+            color: white;
+        }
+
+        .postcard-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .uni-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        .uni-short {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .uni-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            font-size: 0.8rem;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+
+        .stat-val {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .uni-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .mini-tag {
+            font-size: 0.72rem;
+            background: var(--paper);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+
+        .postcard-footer {
+            margin-top: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .profile-container {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-hero {
+            position: relative;
+            padding: 3.5rem 2.5rem;
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .profile-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(31,36,33,0.4) 0%, rgba(31,36,33,0.85) 100%);
+        }
+
+        .profile-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .stamp-decoration {
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            width: 90px;
+            height: 110px;
+            border: 3px dashed rgba(255,255,255,0.6);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transform: rotate(5deg);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .stamp-decoration span {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 2.5rem;
+        }
+
+        .profile-box {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-box-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--ink);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 0.5rem;
+        }
+
+        .compare-table-wrapper {
+            overflow-x: auto;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .compare-table th, .compare-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top;
+        }
+
+        .compare-table th {
+            background: var(--paper);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            width: 20%;
+        }
+
+        .planner-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+        }
+
+        .task-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .task-card.done {
+            opacity: 0.6;
+            background: var(--paper);
+        }
+
+        .task-card.done .task-title {
+            text-decoration: line-through;
+        }
+
+        .task-checkbox {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--sage-dark);
+            cursor: pointer;
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .learn-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .learn-card:hover {
+            border-color: var(--sage-dark);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .term-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--sand);
+            color: var(--ink);
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-strategy { background: var(--sand); color: var(--ink); }
+        .badge-aid { background: var(--sage); color: var(--sage-dark); }
+        .badge-testing { background: var(--blue); color: var(--blue-dark); }
+        .badge-academics { background: var(--rose); color: var(--rose-dark); }
+        .badge-docs { background: #e2dfd8; color: #4a453e; }
+
+        .learn-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--ink);
+        }
+
+        .learn-def {
+            font-size: 0.92rem;
+            color: var(--ink);
+            line-height: 1.55;
+            margin-bottom: 1rem;
+        }
+
+        .learn-box {
+            font-size: 0.82rem;
+            background: var(--paper);
+            padding: 0.75rem 0.9rem;
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--sage-dark);
+            margin-top: auto;
+            margin-bottom: 0.75rem;
+        }
+
+        .learn-example {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .mentor-container {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            height: 650px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .mentor-header {
+            padding: 1.25rem 1.5rem;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mentor-chat {
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .msg-ai {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg-user {
+            background: var(--ink);
+            color: var(--paper);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .mentor-input-area {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--line);
+            background: var(--card);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--card);
+            border: 1px dashed var(--line);
+            border-radius: var(--radius-md);
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--sage-dark);
+        }
+
+        @media (max-width: 992px) {
+            .discover-layout, .profile-grid, .planner-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-  <nav class="site-nav">
-    <div class="nav-inner">
-
-      <a href="index.html" class="logo">
-        Postcards
-      </a>
-
-      <div class="nav-links">
-
-        <a href="discover.html" class="nav-link active">
-          Discover
-        </a>
-
-        <a href="saved.html" class="nav-link">
-          Saved
-        </a>
-
-        <a href="compare.html" class="nav-link">
-          Compare
-        </a>
-
-        <a href="tracker.html" class="nav-link">
-          Tracker
-        </a>
-
-        <a href="learn.html" class="nav-link">
-          Learn
-        </a>
-
-      </div>
-
-      <a href="account.html" class="nav-profile">
-        P
-      </a>
-
-    </div>
-  </nav>
-
-
-  <main class="main-content">
-
-    <div class="page-shell">
-
-      <header class="page-header">
-
-        <div class="eyebrow">
-          UNIVERSITY RESEARCH
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo-area" onclick="navigateTo('discover')">
+                <div class="logo-stamp">
+                    <i class="fa-solid me-1 fa-compass"></i>
+                </div>
+                <div>
+                    <span class="logo-text brand-font">POSTCARDS</span>
+                    <span style="display: block; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;">Global Discovery</span>
+                </div>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><button class="nav-btn active" id="nav-discover" onclick="navigateTo('discover')"><i class="fa-solid fa-earth-americas"></i> Discover</button></li>
+                    <li><button class="nav-btn" id="nav-saved" onclick="navigateTo('saved')"><i class="fa-solid fa-bookmark"></i> Saved <span class="badge" id="saved-count">0</span></button></li>
+                    <li><button class="nav-btn" id="nav-compare" onclick="navigateTo('compare')"><i class="fa-solid fa-scale-balanced"></i> Compare <span class="badge" id="compare-count">0</span></button></li>
+                    <li><button class="nav-btn" id="nav-planner" onclick="navigateTo('planner')"><i class="fa-solid fa-calendar-check"></i> Planner</button></li>
+                    <li><button class="nav-btn" id="nav-learn" onclick="navigateTo('learn')"><i class="fa-solid fa-book-open"></i> Learn</button></li>
+                    <li><button class="nav-btn" id="nav-mentor" onclick="navigateTo('mentor')"><i class="fa-solid fa-sparkles"></i> AI Mentor</button></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <h1 class="display">
-          Find your next place.
-        </h1>
+    <main class="main-content">
 
-        <p>
-          Explore universities, discover new possibilities,
-          and build a collection of places worth knowing.
-        </p>
-
-      </header>
-
-
-      <section class="search-section">
-
-        <div class="search-wrapper">
-
-          <span class="search-icon">
-            ⌕
-          </span>
-
-          <input
-            type="search"
-            id="universitySearch"
-            class="search-input"
-            placeholder="Search universities, cities, states, majors..."
-            autocomplete="off"
-          >
-
-        </div>
-
-      </section>
-
-
-      <section class="filters-section">
-
-        <div class="filters">
-
-          <select
-            id="locationFilter"
-            class="filter-select"
-          >
-            <option value="">
-              Location
-            </option>
-          </select>
-
-
-          <select
-            id="majorFilter"
-            class="filter-select"
-          >
-            <option value="">
-              Major
-            </option>
-          </select>
-
-
-          <select
-            id="tuitionFilter"
-            class="filter-select"
-          >
-            <option value="">
-              Tuition
-            </option>
-
-            <option value="under-40000">
-              Under $40k
-            </option>
-
-            <option value="40000-55000">
-              $40k–$55k
-            </option>
-
-            <option value="55000-65000">
-              $55k–$65k
-            </option>
-
-            <option value="over-65000">
-              Over $65k
-            </option>
-
-          </select>
-
-
-          <select
-            id="typeFilter"
-            class="filter-select"
-          >
-
-            <option value="">
-              Type
-            </option>
-
-            <option value="Private">
-              Private
-            </option>
-
-            <option value="Public">
-              Public
-            </option>
-
-          </select>
-
-
-          <select
-            id="internationalFilter"
-            class="filter-select"
-          >
-
-            <option value="">
-              International
-            </option>
-
-            <option value="yes">
-              International students
-            </option>
-
-          </select>
-
-
-          <button
-            id="resetFilters"
-            class="filter-reset"
-            type="button"
-          >
-            Clear
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <section class="quick-section">
-
-        <div class="section-label">
-          Explore by interest
-        </div>
-
-        <div class="quick-chips">
-
-          <button
-            class="quick-chip"
-            data-query="New York"
-            type="button"
-          >
-            New York
-          </button>
-
-          <button
-            class="quick-chip"
-            data-query="Computer Science"
-            type="button"
-          >
-            Computer Science
-          </button>
-
-          <button
-            class="quick-chip"
-            data-query="Business"
-            type="button"
-          >
-            Business
-          </button>
-
-          <button
-            class="quick-chip"
-            data-query="Technology"
-            type="button"
-          >
-            Technology
-          </button>
-
-          <button
-            class="quick-chip"
-            data-query="Under $40k"
-            type="button"
-          >
-            Under $40k
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <section
-        class="discovery-section"
-        id="recommendedSection"
-      >
-
-        <div class="section-heading">
-
-          <div>
-
-            <div class="section-label">
-              PERSONALIZED
+        <!-- ================= DISCOVER SECTION ================= -->
+        <section id="discover-section" class="page-section active">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow">Explore Institutions Worldwide</div>
+                    <h1 class="section-title">Discover Your Destination</h1>
+                    <p class="section-desc">Search through verified global universities, compare tuition, application requirements, and campus culture.</p>
+                </div>
             </div>
 
-            <h2>
-              Recommended for you
-            </h2>
+            <div class="discover-layout">
+                <!-- Sidebar Filters -->
+                <aside class="filter-card">
+                    <h3 style="font-size: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                        <span><i class="fa-solid fa-sliders"></i> Refine Search</span>
+                        <button onclick="resetFilters()" style="background:none; border:none; color:var(--muted); font-size:0.78rem; cursor:pointer; text-decoration:underline;">Reset</button>
+                    </h3>
 
-          </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Search Keyword</label>
+                        <input type="text" id="search-input" class="input-field" placeholder="University, city, major..." oninput="applyFilters()">
+                    </div>
 
-        </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Country</label>
+                        <select id="country-filter" class="select-field" onchange="applyFilters()">
+                            <option value="">All Countries</option>
+                        </select>
+                    </div>
 
+                    <div class="filter-group">
+                        <label class="filter-label">Field of Study / Major</label>
+                        <select id="major-filter" class="select-field" onchange="applyFilters()">
+                            <option value="">All Fields</option>
+                        </select>
+                    </div>
 
-        <div
-          id="recommendedGrid"
-          class="university-grid"
-        ></div>
+                    <div class="filter-group">
+                        <label class="filter-label">Max Tuition (USD/Year)</label>
+                        <select id="tuition-filter" class="select-field" onchange="applyFilters()">
+                            <option value="">Any Tuition</option>
+                            <option value="10000">Under $10,000</option>
+                            <option value="25000">Under $25,000</option>
+                            <option value="45000">Under $45,000</option>
+                        </select>
+                    </div>
 
-      </section>
+                    <div class="filter-group">
+                        <label class="filter-label">Scholarships Available</label>
+                        <select id="scholarship-filter" class="select-field" onchange="applyFilters()">
+                            <option value="">All</option>
+                            <option value="Yes">Scholarships Offered</option>
+                        </select>
+                    </div>
 
+                    <div class="filter-group">
+                        <label class="filter-label">Quick Curations</label>
+                        <div class="quick-chips">
+                            <span class="chip" onclick="quickFilter('Europe')">Europe</span>
+                            <span class="chip" onclick="quickFilter('Under $25k')">Under $25k</span>
+                            <span class="chip" onclick="quickFilter('Scholarships')">Scholarships</span>
+                            <span class="chip" onclick="quickFilter('English')">English Taught</span>
+                        </div>
+                    </div>
+                </aside>
 
-      <section class="discovery-section">
+                <!-- University Grid Area -->
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="font-size: 0.9rem; color: var(--muted);" id="result-count">Showing 0 universities</div>
+                    </div>
 
-        <div class="section-heading">
+                    <div class="university-grid" id="university-grid">
+                        <!-- Cards dynamically injected here -->
+                    </div>
 
-          <div>
+                    <div id="no-results" class="empty-state" style="display: none;">
+                        <i class="fa-solid fa-compass-slash"></i>
+                        <h3>No universities found</h3>
+                        <p>Try adjusting your search query or loosening your filter criteria.</p>
+                        <button class="btn btn-secondary btn-sm" style="margin-top: 1rem;" onclick="resetFilters()">Reset All Filters</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <div class="section-label">
-              EXPLORE
+        <section id="profile-section" class="page-section">
+            <div style="margin-bottom: 1.5rem;">
+                <button class="btn btn-secondary btn-sm" onclick="navigateTo('discover')"><i class="fa-solid fa-arrow-left"></i> Back to Discover</button>
+            </div>
+            
+            <div id="profile-content-area" class="profile-container">
+                <!-- University detail dynamic render -->
+            </div>
+        </section>
+
+        <section id="saved-section" class="page-section">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow">Your Personal Collection</div>
+                    <h1 class="section-title">Saved Universities</h1>
+                    <p class="section-desc">Institutions you've bookmarked for your application journey.</p>
+                </div>
             </div>
 
-            <h2>
-              All universities
-            </h2>
+            <div class="university-grid" id="saved-grid">
+                <!-- Saved cards render here -->
+            </div>
 
-          </div>
+            <div id="saved-empty" class="empty-state" style="display: none;">
+                <i class="fa-solid fa-bookmark"></i>
+                <h3>No saved universities yet</h3>
+                <p>Browse institutions on the Discover page and click the bookmark icon to save them here.</p>
+                <button class="btn btn-primary" style="margin-top: 1rem;" onclick="navigateTo('discover')">Explore Universities</button>
+            </div>
+        </section>
 
-          <span
-            id="resultsCount"
-            class="results-count"
-          >
-            0 universities
-          </span>
+        <section id="compare-section" class="page-section">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow">Decision Workspace</div>
+                    <h1 class="section-title">Side-by-Side Comparison</h1>
+                    <p class="section-desc">Compare up to 4 universities directly across tuition, requirements, and climate.</p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="clearComparison()"><i class="fa-solid fa-trash"></i> Clear Comparison</button>
+            </div>
 
-        </div>
+            <div id="compare-wrapper" class="compare-table-wrapper">
+                <table class="compare-table">
+                    <thead id="compare-head"></thead>
+                    <tbody id="compare-body"></tbody>
+                </table>
+            </div>
 
+            <div id="compare-empty" class="empty-state" style="display: none;">
+                <i class="fa-solid fa-scale-balanced"></i>
+                <h3>No universities selected for comparison</h3>
+                <p>Click the compare icon (<i class="fa-solid fa-scale-balanced"></i>) on any university card to add it to this workspace.</p>
+                <button class="btn btn-primary" style="margin-top: 1rem;" onclick="navigateTo('discover')">Go to Discover</button>
+            </div>
+        </section>
 
-        <div
-          id="universityGrid"
-          class="university-grid"
-        ></div>
+        <section id="planner-section" class="page-section">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow">Admissions Organization</div>
+                    <h1 class="section-title">Application Planner</h1>
+                    <p class="section-desc">Track milestones, exam deadlines, essays, and recommendation letters.</p>
+                </div>
+            </div>
 
-      </section>
+            <div class="planner-grid">
+                <!-- Add Task Form -->
+                <div class="filter-card">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Add New Milestone</h3>
+                    <form id="planner-form" onsubmit="handleAddTask(event)">
+                        <div class="filter-group">
+                            <label class="filter-label">Task Title</label>
+                            <input type="text" id="task-title" class="input-field" placeholder="e.g. Submit TOEFL Scores" required>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Associated University</label>
+                            <select id="task-uni" class="select-field">
+                                <option value="">General / None</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Deadline / Due Date</label>
+                            <input type="date" id="task-date" class="input-field" required>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Category</label>
+                            <select id="task-category" class="select-field">
+                                <option value="Exam">Language / Testing Exam</option>
+                                <option value="Document">Essay / Personal Statement</option>
+                                <option value="Recommendation">Recommendation Letter</option>
+                                <option value="Application">University Application Deadline</option>
+                                <option value="Financial">Financial Aid / Scholarship</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fa-solid fa-plus"></i> Add Task</button>
+                    </form>
+                </div>
 
+                <!-- Task List -->
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.1rem;">Upcoming Application Milestones</h3>
+                        <span id="planner-status-count" style="font-size: 0.85rem; color: var(--muted);">0 completed</span>
+                    </div>
+                    <div id="planner-task-list">
+                        <!-- Tasks rendered here -->
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <section
-        id="emptyState"
-        class="empty-state"
-        style="display: none;"
-      >
+        <section id="learn-section" class="page-section">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow">Admissions Knowledge Hub</div>
+                    <h1 class="section-title">Global Admissions Library</h1>
+                    <p class="section-desc">Clear, student-friendly explanations of international application concepts, financial aid policies, and degree structures.</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="learn-search" class="input-field" style="width: 260px;" placeholder="Search term, strategy, exam..." oninput="renderLearnLibrary()">
+                </div>
+            </div>
 
-        <div class="empty-state-inner">
+            <!-- Category Filters -->
+            <div style="margin-bottom: 1.5rem;" class="quick-chips">
+                <span class="chip active" id="learn-cat-all" onclick="filterLearnCategory('All')"><i class="fa-solid fa-layer-group"></i> All Terms</span>
+                <span class="chip" id="learn-cat-strategy" onclick="filterLearnCategory('Admissions Strategy')"><i class="fa-solid fa-chess"></i> Application Strategy</span>
+                <span class="chip" id="learn-cat-aid" onclick="filterLearnCategory('Financial Aid')"><i class="fa-solid fa-hand-holding-dollar"></i> Financial Aid</span>
+                <span class="chip" id="learn-cat-testing" onclick="filterLearnCategory('Testing & Language')"><i class="fa-solid fa-file-pen"></i> Testing & Language</span>
+                <span class="chip" id="learn-cat-academics" onclick="filterLearnCategory('Academics & Degrees')"><i class="fa-solid fa-graduation-cap"></i> Academics & Degrees</span>
+                <span class="chip" id="learn-cat-docs" onclick="filterLearnCategory('Documentation')"><i class="fa-solid fa-folder-open"></i> Essays & Docs</span>
+                <span class="chip" id="learn-cat-deadlines" onclick="filterLearnCategory('Deadlines & Admissions')"><i class="fa-solid fa-calendar"></i> Deadlines</span>
+            </div>
 
-          <div class="eyebrow">
-            NO MATCHES
-          </div>
+            <div class="learn-grid" id="learn-grid">
+                <!-- Terminology cards -->
+            </div>
+        </section>
 
-          <h2>
-            Nothing here yet.
-          </h2>
+        <section id="mentor-section" class="page-section">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow">Simulated Research Assistant</div>
+                    <h1 class="section-title">Postcards AI Mentor</h1>
+                    <p class="section-desc">Ask questions about institutions, degree types, tuition budgets, or application strategy.</p>
+                </div>
+            </div>
 
-          <p>
-            Try another search or remove one of your filters.
-          </p>
+            <div class="mentor-container">
+                <div class="mentor-header">
+                    <div class="logo-stamp" style="background: var(--sage); border-color: var(--sage-dark);">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; font-size: 1rem;">Postcards Advisor</div>
+                        <div style="font-size: 0.78rem; color: var(--muted);">Smart Knowledge Engine • Prototype Assistant</div>
+                    </div>
+                </div>
 
-        </div>
+                <div class="mentor-chat" id="mentor-chat">
+                    <div class="chat-msg msg-ai">
+                        Hello! I am your Postcards research assistant. You can ask me to suggest universities based on budget, compare degree programs, or explain admissions concepts like Need-Blind financial aid. How can I help you today?
+                    </div>
+                </div>
 
-      </section>
+                <form class="mentor-input-area" onsubmit="handleMentorSubmit(event)">
+                    <input type="text" id="mentor-input" class="input-field" placeholder="Ask e.g. 'Suggest European universities under $25k with scholarships'..." required>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Ask</button>
+                </form>
+            </div>
+        </section>
 
-    </div>
+    </main>
 
-  </main>
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
 
+    <script>
+        const UNIVERSITIES_DATA = [
+            {
+                id: "oxford",
+                name: "University of Oxford",
+                shortName: "Oxford",
+                country: "United Kingdom",
+                city: "Oxford",
+                region: "Oxfordshire",
+                type: "Public Research University",
+                language: ["English"],
+                tuition: 38500,
+                acceptanceRate: "17.5%",
+                scholarships: "Yes",
+                scholarshipDetails: "Clarendon Fund and Oxford-Weidenfeld scholarships available based on merit.",
+                majors: ["Computer Science", "PPE", "Law", "Medicine", "Engineering", "Literature"],
+                campusSize: "Collegiate City Campus",
+                climate: "Temperate Oceanic (Mild / Rain)",
+                ranking: "#1 Times Higher Ed",
+                deadline: "October 15",
+                requirements: "A-Levels (A*A*A) or IB 38-40 points, Admissions Test, Written Work, Interview.",
+                englishRequirements: "IELTS 7.5 (min 7.0 each component) or TOEFL iBT 110.",
+                studentLife: "Historic college system with traditional formal dinners, rowing, debate unions, and vibrant student societies.",
+                reasons: "World-class tutorial system, unmatched history, and global alumni network.",
+                description: "The oldest university in the English-speaking world, Oxford offers personalized tutorial teaching in an iconic collegiate environment.",
+                website: "https://www.ox.ac.uk",
+                image: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80",
+                tags: ["Historic", "Russell Group", "High Prestige", "Collegiate"]
+            },
+            {
+                id: "stanford",
+                name: "Stanford University",
+                shortName: "Stanford",
+                country: "United States",
+                city: "Stanford",
+                region: "California",
+                type: "Private Research University",
+                language: ["English"],
+                tuition: 62000,
+                acceptanceRate: "3.9%",
+                scholarships: "Yes",
+                scholarshipDetails: "Need-blind financial aid for domestic applicants; competitive need-based grants for international candidates.",
+                majors: ["Computer Science", "Economics", "Engineering", "Symbolic Systems", "Human Biology"],
+                campusSize: "Suburban Large Campus (Silicon Valley)",
+                climate: "Mediterranean (Warm, sunny year-round)",
+                ranking: "#3 QS World Ranking",
+                deadline: "January 5",
+                requirements: "High School Transcript, SAT/ACT optional, 3 Letters of Recommendation, Supplemental Essays.",
+                englishRequirements: "TOEFL iBT 100+ recommended.",
+                studentLife: "Entrepreneurial Silicon Valley vibe, intercollegiate sports culture, palm trees, and active startup hubs.",
+                reasons: "Leading epicenter for innovation, tech entrepreneurship, and cutting-edge multidisciplinary research.",
+                description: "Situated in Northern California's Silicon Valley, Stanford is world-renowned for its academic excellence, venture capital ties, and innovation culture.",
+                website: "https://www.stanford.edu",
+                image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80",
+                tags: ["Silicon Valley", "Prestige", "Tech Hub", "USA Leader"]
+            },
+            {
+                id: "toronto",
+                name: "University of Toronto",
+                shortName: "U of T",
+                country: "Canada",
+                city: "Toronto",
+                region: "Ontario",
+                type: "Public Research University",
+                language: ["English"],
+                tuition: 42000,
+                acceptanceRate: "43%",
+                scholarships: "Yes",
+                scholarshipDetails: "Lester B. Pearson International Scholarship covers tuition, books, and full residence.",
+                majors: ["Computer Science", "Business & Commerce", "Biomedical Engineering", "Data Science", "Architecture"],
+                campusSize: "Large Urban (St. George)",
+                climate: "Four Seasons (Snowy winters, warm summers)",
+                ranking: "#21 QS World Ranking",
+                deadline: "January 15",
+                requirements: "High School Diploma with minimum 85%+ average, course prerequisites, supplemental application.",
+                englishRequirements: "IELTS 6.5 (min 6.0) or TOEFL iBT 100.",
+                studentLife: "Diverse downtown campus with hundreds of clubs, startup incubators, and arts venues.",
+                reasons: "Top Canadian university with flexible post-graduation work permits in a safe, multicultural metropolis.",
+                description: "A leading global research institution renowned for AI breakthroughs, medical discovery, and vibrant urban campus life.",
+                website: "https://www.utoronto.ca",
+                image: "https://images.unsplash.com/photo-1565034946487-077786996e27?auto=format&fit=crop&w=800&q=80",
+                tags: ["Urban", "AI Hub", "Multicultural", "Canada Leader"]
+            },
+            {
+                id: "nus",
+                name: "National University of Singapore",
+                shortName: "NUS",
+                country: "Singapore",
+                city: "Singapore",
+                region: "Kent Ridge",
+                type: "Autonomous Research University",
+                language: ["English"],
+                tuition: 22500,
+                acceptanceRate: "10%",
+                scholarships: "Yes",
+                scholarshipDetails: "MOE Tuition Grant and ASEAN Undergraduate Scholarships available for international applicants.",
+                majors: ["Computer Science", "Data Science", "Business Analytics", "Chemical Engineering", "Medicine"],
+                campusSize: "Integrated Modern Urban Campus",
+                climate: "Tropical (Warm, humid year-round)",
+                ranking: "#8 QS World Ranking",
+                deadline: "February 28",
+                requirements: "High School Diploma / IB (38+) / AP scores, competitive subject grades, personal statement.",
+                englishRequirements: "IELTS 6.5 or TOEFL iBT 92.",
+                studentLife: "Ultramodern campus amenities, multicultural student body, global exchange hubs, and rich Asian culinary culture.",
+                reasons: "Asia's top-ranked university situated in a global finance and high-tech gateway.",
+                description: "A comprehensive global university located in Singapore, celebrated for STEM research, AI advancements, and business leadership.",
+                website: "https://nus.edu.sg",
+                image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
+                tags: ["Asia Leader", "Tech Hub", "Global Gate", "Top 10"]
+            },
+            {
+                id: "eth-zurich",
+                name: "ETH Zurich",
+                shortName: "ETH Zurich",
+                country: "Switzerland",
+                city: "Zurich",
+                region: "Zurich",
+                type: "Public STEM Institute",
+                language: ["German", "English"],
+                tuition: 1600,
+                acceptanceRate: "27%",
+                scholarships: "Yes",
+                scholarshipDetails: "Excellence Scholarship & Opportunity Programme (ESOP) covers study and living costs.",
+                majors: ["Robotics", "Computer Science", "Physics", "Mechanical Engineering", "Architecture"],
+                campusSize: "Modern Urban & Hilltop",
+                climate: "Continental (Snowy winters, pleasant summers)",
+                ranking: "#7 QS World Ranking",
+                deadline: "April 30",
+                requirements: "High school leaving certificate, reduced entrance exam for non-equivalent foreign diplomas.",
+                englishRequirements: "C1 German for Bachelor's; IELTS 7.0 or TOEFL 100 for Master's.",
+                studentLife: "Active outdoor lifestyle near the Swiss Alps, lake swimming, robust tech events, and hackathons.",
+                reasons: "Extremely affordable tuition for a top-10 global university with premier research funding.",
+                description: "One of the world's top scientific and technology universities, famous for counts of Nobel Laureates including Albert Einstein.",
+                website: "https://ethz.ch",
+                image: "https://images.unsplash.com/photo-1517840901100-8179e982acb7?auto=format&fit=crop&w=800&q=80",
+                tags: ["STEM Leader", "Low Tuition", "Affordable", "Europe"]
+            },
+            {
+                id: "ub",
+                name: "University of Barcelona",
+                shortName: "UB",
+                country: "Spain",
+                city: "Barcelona",
+                region: "Catalonia",
+                type: "Public Research University",
+                language: ["Spanish", "Catalan", "English"],
+                tuition: 2800,
+                acceptanceRate: "48%",
+                scholarships: "Yes",
+                scholarshipDetails: "Spanish Ministry of Education Grants and Catalan University Agency (AGAUR) financial assistance.",
+                majors: ["Medicine", "Biology", "Psychology", "International Business", "Fine Arts"],
+                campusSize: "Historic City Center & Healthcare District",
+                climate: "Mediterranean (Mild winters, sunny warm summers)",
+                ranking: "#152 QS World Ranking",
+                deadline: "June 15",
+                requirements: "Spanish Selectividad / UNEDasiss accreditation, certified high school transcripts.",
+                englishRequirements: "DELE B2 Spanish certification required for Spanish tracks; IELTS 6.5 for English tracks.",
+                studentLife: "Vibrant Mediterranean coastal city lifestyle, gothic architecture, rich art history, and lively student plazas.",
+                reasons: "Spain's premier public research university, offering high academic standards at low European tuition rates.",
+                description: "Founded in 1450, the University of Barcelona blends deep history with modern research across multiple campuses in Catalonia's capital.",
+                website: "https://www.ub.edu",
+                image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=800&q=80",
+                tags: ["Spain Leader", "Affordable", "Mediterranean", "Culture"]
+            },
+            {
+                id: "tum",
+                name: "Technical University of Munich",
+                shortName: "TUM",
+                country: "Germany",
+                city: "Munich",
+                region: "Bavaria",
+                type: "Public Technical University",
+                language: ["German", "English"],
+                tuition: 4000,
+                acceptanceRate: "25%",
+                scholarships: "Yes",
+                scholarshipDetails: "DAAD Scholarships and Deutschlandstipendium awarded based on academic merit.",
+                majors: ["Mechanical Engineering", "Informatics", "Automotive Technology", "Aerospace", "Management"],
+                campusSize: "Multi-campus (City & Garching High-Tech Hub)",
+                climate: "Continental (Snowy winters, pleasant warm summers)",
+                ranking: "#28 QS World Ranking",
+                deadline: "May 31",
+                requirements: "Hochschulzugangsberechtigung (HZB qualification), Aptitude Assessment test, transcript evaluation.",
+                englishRequirements: "TOEFL iBT 88+ / IELTS 6.5 or TestDaF / Goethe B2 for German programs.",
+                studentLife: "Proximity to the Bavarian Alps, Oktoberfest, modern Munich innovation centers, and active student engineering clubs.",
+                reasons: "Germany's top engineering and innovation university with close ties to BMW, Siemens, and SAP.",
+                description: "Renowned as 'The Entrepreneurial University', TUM is a powerhouse for engineering, computer science, and technology transfer in Europe.",
+                website: "https://www.tum.de",
+                image: "https://images.unsplash.com/photo-1595867818082-083862f3d630?auto=format&fit=crop&w=800&q=80",
+                tags: ["Engineering", "Germany", "Low Tuition", "Innovation"]
+            },
+            {
+                id: "tokyo",
+                name: "The University of Tokyo",
+                shortName: "Todai",
+                country: "Japan",
+                city: "Tokyo",
+                region: "Kanto",
+                type: "National University",
+                language: ["Japanese", "English"],
+                tuition: 4500,
+                acceptanceRate: "34%",
+                scholarships: "Yes",
+                scholarshipDetails: "MEXT Japanese Government Scholarship & Todai Fellowship for international students.",
+                majors: ["Robotics", "Engineering", "International Relations", "Economics", "Environmental Science"],
+                campusSize: "Historic Hongo Campus",
+                climate: "Humid Subtropical (Mild winters, warm summers)",
+                ranking: "#28 QS World Ranking",
+                deadline: "December 10",
+                requirements: "EJU Exam, English Proficiency, High school transcript, Personal Statement, Interview.",
+                englishRequirements: "TOEFL iBT 90+ or IELTS 6.5+ for Peak English programs.",
+                studentLife: "Blend of rich Japanese university tradition, traditional festivals (Ginkgo festival), and modern Tokyo city exploring.",
+                reasons: "Asia's foremost research power with generous government scholarships and safety.",
+                description: "Japan's premier institution of higher learning, producing nation leaders, researchers, and global innovators.",
+                website: "https://www.u-tokyo.ac.jp",
+                image: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80",
+                tags: ["Asia Leader", "Low Tuition", "MEXT Eligible", "Culture"]
+            },
+            {
+                id: "unam",
+                name: "Universidad Nacional Autónoma de México",
+                shortName: "UNAM",
+                country: "Mexico",
+                city: "Mexico City",
+                region: "CDMX",
+                type: "Public Autonomous University",
+                language: ["Spanish"],
+                tuition: 1,
+                acceptanceRate: "10%",
+                scholarships: "Yes",
+                scholarshipDetails: "AMEXCID Mexican Foreign Affairs grants and UNAM mobility fellowships.",
+                majors: ["Architecture", "Medicine", "International Relations", "Law", "Latin American Studies"],
+                campusSize: "UNESCO World Heritage Central Campus (CU)",
+                climate: "Subtropical Highland (Mild, pleasant year-round)",
+                ranking: "#93 QS World Ranking",
+                deadline: "February 10",
+                requirements: "UNAM Admissions Examination, minimum 8.0/10 high school GPA equivalent, DELE Spanish B2/C1.",
+                englishRequirements: "Not required for core tracks (Spanish instruction).",
+                studentLife: "Immersion in an architectural UNESCO campus featuring mural masterpieces by Diego Rivera and David Siqueiros.",
+                reasons: "Virtually tuition-free education at one of the highest ranked and culturally iconic universities in the Americas.",
+                description: "UNAM is the largest university in Latin America, celebrated for its iconic campus architecture, scientific output, and rich cultural heritage.",
+                website: "https://www.unam.mx",
+                image: "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=800&q=80",
+                tags: ["UNESCO Campus", "Tuition Free", "Latin America", "Historic"]
+            },
+            {
+                id: "melbourne",
+                name: "University of Melbourne",
+                shortName: "UniMelb",
+                country: "Australia",
+                city: "Melbourne",
+                region: "Victoria",
+                type: "Public Research University",
+                language: ["English"],
+                tuition: 33000,
+                acceptanceRate: "70%",
+                scholarships: "Yes",
+                scholarshipDetails: "Melbourne International Undergraduate Scholarship offering up to 100% tuition remission.",
+                majors: ["Biomedical Science", "Arts & Humanities", "Commerce", "Design", "Environmental Studies"],
+                campusSize: "Parkville City Campus",
+                climate: "Temperate (Four seasons in one day)",
+                ranking: "#14 QS World Ranking",
+                deadline: "November 30",
+                requirements: "ATAR equivalent (e.g. SAT 1320+ or IB 31+), prerequisite subjects.",
+                englishRequirements: "IELTS 6.5 (no band below 6.0) or TOEFL iBT 79.",
+                studentLife: "Located in the coffee and cultural capital of Australia, filled with street art, food markets, and beach trips.",
+                reasons: "Distinctive Melbourne Model degrees allowing flexible broad study before specialization.",
+                description: "Australia's leading university known for innovative curriculum design, research excellence, and vibrant campus lifestyle.",
+                website: "https://www.unimelb.edu.au",
+                image: "https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=800&q=80",
+                tags: ["Australia", "High Quality Life", "Flexible Degrees"]
+            },
+            {
+                id: "buenos-aires",
+                name: "Universidad de Buenos Aires",
+                shortName: "UBA",
+                country: "Argentina",
+                city: "Buenos Aires",
+                region: "Capital Federal",
+                type: "Public University",
+                language: ["Spanish"],
+                tuition: 0,
+                acceptanceRate: "Open Admission (via CBC)",
+                scholarships: "No",
+                scholarshipDetails: "Tuition is 100% free for all domestic and international undergraduate students.",
+                majors: ["Medicine", "Law", "Architecture", "Sociology", "Psychology", "Engineering"],
+                campusSize: "Distributed Urban Campuses",
+                climate: "Humid Subtropical (Warm, mild winters)",
+                ranking: "#95 QS World Ranking",
+                deadline: "February 15",
+                requirements: "High school diploma completion & completion of the CBC (Ciclo Básico Común) foundation year.",
+                englishRequirements: "Spanish B2/C1 proficiency certificate required.",
+                studentLife: "Integration into the vibrant, cosmopolitan life of South America's premier cultural capital.",
+                reasons: "Tuition-free top-tier Latin American university education with high international standing.",
+                description: "The largest university in Argentina and one of the highest-ranked public universities in Latin America.",
+                website: "https://www.uba.ar",
+                image: "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+                tags: ["Tuition Free", "Latin America", "Spanish Taught", "Culture"]
+            }
+        ];
 
-  <div
-    class="toast"
-    aria-live="polite"
-  ></div>
+        const LEARN_LIBRARY_DATA = [
+            {
+                id: "ed",
+                term: "Early Decision (ED)",
+                category: "Admissions Strategy",
+                badgeClass: "badge-strategy",
+                definition: "A binding application plan where you commit to attending the university if admitted. You can only apply to one institution via Early Decision.",
+                tip: "Only use Early Decision if the school is your absolute #1 choice and you have verified that the net price calculator or financial aid estimate will be sufficient.",
+                example: "Applying ED to Oxford or Columbia means if they accept you in December, you must withdraw all other pending applications."
+            },
+            {
+                id: "ea",
+                term: "Early Action (EA)",
+                category: "Admissions Strategy",
+                badgeClass: "badge-strategy",
+                definition: "A non-binding early application process. You submit early (typically Oct/Nov) and receive an early decision (Dec/Jan), but retain full freedom to decide until May 1.",
+                tip: "Apply EA wherever possible—it demonstrates strong early interest without locking you into a financial or legal binding commitment.",
+                example: "Submitting EA applications to 3 universities in November gives you acceptances in hand before winter break."
+            },
+            {
+                id: "rd",
+                term: "Regular Decision (RD)",
+                category: "Admissions Strategy",
+                badgeClass: "badge-strategy",
+                definition: "The traditional non-binding application cycle with deadlines usually falling between January 1 and February 1, with admission results released in spring.",
+                tip: "RD allows you to include your 12th grade first-semester grades and late standardized test retakes in your profile.",
+                example: "Most international students submit 5–8 Regular Decision applications in early January."
+            },
+            {
+                id: "rolling",
+                term: "Rolling Admission",
+                category: "Admissions Strategy",
+                badgeClass: "badge-strategy",
+                definition: "Universities review applications continuously as they arrive in batches rather than waiting for one fixed deadline, closing spots when full.",
+                tip: "Apply as early as humanly possible in the cycle—scholarships and competitive program seats fill up quickly on rolling schedules.",
+                example: "Applying in October for a rolling program gives you a higher statistical chance than applying in March."
+            },
+            {
+                id: "need-blind",
+                term: "Need-Blind Admissions",
+                category: "Financial Aid",
+                badgeClass: "badge-aid",
+                definition: "An admission policy where an institution evaluates your academic merits completely independent of your financial need or ability to pay tuition.",
+                tip: "Always check if 'need-blind' applies to international applicants! Many institutions are need-blind for domestic students but need-aware for international candidates.",
+                example: "Top global institutions like Harvard, MIT, Yale, Amherst, and Princeton extend full need-blind admissions to all global applicants."
+            },
+            {
+                id: "need-aware",
+                term: "Need-Aware / Need-Sensitive",
+                category: "Financial Aid",
+                badgeClass: "badge-aid",
+                definition: "An admission policy where an applicant's requested financial aid amount is factored into the final admission decision, especially for international candidates.",
+                tip: "If applying need-aware, focus heavily on highlighting your unique academic value and consider applying for external merit grants.",
+                example: "A university with limited financial aid reserves may accept a qualified self-funded student over an equally qualified student requiring full funding."
+            },
+            {
+                id: "css-fafsa",
+                term: "CSS Profile & Financial Docs",
+                category: "Financial Aid",
+                badgeClass: "badge-aid",
+                definition: "An online application administered by the College Board used by universities to determine eligibility for non-government institutional grants and aid.",
+                tip: "Prepare tax returns and proof of income early; international documentation often requires translated certificates of bank balances.",
+                example: "Most private US and international programs require the CSS Profile submitted along with tax certificates by November/January deadlines."
+            },
+            {
+                id: "sat-act",
+                term: "SAT & ACT Standardized Tests",
+                category: "Testing & Language",
+                badgeClass: "badge-testing",
+                definition: "Standardized entrance exams testing reading comprehension, grammar, and mathematics widely evaluated across North American and international programs.",
+                tip: "Check if target universities are 'Test-Optional' (you choose whether to submit scores) or 'Test-Blind' (scores are not evaluated).",
+                example: "A 1450+ SAT or 32+ ACT composite score is highly competitive for top global research universities."
+            },
+            {
+                id: "language-exams",
+                term: "TOEFL / IELTS / Duolingo (DET)",
+                category: "Testing & Language",
+                badgeClass: "badge-testing",
+                definition: "Standardized English proficiency examinations required for non-native English speakers applying to programs taught in English.",
+                tip: "Pay close attention to sub-score minimums (e.g. minimum 6.5 in Writing/Speaking) rather than focusing solely on overall composite score.",
+                example: "Oxford requires IELTS 7.5 (7.0 subscores), whereas U of T accepts IELTS 6.5 or Duolingo English Test 125+."
+            },
+            {
+                id: "gpa",
+                term: "GPA & Grading Scales",
+                category: "Academics & Degrees",
+                badgeClass: "badge-academics",
+                definition: "Grade Point Average: an aggregated score representing your overall high school academic achievement, often scaled on a 4.0 system or percentage.",
+                tip: "Do not attempt to self-convert your national diploma or IB/A-Level grades to a 4.0 GPA unless explicitly instructed; universities prefer native transcripts.",
+                example: "Unweighted GPA calculates raw grades; Weighted GPA adds extra points for Honors, AP, or IB Higher Level coursework."
+            },
+            {
+                id: "lor",
+                term: "Letters of Recommendation (LOR)",
+                category: "Documentation",
+                badgeClass: "badge-docs",
+                definition: "Written assessments submitted directly by teachers, counselors, or mentors attesting to your character, academic capabilities, and classroom engagement.",
+                tip: "Ask teachers at least 6–8 weeks in advance and provide them with a 'Brag Sheet' summarizing your accomplishments and project work.",
+                example: "Most global universities request two recommendation letters from core subject academic teachers (STEM or Humanities)."
+            },
+            {
+                id: "personal-statement",
+                term: "Personal Statement / Essay",
+                category: "Documentation",
+                badgeClass: "badge-docs",
+                definition: "A central narrative essay (often 500–650 words) allowing you to showcase your individual voice, perspective, resilience, and personal vision beyond test scores.",
+                tip: "Focus on reflection rather than just listing resume achievements. Show *how* you think, learn, and contribute to communities.",
+                example: "Writing about a personal project, cultural bridging experience, or intellectual curiosity spark gives context to your academic drive."
+            },
+            {
+                id: "majors-minors",
+                term: "Major, Minor & Double Major",
+                category: "Academics & Degrees",
+                badgeClass: "badge-academics",
+                definition: "A Major is your primary area of academic concentration. A Minor is a secondary sub-specialization. A Double Major satisfies requirements for two primary fields.",
+                tip: "European degrees usually require direct entry into a specific Major from Day 1, whereas US/Canadian degrees allow flexible major declaration in Year 2.",
+                example: "Majoring in Computer Science with a Minor in Philosophy or Cognitive Science."
+            },
+            {
+                id: "ects",
+                term: "ECTS Credits & European System",
+                category: "Academics & Degrees",
+                badgeClass: "badge-academics",
+                definition: "European Credit Transfer and Accumulation System: a standard for comparing study attainment across higher education institutions in the European Union.",
+                tip: "A full academic year in Europe usually equals 60 ECTS credits, equivalent to ~1,500–1,800 hours of student workload.",
+                example: "A standard 3-year European Bachelor's degree equals 180 ECTS credits."
+            },
+            {
+                id: "conditional-admission",
+                term: "Conditional Acceptance",
+                category: "Deadlines & Admissions",
+                badgeClass: "badge-strategy",
+                definition: "An admission offer contingent on meeting specific final conditions, such as maintaining high final exam scores or completing a preparatory pathway year.",
+                tip: "Common in UK, Australian, and European institutions where final high school results (A-Levels, IB, High School Diploma) are released after application deadlines.",
+                example: "Receiving an offer from Melbourne conditioned on achieving an 85% final exam average in high school calculus."
+            },
+            {
+                id: "waitlist-deferral",
+                term: "Waitlist & Deferral",
+                category: "Deadlines & Admissions",
+                badgeClass: "badge-strategy",
+                definition: "A Deferral moves an early applicant into the Regular Decision pool. A Waitlist keeps qualified candidates on hold until admitted students accept/decline offers.",
+                tip: "If deferred or waitlisted, submit a concise 'Letter of Continued Interest' (LOCI) with recent academic updates or achievements.",
+                example: "Being placed on a waitlist after April 1 means receiving potential admission updates between May and July."
+            }
+        ];
 
+        let state = {
+            saved: JSON.parse(localStorage.getItem('postcards_saved')) || [],
+            compare: JSON.parse(localStorage.getItem('postcards_compare')) || [],
+            planner: JSON.parse(localStorage.getItem('postcards_planner')) || [
+                { id: 1, title: "Take TOEFL Language Exam", uniId: "", date: "2026-11-15", category: "Exam", done: false },
+                { id: 2, title: "Draft Personal Statement Essay", uniId: "Oxford", date: "2026-10-01", category: "Document", done: true }
+            ],
+            selectedLearnCategory: 'All'
+        };
 
-  <script src="js/universities.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/discover.js"></script>
+        function saveState() {
+            localStorage.setItem('postcards_saved', JSON.stringify(state.saved));
+            localStorage.setItem('postcards_compare', JSON.stringify(state.compare));
+            localStorage.setItem('postcards_planner', JSON.stringify(state.planner));
+            updateBadges();
+        }
 
+        function updateBadges() {
+            document.getElementById('saved-count').textContent = state.saved.length;
+            document.getElementById('compare-count').textContent = state.compare.length;
+        }
+
+        function showToast(message, icon = 'info-circle') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-${icon}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function navigateTo(sectionId, param = null) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            const targetSec = document.getElementById(`${sectionId}-section`);
+            const targetNav = document.getElementById(`nav-${sectionId}`);
+
+            if (targetSec) targetSec.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (sectionId === 'discover') renderDiscoverGrid();
+            if (sectionId === 'saved') renderSavedGrid();
+            if (sectionId === 'compare') renderCompareWorkspace();
+            if (sectionId === 'planner') renderPlanner();
+            if (sectionId === 'learn') renderLearnLibrary();
+            if (sectionId === 'profile' && param) renderUniversityProfile(param);
+        }
+
+        function populateFilterDropdowns() {
+            const countries = [...new Set(UNIVERSITIES_DATA.map(u => u.country))];
+            const countrySelect = document.getElementById('country-filter');
+            countrySelect.innerHTML = '<option value="">All Countries</option>';
+            countries.sort().forEach(c => countrySelect.innerHTML += `<option value="${c}">${c}</option>`);
+
+            const majors = [...new Set(UNIVERSITIES_DATA.flatMap(u => u.majors))];
+            const majorSelect = document.getElementById('major-filter');
+            majorSelect.innerHTML = '<option value="">All Fields</option>';
+            majors.sort().forEach(m => majorSelect.innerHTML += `<option value="${m}">${m}</option>`);
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const country = document.getElementById('country-filter').value;
+            const major = document.getElementById('major-filter').value;
+            const maxTuition = document.getElementById('tuition-filter').value;
+            const scholarship = document.getElementById('scholarship-filter').value;
+
+            const filtered = UNIVERSITIES_DATA.filter(uni => {
+                const matchesQuery = !query || 
+                    uni.name.toLowerCase().includes(query) ||
+                    uni.city.toLowerCase().includes(query) ||
+                    uni.country.toLowerCase().includes(query) ||
+                    uni.description.toLowerCase().includes(query) ||
+                    uni.majors.some(m => m.toLowerCase().includes(query));
+
+                const matchesCountry = !country || uni.country === country;
+                const matchesMajor = !major || uni.majors.includes(major);
+                const matchesTuition = !maxTuition || uni.tuition <= parseInt(maxTuition);
+                const matchesScholarship = !scholarship || uni.scholarships === scholarship;
+
+                return matchesQuery && matchesCountry && matchesMajor && matchesTuition && matchesScholarship;
+            });
+
+            renderDiscoverGrid(filtered);
+        }
+
+        function quickFilter(type) {
+            resetFilters();
+            if (type === 'Europe') {
+                document.getElementById('search-input').value = 'Europe';
+            } else if (type === 'Under $25k') {
+                document.getElementById('tuition-filter').value = '25000';
+            } else if (type === 'Scholarships') {
+                document.getElementById('scholarship-filter').value = 'Yes';
+            } else if (type === 'English') {
+                document.getElementById('search-input').value = 'English';
+            }
+            applyFilters();
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('country-filter').value = '';
+            document.getElementById('major-filter').value = '';
+            document.getElementById('tuition-filter').value = '';
+            document.getElementById('scholarship-filter').value = '';
+            renderDiscoverGrid();
+        }
+
+        function renderDiscoverGrid(data = UNIVERSITIES_DATA) {
+            const grid = document.getElementById('university-grid');
+            const countLabel = document.getElementById('result-count');
+            const noResults = document.getElementById('no-results');
+
+            countLabel.textContent = `Showing ${data.length} institutional postcard${data.length === 1 ? '' : 's'}`;
+            grid.innerHTML = '';
+
+            if (data.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            noResults.style.display = 'none';
+
+            data.forEach(uni => {
+                const isSaved = state.saved.includes(uni.id);
+                const isCompare = state.compare.includes(uni.id);
+
+                grid.innerHTML += `
+                    <div class="postcard-item">
+                        <div class="postcard-header-img" style="background-image: url('${uni.image}');">
+                            <span class="location-badge"><i class="fa-solid fa-location-dot"></i> ${uni.city}, ${uni.country}</span>
+                            <div class="card-actions-top">
+                                <button class="btn-circle ${isSaved ? 'active-saved' : ''}" title="Save University" onclick="toggleSave('${uni.id}')">
+                                    <i class="fa-${isSaved ? 'solid' : 'regular'} fa-bookmark"></i>
+                                </button>
+                                <button class="btn-circle ${isCompare ? 'active-compare' : ''}" title="Compare University" onclick="toggleCompare('${uni.id}')">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="postcard-body">
+                            <h3 class="uni-title">${uni.name}</h3>
+                            <div class="uni-short">${uni.type} • ${uni.ranking}</div>
+                            
+                            <div class="uni-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Tuition / year</span>
+                                    <span class="stat-val">${uni.tuition <= 1 ? 'Tuition Free / Nominal' : '$' + uni.tuition.toLocaleString()}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Acceptance</span>
+                                    <span class="stat-val">${uni.acceptanceRate}</span>
+                                </div>
+                            </div>
+
+                            <div class="uni-tags">
+                                ${uni.tags.map(t => `<span class="mini-tag">${t}</span>`).join('')}
+                            </div>
+
+                            <div class="postcard-footer">
+                                <button class="btn btn-primary btn-sm" style="flex:1;" onclick="navigateTo('profile', '${uni.id}')">Explore Postcard</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSave(id) {
+            const index = state.saved.indexOf(id);
+            if (index > -1) {
+                state.saved.splice(index, 1);
+                showToast('Removed from Saved collection', 'bookmark');
+            } else {
+                state.saved.push(id);
+                showToast('Saved to your profile', 'bookmark');
+            }
+            saveState();
+            renderDiscoverGrid();
+            renderSavedGrid();
+        }
+
+        function toggleCompare(id) {
+            const index = state.compare.indexOf(id);
+            if (index > -1) {
+                state.compare.splice(index, 1);
+                showToast('Removed from comparison workspace', 'scale-balanced');
+            } else {
+                if (state.compare.length >= 4) {
+                    showToast('Maximum 4 universities can be compared at once', 'triangle-exclamation');
+                    return;
+                }
+                state.compare.push(id);
+                showToast('Added to side-by-side comparison', 'scale-balanced');
+            }
+            saveState();
+            renderDiscoverGrid();
+            renderCompareWorkspace();
+        }
+
+        function renderUniversityProfile(id) {
+            const uni = UNIVERSITIES_DATA.find(u => u.id === id);
+            if (!uni) return;
+
+            const container = document.getElementById('profile-content-area');
+            const isSaved = state.saved.includes(uni.id);
+            const isCompare = state.compare.includes(uni.id);
+
+            container.innerHTML = `
+                <div class="profile-hero" style="background-image: url('${uni.image}');">
+                    <div class="stamp-decoration">
+                        <span>POSTCARD</span>
+                        <i class="fa-solid fa-stamp" style="font-size:1.5rem; margin:0.3rem 0; color:white;"></i>
+                        <span>${uni.country}</span>
+                    </div>
+                    <div class="profile-hero-content">
+                        <span class="location-badge" style="display:inline-flex; margin-bottom:0.75rem;"><i class="fa-solid fa-location-dot"></i> ${uni.city}, ${uni.country}</span>
+                        <h1 style="font-size: 2.5rem; color: white;" class="editorial-title">${uni.name}</h1>
+                        <p style="font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-top:0.5rem;">${uni.description}</p>
+                        
+                        <div style="display: flex; gap:0.75rem; margin-top:1.5rem;">
+                            <button class="btn ${isSaved ? 'btn-sage' : 'btn-secondary'}" onclick="toggleSave('${uni.id}'); renderUniversityProfile('${uni.id}')">
+                                <i class="fa-${isSaved ? 'solid' : 'regular'} fa-bookmark"></i> ${isSaved ? 'Saved in Profile' : 'Save University'}
+                            </button>
+                            <button class="btn ${isCompare ? 'btn-sage' : 'btn-secondary'}" onclick="toggleCompare('${uni.id}'); renderUniversityProfile('${uni.id}')">
+                                <i class="fa-solid fa-scale-balanced"></i> ${isCompare ? 'In Comparison' : 'Compare'}
+                            </button>
+                            <a href="${uni.website}" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Official Website</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-grid">
+                    <div>
+                        <div class="profile-box">
+                            <h3 class="profile-box-title"><i class="fa-solid fa-graduation-cap"></i> Academic Overview & Key Programs</h3>
+                            <p style="margin-bottom: 1rem;">${uni.reasons}</p>
+                            <div style="font-weight: 600; font-size: 0.88rem; margin-bottom: 0.5rem;">Notable Majors & Fields:</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                                ${uni.majors.map(m => `<span class="mini-tag" style="font-size:0.8rem; padding: 4px 10px;">${m}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <div class="profile-box">
+                            <h3 class="profile-box-title"><i class="fa-solid fa-file-signature"></i> Admissions & English Requirements</h3>
+                            <p style="margin-bottom: 0.75rem;"><strong>General Entry Standard:</strong> ${uni.requirements}</p>
+                            <p style="margin-bottom: 0.75rem;"><strong>English Language Criteria:</strong> ${uni.englishRequirements}</p>
+                            <p><strong>Primary Application Deadline:</strong> <span style="color:var(--rose-dark); font-weight:700;">${uni.deadline}</span></p>
+                        </div>
+
+                        <div class="profile-box">
+                            <h3 class="profile-box-title"><i class="fa-solid fa-house-chimney-window"></i> Student & Campus Culture</h3>
+                            <p>${uni.studentLife}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="profile-box">
+                            <h3 class="profile-box-title"><i class="fa-solid fa-circle-info"></i> Fast Facts</h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem;">
+                                <div><strong style="color:var(--muted); text-transform:uppercase; font-size:0.75rem; display:block;">Tuition Estimate</strong> ${uni.tuition <= 1 ? 'Free Tuition / Nominal' : '$' + uni.tuition.toLocaleString() + ' / year'}</div>
+                                <div><strong style="color:var(--muted); text-transform:uppercase; font-size:0.75rem; display:block;">Acceptance Rate</strong> ${uni.acceptanceRate}</div>
+                                <div><strong style="color:var(--muted); text-transform:uppercase; font-size:0.75rem; display:block;">Global Rank</strong> ${uni.ranking}</div>
+                                <div><strong style="color:var(--muted); text-transform:uppercase; font-size:0.75rem; display:block;">Language of Instruction</strong> ${uni.language.join(', ')}</div>
+                                <div><strong style="color:var(--muted); text-transform:uppercase; font-size:0.75rem; display:block;">Campus & Environment</strong> ${uni.campusSize}</div>
+                                <div><strong style="color:var(--muted); text-transform:uppercase; font-size:0.75rem; display:block;">Regional Climate</strong> ${uni.climate}</div>
+                            </div>
+                        </div>
+
+                        <div class="profile-box" style="background: var(--sand); border-color: var(--sand-dark);">
+                            <h3 class="profile-box-title"><i class="fa-solid fa-award"></i> Scholarships</h3>
+                            <p style="font-size:0.88rem;">${uni.scholarshipDetails}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSavedGrid() {
+            const grid = document.getElementById('saved-grid');
+            const emptyState = document.getElementById('saved-empty');
+            const savedUnis = UNIVERSITIES_DATA.filter(u => state.saved.includes(u.id));
+
+            grid.innerHTML = '';
+
+            if (savedUnis.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            savedUnis.forEach(uni => {
+                const isCompare = state.compare.includes(uni.id);
+                grid.innerHTML += `
+                    <div class="postcard-item">
+                        <div class="postcard-header-img" style="background-image: url('${uni.image}');">
+                            <span class="location-badge"><i class="fa-solid fa-location-dot"></i> ${uni.city}, ${uni.country}</span>
+                            <div class="card-actions-top">
+                                <button class="btn-circle active-saved" title="Remove" onclick="toggleSave('${uni.id}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="postcard-body">
+                            <h3 class="uni-title">${uni.name}</h3>
+                            <div class="uni-short">${uni.type}</div>
+                            <div class="postcard-footer" style="margin-top:1rem;">
+                                <button class="btn btn-primary btn-sm" style="flex:1;" onclick="navigateTo('profile', '${uni.id}')">View Postcard</button>
+                                <button class="btn btn-secondary btn-sm ${isCompare ? 'btn-sage' : ''}" onclick="toggleCompare('${uni.id}')">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderCompareWorkspace() {
+            const head = document.getElementById('compare-head');
+            const body = document.getElementById('compare-body');
+            const emptyState = document.getElementById('compare-empty');
+            const wrapper = document.getElementById('compare-wrapper');
+
+            const compareUnis = UNIVERSITIES_DATA.filter(u => state.compare.includes(u.id));
+
+            if (compareUnis.length === 0) {
+                wrapper.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            wrapper.style.display = 'block';
+            emptyState.style.display = 'none';
+
+            let headHtml = `<tr><th>Criteria</th>`;
+            compareUnis.forEach(u => {
+                headHtml += `
+                    <td>
+                        <div style="font-weight:700; font-size:1.1rem; color:var(--ink);">${u.name}</div>
+                        <div style="font-size:0.8rem; color:var(--muted);">${u.city}, ${u.country}</div>
+                        <button class="btn btn-secondary btn-sm" style="margin-top:0.5rem;" onclick="toggleCompare('${u.id}')"><i class="fa-solid fa-xmark"></i> Remove</button>
+                    </td>
+                `;
+            });
+            headHtml += `</tr>`;
+            head.innerHTML = headHtml;
+
+            const fields = [
+                { label: "Annual Tuition", key: u => u.tuition <= 1 ? 'Free Tuition / Nominal' : '$' + u.tuition.toLocaleString() },
+                { label: "Acceptance Rate", key: u => u.acceptanceRate },
+                { label: "Global Ranking", key: u => u.ranking },
+                { label: "Scholarships", key: u => u.scholarships + " — " + u.scholarshipDetails },
+                { label: "Language", key: u => u.language.join(', ') },
+                { label: "Application Deadline", key: u => u.deadline },
+                { label: "Requirements", key: u => u.requirements },
+                { label: "Climate", key: u => u.climate }
+            ];
+
+            let bodyHtml = '';
+            fields.forEach(f => {
+                bodyHtml += `<tr><th>${f.label}</th>`;
+                compareUnis.forEach(u => {
+                    bodyHtml += `<td>${f.key(u)}</td>`;
+                });
+                bodyHtml += `</tr>`;
+            });
+
+            body.innerHTML = bodyHtml;
+        }
+
+        function clearComparison() {
+            state.compare = [];
+            saveState();
+            renderCompareWorkspace();
+            showToast('Comparison workspace cleared');
+        }
+
+        function renderPlanner() {
+            const list = document.getElementById('planner-task-list');
+            const countLabel = document.getElementById('planner-status-count');
+            const uniSelect = document.getElementById('task-uni');
+
+            uniSelect.innerHTML = '<option value="">General / None</option>';
+            UNIVERSITIES_DATA.forEach(u => uniSelect.innerHTML += `<option value="${u.name}">${u.name}</option>`);
+
+            list.innerHTML = '';
+            const completedCount = state.planner.filter(t => t.done).length;
+            countLabel.textContent = `${completedCount} of ${state.planner.length} completed`;
+
+            if (state.planner.length === 0) {
+                list.innerHTML = `<div class="empty-state">No milestones created yet. Add your first task on the left!</div>`;
+                return;
+            }
+
+            state.planner.forEach(task => {
+                list.innerHTML += `
+                    <div class="task-card ${task.done ? 'done' : ''}">
+                        <input type="checkbox" class="task-checkbox" ${task.done ? 'checked' : ''} onchange="toggleTaskDone(${task.id})">
+                        <div style="flex:1;">
+                            <div class="task-title" style="font-weight:600; font-size:0.95rem;">${task.title}</div>
+                            <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">
+                                <i class="fa-solid fa-tag"></i> ${task.category} 
+                                ${task.uniId ? ` • <i class="fa-solid fa-university"></i> ${task.uniId}` : ''}
+                                • <i class="fa-solid fa-clock"></i> Due ${task.date}
+                            </div>
+                        </div>
+                        <button style="background:none; border:none; color:var(--muted); cursor:pointer;" onclick="deleteTask(${task.id})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function handleAddTask(e) {
+            e.preventDefault();
+            const title = document.getElementById('task-title').value;
+            const uniId = document.getElementById('task-uni').value;
+            const date = document.getElementById('task-date').value;
+            const category = document.getElementById('task-category').value;
+
+            const newTask = {
+                id: Date.now(),
+                title,
+                uniId,
+                date,
+                category,
+                done: false
+            };
+
+            state.planner.push(newTask);
+            saveState();
+            renderPlanner();
+            document.getElementById('planner-form').reset();
+            showToast('New milestone added to Planner', 'calendar-plus');
+        }
+
+        function toggleTaskDone(id) {
+            const task = state.planner.find(t => t.id === id);
+            if (task) {
+                task.done = !task.done;
+                saveState();
+                renderPlanner();
+            }
+        }
+
+        function deleteTask(id) {
+            state.planner = state.planner.filter(t => t.id !== id);
+            saveState();
+            renderPlanner();
+            showToast('Task deleted');
+        }
+
+        function filterLearnCategory(cat) {
+            state.selectedLearnCategory = cat;
+            document.querySelectorAll('#learn-section .quick-chips .chip').forEach(chip => chip.classList.remove('active'));
+            
+            if (cat === 'All') document.getElementById('learn-cat-all').classList.add('active');
+            else if (cat === 'Admissions Strategy') document.getElementById('learn-cat-strategy').classList.add('active');
+            else if (cat === 'Financial Aid') document.getElementById('learn-cat-aid').classList.add('active');
+            else if (cat === 'Testing & Language') document.getElementById('learn-cat-testing').classList.add('active');
+            else if (cat === 'Academics & Degrees') document.getElementById('learn-cat-academics').classList.add('active');
+            else if (cat === 'Documentation') document.getElementById('learn-cat-docs').classList.add('active');
+            else if (cat === 'Deadlines & Admissions') document.getElementById('learn-cat-deadlines').classList.add('active');
+
+            renderLearnLibrary();
+        }
+
+        function renderLearnLibrary() {
+            const grid = document.getElementById('learn-grid');
+            const query = document.getElementById('learn-search').value.toLowerCase();
+
+            grid.innerHTML = '';
+            const filtered = LEARN_LIBRARY_DATA.filter(item => {
+                const matchesCategory = (state.selectedLearnCategory === 'All' || item.category === state.selectedLearnCategory);
+                const matchesQuery = !query || 
+                    item.term.toLowerCase().includes(query) ||
+                    item.definition.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query) ||
+                    item.tip.toLowerCase().includes(query);
+
+                return matchesCategory && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fa-solid fa-book-open"></i>
+                        <h3>No matching admissions terms found</h3>
+                        <p>Try searching for terms like "IELTS", "Early Action", "Need-Blind", or reset your category filter.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(item => {
+                grid.innerHTML += `
+                    <div class="learn-card">
+                        <span class="term-badge ${item.badgeClass}">${item.category}</span>
+                        <h3 class="learn-title editorial-title">${item.term}</h3>
+                        <p class="learn-def">${item.definition}</p>
+
+                        <div class="learn-box">
+                            <strong><i class="fa-solid fa-lightbulb" style="color:var(--sand-dark);"></i> Coach Strategy:</strong> ${item.tip}
+                        </div>
+
+                        ${item.example ? `<div class="learn-example"><strong>In Practice:</strong> ${item.example}</div>` : ''}
+
+                        <button class="btn btn-secondary btn-sm" style="margin-top:auto;" onclick="quickAddPlannerTaskFromLearn('${item.term}')">
+                            <i class="fa-solid fa-calendar-plus"></i> Add related task to Planner
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function quickAddPlannerTaskFromLearn(termTitle) {
+            const newTask = {
+                id: Date.now(),
+                title: `Prepare / Complete: ${termTitle}`,
+                uniId: "",
+                date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                category: "Document",
+                done: false
+            };
+
+            state.planner.push(newTask);
+            saveState();
+            showToast(`Added task for "${termTitle}" to Planner!`, 'calendar-check');
+        }
+
+        function handleMentorSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('mentor-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            const chat = document.getElementById('mentor-chat');
+
+            chat.innerHTML += `<div class="chat-msg msg-user">${escapeHtml(query)}</div>`;
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
+
+            setTimeout(() => {
+                const response = generateMentorResponse(query);
+                chat.innerHTML += `<div class="chat-msg msg-ai">${response}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 600);
+        }
+
+        function generateMentorResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('europe') || q.includes('cheap') || q.includes('affordable')) {
+                const cheap = UNIVERSITIES_DATA.filter(u => u.tuition < 10000);
+                return `Here are some highly affordable global options from our database:<br><br>` +
+                    cheap.map(u => `• <strong>${u.name} (${u.country})</strong>: ${u.tuition <= 1 ? 'Free / nominal tuition' : '$' + u.tuition + '/year'}. ${u.description}`).join('<br><br>');
+            }
+
+            if (q.includes('need-blind') || q.includes('financial aid') || q.includes('scholarship')) {
+                return `<strong>Financial Aid Guidance:</strong><br>In our database, institutions like <strong>ETH Zurich</strong> offer low tuition costs ($1,600/yr) and <strong>UNAM</strong> offers tuition-free study. <strong>Stanford</strong> offers need-blind/need-based grants, while <strong>Oxford</strong>, <strong>NUS</strong>, and <strong>University of Toronto</strong> offer prestigious full scholarships (Clarendon, ASEAN, & Lester B. Pearson scholarships).`;
+            }
+
+            if (q.includes('compare') || q.includes('toronto') || q.includes('oxford') || q.includes('stanford')) {
+                return `When comparing premier global hubs like <strong>Stanford</strong>, <strong>Oxford</strong>, and <strong>University of Toronto</strong>:<br>
+                • <strong>Stanford</strong> excels in Silicon Valley tech entrepreneurship and flexible undergraduate majors.<br>
+                • <strong>Oxford</strong> uses a tutorial system with an October 15 application deadline.<br>
+                • <strong>U of T</strong> offers broad major entry combinations in a vibrant North American city environment.`;
+            }
+
+            return `I analyzed your query regarding <em>"${escapeHtml(query)}"</em>. Based on our Postcards global university database, I recommend exploring our Discover search filters for specific degree requirements or opening individual University Postcards to examine deadlines and language test prerequisites!`;
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilterDropdowns();
+            renderDiscoverGrid();
+            renderLearnLibrary();
+            updateBadges();
+        });
+    </script>
 </body>
-
 </html>
